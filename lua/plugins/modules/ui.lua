@@ -9,7 +9,7 @@ return {
   {
     'willothy/nvim-cokeline',
     lazy = true,
-    events = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function()
       require('plugins.configs.cokeline')
     end,
@@ -31,7 +31,7 @@ return {
   {
     'Bekaboo/deadcolumn.nvim',
     lazy = true,
-    events = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
   {
     'j-hui/fidget.nvim',

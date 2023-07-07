@@ -50,6 +50,7 @@ return {
     end,
   },
 
+  -- Will break startup screen texts
   --[[ {
     'Eandrju/cellular-automaton.nvim',
     event = { 'CursorHold', 'CursorHoldI' },
