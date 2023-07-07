@@ -16,6 +16,12 @@ require('cokeline').setup({
         and get_hex('Normal', 'bg')
          or get_hex('TablineFill', 'bg')
     end,
+    style = function(buffer)
+      return
+        buffer.is_focused
+        and 'bold'
+         or 'NONE'
+    end,
   },
 
   sidebar = {

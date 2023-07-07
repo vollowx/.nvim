@@ -1,6 +1,6 @@
 require('gitsigns').setup({
   preview_config = {
-    border = 'solid',
+    border = 'rounded',
     style = 'minimal',
   },
   signs = {

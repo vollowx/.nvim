@@ -125,7 +125,7 @@ ts_configs.setup({
       enable = true,
       border = 'shadow',
       peek_definition_code = {
-        ['<C-k>'] = '@function.outer',
+        ['<C-o>'] = '@function.outer',
       },
     },
   },

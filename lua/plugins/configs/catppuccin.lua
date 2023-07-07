@@ -143,12 +143,11 @@ require('catppuccin').setup({
         ['@keyword.return'] = { fg = cp.pink, style = clear },
 
         -- For nvim-cokeline
-        TabLineFill = { bg = cp.mantle },
-        TabLineCurrent = { fg = cp.text, bg = cp.base },
+        TabLineFill = { link = 'StatusLine' },
 
         -- For status line
-        StatusLineHeader = { fg = cp.lavender, bg = cp.mantle },
-        StatusLineHeaderModified = { fg = cp.rosewater, bg = cp.mantle },
+        StatusLineHeader = { fg = cp.lavender },
+        StatusLineHeaderModified = { fg = cp.rosewater },
         StatusLineGitAdded = { fg = cp.green },
         StatusLineGitChanged = { fg = cp.blue },
         StatusLineGitRemoved = { fg = cp.red },
