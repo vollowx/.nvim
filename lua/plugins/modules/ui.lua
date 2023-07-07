@@ -8,34 +8,37 @@ return {
   },
   {
     'willothy/nvim-cokeline',
+    lazy = true,
+    events = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function()
       require('plugins.configs.cokeline')
     end,
-    events = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
   {
     'nvim-tree/nvim-tree.lua',
-    config = function()
-      require('plugins.configs.nvim-tree')
-    end,
     lazy = true,
-    keys = { '<C-n>' },
     cmd = {
       'NvimTreeOpen', 'NvimTreeClose', 'NvimTreeToggle', 'NvimTreeFocus',
       'NvimTreeRefresh', 'NvimTreeFindFile', 'NvimTreeFindFileToggle',
       'NvimTreeClipboard', 'NvimTreeResize', 'NvimTreeCollapse',
       'NvimTreeCollapseKeepBuffers', 'NvimTreeGenerateOnAttach'
     },
+    keys = { '<C-n>' },
+    config = function()
+      require('plugins.configs.nvim-tree')
+    end,
   },
   {
     'Bekaboo/deadcolumn.nvim',
+    lazy = true,
     events = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
   {
     'j-hui/fidget.nvim',
+    lazy = true,
+    event = 'LspAttach',
     config = function()
       require('plugins.configs.fidget')
     end,
-    event = 'LspAttach',
   },
 }

@@ -91,7 +91,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = 'BufReadPre',
+    event = { 'CursorHold', 'CursorHoldI' },
     dependencies = 'plenary.nvim',
     config = function()
       require('plugins.configs.gitsigns')
@@ -121,17 +121,16 @@ return {
       'Gwq',
       'Gwrite',
     },
-    event = { 'BufWritePost', 'BufReadPre' },
     config = function()
       require('plugins.configs.vim-fugitive')
     end,
   },
 
-  {
+  --[[ {
     'akinsho/git-conflict.nvim',
     event = 'BufReadPre',
     config = true,
-  },
+  }, ]]
 
   -- {
   --   'kevinhwang91/rnvimr',
@@ -142,7 +141,7 @@ return {
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = { 'BufNew', 'BufRead' },
+    event = { 'CursorHold', 'CursorHoldI' },
     config = function()
       require('plugins.configs.nvim-colorizer')
     end,

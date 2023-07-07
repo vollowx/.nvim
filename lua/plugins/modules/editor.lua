@@ -24,10 +24,10 @@ return {
     end,
   },
 
-  {
+  --[[ {
     'tpope/vim-sleuth',
     event = 'BufReadPre',
-  },
+  }, ]]
 
   {
     'windwp/nvim-autopairs',

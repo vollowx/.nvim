@@ -50,12 +50,12 @@ return {
     end,
   },
 
-  {
+  --[[ {
     'Eandrju/cellular-automaton.nvim',
     event = { 'CursorHold', 'CursorHoldI' },
     cmd = 'CellularAutomaton',
     dependencies = 'nvim-treesitter',
-  },
+  }, ]]
 
   {
     'RRethy/nvim-treesitter-endwise',
