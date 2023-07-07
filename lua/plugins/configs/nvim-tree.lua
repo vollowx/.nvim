@@ -6,7 +6,6 @@ require('nvim-tree').setup({
     update_root = false,
   },
   renderer = {
-    root_folder_label = false,
     highlight_git = true,
 
     icons = {

@@ -21,7 +21,7 @@ local function create_autocmd_applypatch()
     pattern = { 'LazyInstall*', 'LazyUpdate*' },
     group = vim.api.nvim_create_augroup('LazyPatches', {}),
     callback = function(info)
-      local patches_path = vim.fs.joinpath(vim.fn.stdpath('config'), 'patches')
+      local patches_path = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua/plugins/patches')
       for patch in vim.fs.dir(patches_path) do
         local patch_path = vim.fs.joinpath(patches_path, patch)
         local plugin_path =
