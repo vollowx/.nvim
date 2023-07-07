@@ -3,6 +3,7 @@ return {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     keys = {
+      '<C-p>',
       '<Leader>F',
       '<Leader>f',
       '<Leader>ff',

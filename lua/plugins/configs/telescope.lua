@@ -60,6 +60,7 @@ override_lsp_picker('lsp_dynamic_workspace_symbols', 'workspace/symbol')
 local map = require('utils').keymap.set
 
 -- stylua: ignore start
+map('n', '<C-p>',  function() builtin.keymaps() end, { desc = 'ui: Open command panel'  })
 map('n', '<Leader>F',  function() builtin.builtin() end)
 map('n', '<Leader>f',  function() builtin.builtin() end)
 map('n', '<Leader>ff', function() builtin.find_files() end)
