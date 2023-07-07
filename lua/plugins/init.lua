@@ -165,7 +165,7 @@ else
     'base',
     -- 'completion',
     -- 'debug',
-    -- 'editor',
+    'editor',
     -- 'lsp',
     -- 'markup',
     'tools',

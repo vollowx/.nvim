@@ -1,30 +1,29 @@
-local keymap = require('utils').keymap
-local set = keymap.set
-local opt = keymap.opt
+local map = require('utils').keymap.set
 
-set('nx', '<Space>', '<Ignore>', opt())
+map('nx', '<Space>', '<Ignore>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-set('n', '<Esc>', '<Cmd>noh<CR>', opt { desc = 'search: No highlight' })
-set('n', '<C-s>', '<Cmd>write<CR>', opt { desc = 'buffer: Save file' })
+map('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'search: No highlight' })
+map('n', '<C-s>', '<Cmd>write<CR>', { desc = 'buffer: Save file' })
 
 -- Multi-window operations
-set('nx', '<C-h>', '<C-w>h', opt { desc = 'window: Go left' })
-set('nx', '<C-j>', '<C-w>j', opt { desc = 'window: Go down' })
-set('nx', '<C-k>', '<C-w>k', opt { desc = 'window: Go up' })
-set('nx', '<C-l>', '<C-w>l', opt { desc = 'window: Go right' })
+map('nx', '<C-h>', '<C-w>h', { desc = 'window: Go left' })
+map('nx', '<C-j>', '<C-w>j', { desc = 'window: Go down' })
+map('nx', '<C-k>', '<C-w>k', { desc = 'window: Go up' })
+map('nx', '<C-l>', '<C-w>l', { desc = 'window: Go right' })
 
 -- Up/down motions
-set('nx', 'j', 'v:count ? "j" : "gj"', opt { expr = true })
-set('nx', 'k', 'v:count ? "k" : "gk"', opt { expr = true })
+map('nx', 'j', 'v:count ? "j" : "gj"', { expr = true })
+map('nx', 'k', 'v:count ? "k" : "gk"', { expr = true })
 
 -- Buffer navigation
-set('n', '<A-j>', '<Cmd>exec v:count1 . "bn"<CR>', opt { desc = 'buffer: Next buffer' })
-set('n', '<A-k>', '<Cmd>exec v:count1 . "bp"<CR>', opt { desc = 'buffer: Previous buffer' })
+map('n', '<A-q>', '<Cmd>bd<CR>', { desc = 'buffer: Delete buffer' })
+map('n', '<A-j>', '<Cmd>exec v:count1 . "bn"<CR>', { desc = 'buffer: Next buffer' })
+map('n', '<A-k>', '<Cmd>exec v:count1 . "bp"<CR>', { desc = 'buffer: Previous buffer' })
 
 -- Close all floating windows
-set('n', 'q', '<Ignore>', opt { desc = 'window: Close floating windows', callback = function()
+map('n', 'q', function()
   local count = 0
   local current_win = vim.api.nvim_get_current_win()
   -- close current win only if it's a floating window
@@ -47,9 +46,9 @@ set('n', 'q', '<Ignore>', opt { desc = 'window: Close floating windows', callbac
       false
     )
   end
-end })
+end, { desc = 'window: Close floating windows' })
 
-set('t', '<C-Esc>', vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), opt { desc = 'terminal: Exit terminal mode' })
-set('n', '<A-f>', '<Ignore>', opt { desc = 'lsp: Format', callback = function()
+map('t', '<C-Esc>', vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), { desc = 'terminal: Exit terminal mode' })
+map('n', '<A-f>', function()
   vim.lsp.buf.format { async = true }
-end, expr = true })
+end, { desc = 'lsp: Format', expr = true })

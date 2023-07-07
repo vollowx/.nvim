@@ -20,14 +20,10 @@ require('gitsigns').setup({
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
-    end
+    local map = require('utils').keymap.set
 
     -- Navigation
-    map({ 'n', 'x' }, ']c', function()
+    map('nx', ']c', function()
       if vim.wo.diff then
         return ']c'
       end
@@ -37,7 +33,7 @@ require('gitsigns').setup({
       return '<Ignore>'
     end, { expr = true })
 
-    map({ 'n', 'x' }, '[c', function()
+    map('nx', '[c', function()
       if vim.wo.diff then
         return '[c'
       end
@@ -57,7 +53,7 @@ require('gitsigns').setup({
     map('n', '<leader>gb', gs.blame_line)
 
     -- Text object
-    map({ 'o', 'x' }, 'ic', ':<C-U>Gitsigns select_hunk<CR>')
-    map({ 'o', 'x' }, 'ac', ':<C-U>Gitsigns select_hunk<CR>')
+    map('ox', 'ic', ':<C-U>Gitsigns select_hunk<CR>')
+    map('ox', 'ac', ':<C-U>Gitsigns select_hunk<CR>')
   end,
 })

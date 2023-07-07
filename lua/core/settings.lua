@@ -93,9 +93,9 @@ return {
       Call                = '󰃷 ',
       CaseStatement       = '󱃙 ',
       Class               = ' ',
-      Color               = '󰏘 ',
+      Color               = '󰸌 ',
       Constant            = '󰏿 ',
-      Constructor         = ' ',
+      Constructor         = '󰢻 ',
       ContinueStatement   = '→ ',
       Copilot             = ' ',
       Declaration         = '󰙠 ',
@@ -162,13 +162,9 @@ return {
       WhileStatement      = '󰑖 ',
     },
     git = {
-      Add                 = '+ ',
-      Mod                 = '* ',
-      Remove              = '- ',
-    },
-    misc = {
-      RobotExcited        = 'RE',
-      RobotDead           = 'RD',
+      Add                 = '󰜄 ',
+      Mod                 = '󱗝 ',
+      Remove              = '󰛲 ',
     },
     ui = {
       AngleDown           = ' ',
@@ -190,9 +186,6 @@ return {
       TriangleLeft        = '◀ ',
       TriangleRight       = '▶ ',
       TriangleUp          = '▲ ',
-
-      Tab                 = 'TB',
-      FolderWithHeart     = 'FH',
     },
   }
 }

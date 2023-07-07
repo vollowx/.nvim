@@ -57,27 +57,29 @@ override_lsp_picker('lsp_document_symbols', 'textDocument/documentSymbol')
 override_lsp_picker('lsp_workspace_symbols', 'workspace/symbol')
 override_lsp_picker('lsp_dynamic_workspace_symbols', 'workspace/symbol')
 
+local map = require('utils').keymap.set
+
 -- stylua: ignore start
-vim.keymap.set('n', '<Leader>F',  function() builtin.builtin() end)
-vim.keymap.set('n', '<Leader>f',  function() builtin.builtin() end)
-vim.keymap.set('n', '<Leader>ff', function() builtin.find_files() end)
-vim.keymap.set('n', '<Leader>fo', function() builtin.oldfiles() end)
-vim.keymap.set('n', '<Leader>f;', function() builtin.live_grep() end)
-vim.keymap.set('n', '<Leader>f*', function() builtin.grep_string() end)
-vim.keymap.set('n', '<Leader>fh', function() builtin.help_tags() end)
-vim.keymap.set('n', '<Leader>f/', function() builtin.current_buffer_fuzzy_find() end)
-vim.keymap.set('n', '<Leader>fb', function() builtin.buffers() end)
-vim.keymap.set('n', '<Leader>fr', function() builtin.lsp_references() end)
-vim.keymap.set('n', '<Leader>fd', function() builtin.lsp_definitions() end)
-vim.keymap.set('n', '<Leader>fa', function() builtin.lsp_code_actions() end)
-vim.keymap.set('n', '<Leader>fe', function() builtin.diagnostics() end)
-vim.keymap.set('n', '<Leader>fp', function() builtin.treesitter() end)
-vim.keymap.set('n', '<Leader>fs', function() builtin.lsp_document_symbols() end)
-vim.keymap.set('n', '<Leader>fS', function() builtin.lsp_workspace_symbols() end)
-vim.keymap.set('n', '<Leader>fg', function() builtin.git_status() end)
-vim.keymap.set('n', '<Leader>fm', function() builtin.marks() end)
-vim.keymap.set('n', '<Leader>fu', function() telescope.extensions.undo.undo() end)
-vim.keymap.set('n', '<Leader>f<Esc>', '<Ignore>')
+map('n', '<Leader>F',  function() builtin.builtin() end)
+map('n', '<Leader>f',  function() builtin.builtin() end)
+map('n', '<Leader>ff', function() builtin.find_files() end)
+map('n', '<Leader>fo', function() builtin.oldfiles() end)
+map('n', '<Leader>fw', function() builtin.live_grep() end)
+map('n', '<Leader>f*', function() builtin.grep_string() end)
+map('n', '<Leader>fh', function() builtin.help_tags() end)
+map('n', '<Leader>f/', function() builtin.current_buffer_fuzzy_find() end)
+map('n', '<Leader>fb', function() builtin.buffers() end)
+map('n', '<Leader>fr', function() builtin.lsp_references() end)
+map('n', '<Leader>fd', function() builtin.lsp_definitions() end)
+map('n', '<Leader>fa', function() builtin.lsp_code_actions() end)
+map('n', '<Leader>fe', function() builtin.diagnostics() end)
+map('n', '<Leader>fp', function() builtin.treesitter() end)
+map('n', '<Leader>fs', function() builtin.lsp_document_symbols() end)
+map('n', '<Leader>fS', function() builtin.lsp_workspace_symbols() end)
+map('n', '<Leader>fg', function() builtin.git_status() end)
+map('n', '<Leader>fm', function() builtin.marks() end)
+map('n', '<Leader>fu', function() telescope.extensions.undo.undo() end)
+map('n', '<Leader>f<Esc>', '<Ignore>')
 -- stylua: ignore end
 
 -- Workaround for nvim-telescope/telescope.nvim #2501
@@ -111,7 +113,7 @@ telescope.setup({
   defaults = {
     prompt_prefix = '/ ',
     selection_caret = static.icons.ArrowRight,
-    borderchars = static.borders.empty,
+    borderchars = static.borders.rounded,
     dynamic_preview_title = true,
     layout_strategy = 'flex',
     layout_config = {

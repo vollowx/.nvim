@@ -88,9 +88,11 @@ local function lazygit_toggle(dir)
   end
 end
 
-vim.keymap.set({ 't', 'n' }, '<M-i>', lazygit_toggle)
-vim.keymap.set({ 't', 'n' }, '<C-\\>g', lazygit_toggle)
-vim.keymap.set({ 't', 'n' }, '<C-\\><C-g>', lazygit_toggle)
+local map = require('utils').keymap.set
+
+map('tn', '<M-i>', lazygit_toggle)
+map('tn', '<C-\\>g', lazygit_toggle)
+map('tn', '<C-\\><C-g>', lazygit_toggle)
 vim.api.nvim_create_user_command('Lazygit', function(info)
   lazygit_toggle(info.fargs[1])
 end, {
@@ -104,15 +106,15 @@ end, {
 })
 
 -- stylua: ignore start
-vim.keymap.set({ 't', 'n' }, '<C-\\><C-\\>', function() toggleterm.toggle_command(nil,                    vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\>v',      function() toggleterm.toggle_command('direction=vertical',   vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\>s',      function() toggleterm.toggle_command('direction=horizontal', vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\>t',      function() toggleterm.toggle_command('direction=tab',        vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\>f',      function() toggleterm.toggle_command('direction=float',      vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\><C-v>',  function() toggleterm.toggle_command('direction=vertical',   vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\><C-s>',  function() toggleterm.toggle_command('direction=horizontal', vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\><C-t>',  function() toggleterm.toggle_command('direction=tab',        vim.v.count) end)
-vim.keymap.set({ 't', 'n' }, '<C-\\><C-f>',  function() toggleterm.toggle_command('direction=float',      vim.v.count) end)
+map('tn', '<C-\\><C-\\>', function() toggleterm.toggle_command(nil,                    vim.v.count) end)
+map('tn', '<C-\\>v',      function() toggleterm.toggle_command('direction=vertical',   vim.v.count) end)
+map('tn', '<C-\\>s',      function() toggleterm.toggle_command('direction=horizontal', vim.v.count) end)
+map('tn', '<C-\\>t',      function() toggleterm.toggle_command('direction=tab',        vim.v.count) end)
+map('tn', '<C-\\>f',      function() toggleterm.toggle_command('direction=float',      vim.v.count) end)
+map('tn', '<C-\\><C-v>',  function() toggleterm.toggle_command('direction=vertical',   vim.v.count) end)
+map('tn', '<C-\\><C-s>',  function() toggleterm.toggle_command('direction=horizontal', vim.v.count) end)
+map('tn', '<C-\\><C-t>',  function() toggleterm.toggle_command('direction=tab',        vim.v.count) end)
+map('tn', '<C-\\><C-f>',  function() toggleterm.toggle_command('direction=float',      vim.v.count) end)
 -- stylua: ignore end
 
 -- Hijack toggleterm's toggle_command function to set splitkeep option before
