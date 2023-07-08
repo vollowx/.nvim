@@ -29,7 +29,7 @@ opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
-opt.completeopt    = 'menuone'
+opt.completeopt    = 'menu,menuone,noselect'
 opt.conceallevel   = 2
 -- stylua: ignore end
 
@@ -69,7 +69,7 @@ opt.expandtab   = true
 opt.smartindent = true
 opt.autoindent  = true
 
-opt.hlsearch    = false
+opt.hlsearch    = true
 opt.ignorecase  = true
 opt.smartcase   = true
 

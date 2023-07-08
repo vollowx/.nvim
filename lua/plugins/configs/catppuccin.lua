@@ -1,5 +1,4 @@
 local transparent_background = require('core.settings').transparent_background
-local clear = {}
 
 require('catppuccin').setup({
   transparent_background = transparent_background,
@@ -35,7 +34,7 @@ require('catppuccin').setup({
     nvimtree = true,
     semantic_tokens = true,
     symbols_outline = false,
-    telescope = true,
+    telescope = { enable = true, style = 'nvchad' },
     treesitter_context = true,
     ts_rainbow = true,
     which_key = true,
@@ -66,7 +65,7 @@ require('catppuccin').setup({
         IndentBlanklineChar = { fg = cp.surface0 },
         IndentBlanklineContextChar = { fg = cp.surface2, style = { 'bold' } },
 
-        -- For nvim-cmp and wilder.nvim
+        -- For nvim-cmp
         Pmenu = { fg = cp.overlay2, bg = transparent_background and cp.none or cp.base },
         PmenuBorder = { fg = cp.surface1, bg = transparent_background and cp.none or cp.base },
         PmenuSel = { bg = cp.green, fg = cp.base },
@@ -141,6 +140,10 @@ require('catppuccin').setup({
         StatusLineGitAdded = { fg = cp.green },
         StatusLineGitChanged = { fg = cp.blue },
         StatusLineGitRemoved = { fg = cp.red },
+        StatusLineDiagnosticError = { fg = cp.red },
+        StatusLineDiagnosticWarning = { fg = cp.yellow },
+        StatusLineDiagnosticInfo = { fg = cp.blue },
+        StatusLineDiagnosticHint = { fg = cp.rosewater },
       }
     end,
   },

@@ -6,15 +6,15 @@ return {
       require('plugins.configs.catppuccin')
     end,
   },
-  {
+  --[[ {
     'willothy/nvim-cokeline',
     lazy = true,
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = 'VeryLazy',
     config = function()
       require('plugins.configs.cokeline')
     end,
-  },
-  {
+  }, ]]
+  --[[ {
     'nvim-tree/nvim-tree.lua',
     lazy = true,
     cmd = {
@@ -27,18 +27,10 @@ return {
     config = function()
       require('plugins.configs.nvim-tree')
     end,
-  },
+  }, ]]
   {
     'Bekaboo/deadcolumn.nvim',
     lazy = true,
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-  },
-  {
-    'j-hui/fidget.nvim',
-    lazy = true,
-    event = 'LspAttach',
-    config = function()
-      require('plugins.configs.fidget')
-    end,
+    event = 'VeryLazy',
   },
 }

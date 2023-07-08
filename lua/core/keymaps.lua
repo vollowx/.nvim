@@ -5,7 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 map('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'search: No highlight' })
-map('n', '<C-s>', '<Cmd>write<CR>', { desc = 'buffer: Save file' })
+map('n', '<C-s>', '<Cmd>write<CR>', { desc = 'edit: Write to file' })
 
 -- Multi-window operations
 map('nx', '<C-h>', '<C-w>h', { desc = 'window: Go left' })
@@ -18,9 +18,9 @@ map('nx', 'j', 'v:count ? "j" : "gj"', { expr = true })
 map('nx', 'k', 'v:count ? "k" : "gk"', { expr = true })
 
 -- Buffer navigation
-map('n', '<A-q>', '<Cmd>bd<CR>', { desc = 'buffer: Delete buffer' })
-map('n', '<A-j>', '<Cmd>exec v:count1 . "bn"<CR>', { desc = 'buffer: Next buffer' })
-map('n', '<A-k>', '<Cmd>exec v:count1 . "bp"<CR>', { desc = 'buffer: Previous buffer' })
+map('n', '<S-q>', '<Cmd>bd!<CR>', { desc = 'buffer: Delete buffer' })
+map('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>', { desc = 'buffer: Next buffer' })
+map('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>', { desc = 'buffer: Previous buffer' })
 
 -- Close all floating windows
 map('n', 'q', function()

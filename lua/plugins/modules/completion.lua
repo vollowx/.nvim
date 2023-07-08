@@ -33,9 +33,14 @@ return {
   },
 
   {
-    'hrsh7th/cmp-path',
+    'tzachar/fuzzy.nvim',
+    lazy = true,
+  },
+
+  {
+    'tzachar/cmp-fuzzy-path',
     event = { 'CmdlineEnter', 'InsertEnter' },
-    dependencies = { 'nvim-cmp' },
+    dependencies = { 'fuzzy.nvim', 'nvim-cmp' },
   },
 
   {

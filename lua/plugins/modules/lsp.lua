@@ -19,7 +19,7 @@ return {
 
   {
     'jose-elias-alvarez/null-ls.nvim',
-    event = { 'BufReadPre', 'FileType' },
+    event = { 'FileType' },
     cmd = {
       'NullLsLog',
       'NullLsInfo',
@@ -44,6 +44,15 @@ return {
     event = 'LspAttach',
     config = function()
       require('plugins.configs.glance')
+    end,
+  },
+
+  {
+    'j-hui/fidget.nvim',
+    lazy = true,
+    event = 'LspAttach',
+    config = function()
+      require('plugins.configs.fidget')
     end,
   },
 }

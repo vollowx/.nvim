@@ -112,7 +112,7 @@ local layout_dropdown = {
 
 telescope.setup({
   defaults = {
-    prompt_prefix = '/ ',
+    prompt_prefix = static.icons.Magnify,
     selection_caret = static.icons.ArrowRight,
     borderchars = static.borders.rounded,
     dynamic_preview_title = true,
