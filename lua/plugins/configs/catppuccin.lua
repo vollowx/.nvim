@@ -137,10 +137,10 @@ require('catppuccin').setup({
         StatusLineHeaderModified = { fg = cp.rosewater, bg = cp.crust },
         StatusLineStrong = { style = { 'bold'  } },
         StatusLineWeak = { fg = cp.subtext0 },
+        StatusLineFaded = { fg = cp.subtext0 },
         StatusLineGitAdded = { fg = cp.green },
         StatusLineGitChanged = { fg = cp.blue },
         StatusLineGitRemoved = { fg = cp.red },
-        StatusLineFaded = { fg = cp.subtext0 },
       }
     end,
   },
