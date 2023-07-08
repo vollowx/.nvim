@@ -2,8 +2,6 @@ local transparent_background = require('core.settings').transparent_background
 local clear = {}
 
 require('catppuccin').setup({
-  flavour = 'mocha',
-  background = { light = 'latte', dark = 'mocha' },
   transparent_background = transparent_background,
   integrations = {
     treesitter = true,
@@ -30,7 +28,6 @@ require('catppuccin').setup({
     hop = true,
     illuminate = true,
     indent_blankline = { enabled = true, colored_indent_levels = false },
-    lsp_saga = true,
     lsp_trouble = true,
     markdown = true,
     mason = true,
@@ -132,22 +129,14 @@ require('catppuccin').setup({
         TelescopeResultsDiffChange = { fg = cp.yellow },
         TelescopeResultsDiffDelete = { fg = cp.red },
 
-        -- For nvim-treehopper
-        TSNodeKey = {
-          fg = cp.peach,
-          bg = transparent_background and cp.none or cp.base,
-          style = { 'bold', 'underline' },
-        },
-
-        -- For treesitter
-        ['@keyword.return'] = { fg = cp.pink, style = clear },
-
         -- For nvim-cokeline
         TabLineFill = { link = 'StatusLine' },
 
         -- For status line
-        StatusLineHeader = { fg = cp.lavender },
-        StatusLineHeaderModified = { fg = cp.rosewater },
+        StatusLineHeader = { fg = cp.lavender, bg = cp.crust },
+        StatusLineHeaderModified = { fg = cp.rosewater, bg = cp.crust },
+        StatusLineStrong = { style = { 'bold'  } },
+        StatusLineWeak = { fg = cp.subtext0 },
         StatusLineGitAdded = { fg = cp.green },
         StatusLineGitChanged = { fg = cp.blue },
         StatusLineGitRemoved = { fg = cp.red },
