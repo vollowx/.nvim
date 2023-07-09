@@ -4,12 +4,12 @@ require('gitsigns').setup({
     style = 'minimal',
   },
   signs = {
-    add = { text = '┃' },
-    untracked = { text = '┃' },
-    change = { text = '┃' },
-    delete = { text = '▁' },
-    topdelete = { text = '▔' },
-    changedelete = { text = '╋' },
+    add = { text = '▎' },
+    untracked = { text = '▎' },
+    change = { text = '▎' },
+    delete = { text = '▎' },
+    topdelete = { text = '▎' },
+    changedelete = { text = '▎' },
   },
   current_line_blame = false,
   current_line_blame_opts = {

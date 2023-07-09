@@ -108,6 +108,7 @@ end
 ---@param module_names string[]
 local function enable_modules(module_names)
   local config = {
+    defaults = { lazy = true },
     root = vim.g.package_path,
     lockfile = vim.g.package_lock,
     git = {
@@ -115,7 +116,6 @@ local function enable_modules(module_names)
     },
     ui = {
       border = 'rounded',
-      size = { width = 0.7, height = 0.74 },
     },
     checker = { enabled = false },
     change_detection = { notify = false },
@@ -167,7 +167,7 @@ else
     -- 'debug',
     'editor',
     'lsp',
-    -- 'markup',
+    'markup',
     'tools',
     'treesitter',
     'ui',

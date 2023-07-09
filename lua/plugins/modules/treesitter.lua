@@ -17,7 +17,7 @@ return {
       'TSEditQuery',
       'TSEditQueryUserAfter',
     },
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'User NvFile',
     config = function()
       require('plugins.configs.nvim-treesitter')
     end,
@@ -30,19 +30,17 @@ return {
 
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    lazy = true,
     dependencies = 'nvim-treesitter',
   },
 
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
-    lazy = true,
     dependencies = 'nvim-treesitter',
   },
 
   {
     'CKolkey/ts-node-action',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'User NvFile',
     keys = '<Leader><Leader>',
     dependencies = 'nvim-treesitter',
     config = function()
@@ -60,7 +58,6 @@ return {
 
   {
     'RRethy/nvim-treesitter-endwise',
-    event = { 'CursorHold', 'CursorHoldI' },
     dependencies = 'nvim-treesitter',
   },
 }

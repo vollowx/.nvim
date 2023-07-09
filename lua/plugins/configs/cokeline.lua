@@ -45,10 +45,17 @@ require('cokeline').setup({
       fg = function(buffer) return buffer.devicon.color end,
     },
     {
-      text = function(buffer) return buffer.filename end,
+      text = function(buffer) return buffer.filename .. ' ' end,
     },
     {
-      text = '  ',
+      text = icons.Cross,
+      fg = get_hex('Error', 'fg'),
+      on_click = function(_, _, _, _, buffer)
+        buffer:delete()
+      end
+    },
+    {
+      text = ' ',
     }
   },
 })

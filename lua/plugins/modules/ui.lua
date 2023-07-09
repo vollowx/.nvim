@@ -5,18 +5,17 @@ return {
     config = function()
       require('plugins.configs.catppuccin')
     end,
+    lazy = false,
   },
-  --[[ {
+  {
     'willothy/nvim-cokeline',
-    lazy = true,
-    event = 'VeryLazy',
+    event = 'BufEnter',
     config = function()
       require('plugins.configs.cokeline')
     end,
-  }, ]]
-  --[[ {
+  },
+  {
     'nvim-tree/nvim-tree.lua',
-    lazy = true,
     cmd = {
       'NvimTreeOpen', 'NvimTreeClose', 'NvimTreeToggle', 'NvimTreeFocus',
       'NvimTreeRefresh', 'NvimTreeFindFile', 'NvimTreeFindFileToggle',
@@ -27,10 +26,16 @@ return {
     config = function()
       require('plugins.configs.nvim-tree')
     end,
-  }, ]]
+  },
   {
     'Bekaboo/deadcolumn.nvim',
-    lazy = true,
-    event = 'VeryLazy',
+    event = 'BufEnter',
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    event = 'User NvFile',
+    config = function()
+      require('plugins.configs.indent-blankline')
+    end
   },
 }

@@ -8,7 +8,7 @@ local function lspconfig_floating_preview()
   ---Update LSP floating preview window options
   local function update_floating_preview_opts()
     opts_override = {
-      border = 'solid',
+      border = 'rounded',
       max_width = math.ceil(vim.go.columns * 0.75),
       max_height = math.ceil(vim.go.lines * 0.4),
       close_events = {

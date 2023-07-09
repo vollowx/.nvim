@@ -1,7 +1,6 @@
 return {
   {
     'hrsh7th/nvim-cmp',
-    lazy = true,
     config = function()
       require('plugins.configs.nvim-cmp')
     end,
@@ -34,7 +33,6 @@ return {
 
   {
     'tzachar/fuzzy.nvim',
-    lazy = true,
   },
 
   {
@@ -51,7 +49,6 @@ return {
 
   {
     'rcarriga/cmp-dap',
-    lazy = true,
     dependencies = { 'nvim-dap', 'nvim-cmp' },
   },
 

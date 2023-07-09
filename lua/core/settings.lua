@@ -1,6 +1,9 @@
 return {
-  use_ssh = true,
+  use_ssh = false,
+
+  colorscheme = 'catppuccin',
   transparent_background = false,
+
   palette_overwrite = {},
   langs = {
     sh = {

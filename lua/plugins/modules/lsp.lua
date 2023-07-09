@@ -1,7 +1,7 @@
 return {
   {
     'neovim/nvim-lspconfig',
-    event = { 'FileType' },
+    event = 'User NvFile',
     cmd = { 'LspInfo', 'LspStart' },
     config = function()
       require('plugins.configs.nvim-lspconfig')
@@ -19,7 +19,7 @@ return {
 
   {
     'jose-elias-alvarez/null-ls.nvim',
-    event = { 'FileType' },
+    event = 'User NvFile',
     cmd = {
       'NullLsLog',
       'NullLsInfo',
@@ -33,7 +33,6 @@ return {
 
   {
     'folke/neodev.nvim',
-    ft = 'lua',
     config = function()
       require('plugins.configs.neodev')
     end,
@@ -49,7 +48,6 @@ return {
 
   {
     'j-hui/fidget.nvim',
-    lazy = true,
     event = 'LspAttach',
     config = function()
       require('plugins.configs.fidget')

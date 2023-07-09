@@ -39,13 +39,11 @@ return {
     -- If it complains 'fzf doesn't exists, run 'make' inside
     -- the root folder of this plugin
     build = 'make',
-    lazy = true,
     dependencies = { 'plenary.nvim', 'telescope.nvim' },
   },
 
   {
     'debugloop/telescope-undo.nvim',
-    lazy = true,
     dependencies = { 'plenary.nvim', 'telescope.nvim' },
   },
 
@@ -92,7 +90,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'User NvGitFile',
     dependencies = 'plenary.nvim',
     config = function()
       require('plugins.configs.gitsigns')
@@ -142,7 +140,7 @@ return {
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'User NvFile',
     config = function()
       require('plugins.configs.nvim-colorizer')
     end,
