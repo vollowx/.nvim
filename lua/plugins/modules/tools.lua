@@ -26,20 +26,34 @@ map('tn', '<A-d>', '<cmd>ToggleTerm direction=float<cr>', { desc = 'terminal: To
 map('tn', '<A-v>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = 'terminal: Toggle vertical' })
 map('tn', '<A-\\>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = 'terminal: Toggle horizontal' })
 
+-- stylua: ignore start
+map('n', ']g', function() require('gitsigns').next_hunk() end, { desc = 'git: Next Git hunk' })
+map('n', '[g', function() require('gitsigns').prev_hunk() end, { desc = 'git: Previous Git hunk' })
+map('n', '<leader>gl', function() require('gitsigns').blame_line() end, { desc = 'git: View Git blame' })
+map('n', '<leader>gL', function() require('gitsigns').blame_line { full = true } end, { desc = 'git: View full Git blame' })
+map('n', '<leader>gp', function() require('gitsigns').preview_hunk() end, { desc = 'git: Preview Git hunk' })
+map('n', '<leader>gh', function() require('gitsigns').reset_hunk() end, { desc = 'git: Reset Git hunk' })
+map('n', '<leader>gr', function() require('gitsigns').reset_buffer() end, { desc = 'git: Reset Git buffer' })
+map('n', '<leader>gs', function() require('gitsigns').stage_hunk() end, { desc = 'git: Stage Git hunk' })
+map('n', '<leader>gS', function() require('gitsigns').stage_buffer() end, { desc = 'git: Stage Git buffer' })
+map('n', '<leader>gu', function() require('gitsigns').undo_stage_hunk() end, { desc = 'git: Unstage Git hunk' })
+map('n', '<leader>gd', function() require('gitsigns').diffthis() end, { desc = 'git: View Git diff' })
+-- stylua: ignore end
+
 local lazygit = nil
 local toggle_lazygit = function()
-	if vim.fn.executable("lazygit") == 1 then
+	if vim.fn.executable('lazygit') == 1 then
 		if not lazygit then
-			lazygit = require("toggleterm.terminal").Terminal:new({
-				cmd = "lazygit",
-				direction = "float",
+			lazygit = require('toggleterm.terminal').Terminal:new({
+				cmd = 'lazygit',
+				direction = 'float',
 				close_on_exit = true,
 				hidden = true,
 			})
 		end
 		lazygit:toggle()
 	else
-		vim.notify("[toggleterm.nvim] `lazygit` not found!", vim.log.levels.ERROR)
+		vim.notify('[toggleterm.nvim] `lazygit` not found!', vim.log.levels.ERROR)
 	end
 end
 
