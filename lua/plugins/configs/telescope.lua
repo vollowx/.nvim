@@ -77,7 +77,7 @@ telescope.setup {
   defaults = {
     prompt_prefix = static.icons.Magnify,
     selection_caret = static.icons.ArrowRight,
-    borderchars = static.borders.rounded,
+    borderchars = static.borders.single,
     dynamic_preview_title = true,
     layout_strategy = 'flex',
     layout_config = {

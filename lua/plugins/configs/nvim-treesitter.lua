@@ -113,15 +113,15 @@ ts_configs.setup {
     swap = {
       enable = true,
       swap_next = {
-        ['<M-C-L>'] = '@parameter.inner',
+        ['<M-C-l>'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<M-C-H>'] = '@parameter.inner',
+        ['<M-C-h>'] = '@parameter.inner',
       },
     },
     lsp_interop = {
       enable = true,
-      border = 'shadow',
+      border = 'single',
       peek_definition_code = {
         ['<C-o>'] = '@function.outer',
       },

@@ -1,3 +1,7 @@
+local map = require('utils').keymap.set
+
+map('nx', 'ga', '<Cmd>EasyAlign<CR>', { desc = 'edit: Align with delimiter' })
+
 return {
   {
     'kylechui/nvim-surround',
@@ -38,10 +42,7 @@ return {
 
   {
     'junegunn/vim-easy-align',
-    keys = {
-      { 'ga', mode = { 'n', 'x' } },
-      { 'gA', mode = { 'n', 'x' } },
-    },
+    event = 'User NvFile',
     config = function() require 'plugins.configs.vim-easy-align' end,
   },
 }

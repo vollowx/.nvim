@@ -94,7 +94,7 @@ local function enable_modules(module_names)
       url_format = use_ssh and 'git@github.com:%s.git' or 'https://github.com/%s.git',
     },
     ui = {
-      border = 'rounded',
+      border = 'single',
     },
     checker = { enabled = false },
     change_detection = { notify = false },

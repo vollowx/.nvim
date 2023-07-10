@@ -9,7 +9,7 @@ toggleterm.setup {
   persist_size = false,
   direction = 'horizontal',
   float_opts = {
-    border = 'rounded',
+    border = 'single',
     width = function() return math.floor(vim.go.columns * 0.7) end,
     height = function() return math.floor(vim.go.lines * 0.7) end,
     winblend = 0,

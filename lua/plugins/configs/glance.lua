@@ -25,7 +25,7 @@ glance.setup {
   hooks = {
     before_open = function(results, open, jump)
       if #results == 0 then
-        vim.notify('[glance.nvim] no results found', vim.log.levels.INFO)
+        vim.notify('[glance.nvim] No results found', vim.log.levels.INFO)
         return
       end
       if #results > 1 then
@@ -33,7 +33,7 @@ glance.setup {
         return
       end
       -- Only one result
-      vim.notify('[glance.nvim] only one result found', vim.log.levels.INFO)
+      vim.notify('[glance.nvim] Only one result found', vim.log.levels.INFO)
       jump(results[1])
     end,
   },

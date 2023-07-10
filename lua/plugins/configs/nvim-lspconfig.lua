@@ -8,7 +8,7 @@ local function lspconfig_floating_preview()
   ---Update LSP floating preview window options
   local function update_floating_preview_opts()
     opts_override = {
-      border = 'rounded',
+      border = 'single',
       close_events = {
         'CursorMoved',
         'CursorMovedI',
@@ -89,7 +89,7 @@ end
 ---Customize LspInfo floating window
 local function lspconfig_info_win()
   -- setup LspInfo floating window border
-  require('lspconfig.ui.windows').default_options.border = 'shadow'
+  require('lspconfig.ui.windows').default_options.border = 'single'
   -- reload LspInfo floating window on VimResized
   vim.api.nvim_create_autocmd('VimResized', {
     pattern = '*',

@@ -29,10 +29,10 @@ require('clangd_extensions').setup {
       },
     },
     memory_usage = {
-      border = 'shadow',
+      border = 'single',
     },
     symbol_info = {
-      border = 'shadow',
+      border = 'single',
     },
   },
 }
