@@ -1,13 +1,11 @@
-local glance = require('glance')
+local glance = require 'glance'
 local actions = glance.actions
-local utils = require('utils')
+local utils = require 'utils'
 local horiz = vim.opt.fillchars:get().horiz
 
-glance.setup({
+glance.setup {
   height = 16,
-  detached = function(win)
-    return vim.api.nvim_win_get_width(win) < 80
-  end,
+  detached = function(win) return vim.api.nvim_win_get_width(win) < 80 end,
   folds = {
     fold_closed = utils.static.icons.AngleRight,
     fold_open = utils.static.icons.AngleDown,
@@ -65,8 +63,8 @@ glance.setup({
       ['za'] = actions.toggle_fold,
       ['<Tab>'] = actions.toggle_fold,
       ['<CR>'] = actions.jump,
-      ['<C-w>h'] = actions.enter_win('preview'),
-      ['<M-h>'] = actions.enter_win('preview'),
+      ['<C-w>h'] = actions.enter_win 'preview',
+      ['<M-h>'] = actions.enter_win 'preview',
       ['q'] = actions.close,
       ['<Esc>'] = actions.close,
       ['<S-Tab>'] = false,
@@ -84,15 +82,15 @@ glance.setup({
       ['q'] = actions.close,
       ['<C-n>'] = actions.next_location,
       ['<C-p>'] = actions.previous_location,
-      ['<C-w>l'] = actions.enter_win('list'),
-      ['<M-l>'] = actions.enter_win('list'),
+      ['<C-w>l'] = actions.enter_win 'list',
+      ['<M-l>'] = actions.enter_win 'list',
       ['Q'] = false,
       ['<Tab>'] = false,
       ['<S-Tab>'] = false,
       ['<Leader>l'] = false,
     },
   },
-})
+}
 
 ---@diagnostic disable: duplicate-set-field
 -- Override LSP handler functions

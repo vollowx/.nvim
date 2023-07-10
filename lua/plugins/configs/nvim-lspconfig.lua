@@ -1,5 +1,5 @@
-local static = require('utils.static')
-local server_configs = require('plugins.configs.lsp-server-configs')
+local static = require 'utils.static'
+local server_configs = require 'plugins.configs.lsp-server-configs'
 
 ---Customize LSP floating window border
 local function lspconfig_floating_preview()
@@ -49,7 +49,7 @@ end
 ---Customize LSP diagnostic UI
 local function lspconfig_diagnostics()
   local icons = static.icons
-  for _, severity in ipairs({ 'Error', 'Warn', 'Info', 'Hint' }) do
+  for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
     local sign_name = 'DiagnosticSign' .. severity
     vim.fn.sign_define(sign_name, {
       text = icons[sign_name],
@@ -59,16 +59,15 @@ local function lspconfig_diagnostics()
     })
   end
 
-  vim.lsp.handlers['textDocument/publishDiagnostics'] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- Enable underline, use default values
-      underline = true,
-      -- Enable virtual text, override spacing to 4
-      virtual_text = {
-        spacing = 4,
-        prefix = vim.trim(static.icons.AngleLeft),
-      },
-    })
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- Enable underline, use default values
+    underline = true,
+    -- Enable virtual text, override spacing to 4
+    virtual_text = {
+      spacing = 4,
+      prefix = vim.trim(static.icons.AngleLeft),
+    },
+  })
 
   -- Disable LSP diagnostics in diff mode
   vim.api.nvim_create_autocmd('OptionSet', {
@@ -78,10 +77,7 @@ local function lspconfig_diagnostics()
       if vim.v.option_new == '1' then
         vim.diagnostic.disable(info.buf)
         vim.b._lsp_diagnostics_temp_disabled = true
-      elseif
-        vim.fn.match(vim.fn.mode(), '[iRsS\x13].*') == -1
-        and vim.b._lsp_diagnostics_temp_disabled
-      then
+      elseif vim.fn.match(vim.fn.mode(), '[iRsS\x13].*') == -1 and vim.b._lsp_diagnostics_temp_disabled then
         vim.diagnostic.enable(info.buf)
         vim.b._lsp_diagnostics_temp_disabled = nil
       end
@@ -101,7 +97,7 @@ local function lspconfig_info_win()
     callback = function()
       if vim.bo.ft == 'lspinfo' then
         vim.api.nvim_win_close(0, true)
-        vim.cmd('LspInfo')
+        vim.cmd 'LspInfo'
       end
     end,
   })
@@ -118,10 +114,7 @@ local function lspconfig_goto_handers()
   for method, handler in pairs(handlers) do
     vim.lsp.handlers[method] = function(err, result, ctx, cfg)
       if not result or type(result) == 'table' and vim.tbl_isempty(result) then
-        vim.notify(
-          '[LSP] no ' .. method:match('/(%w*)$') .. ' found',
-          vim.log.levels.WARN
-        )
+        vim.notify('[LSP] no ' .. method:match '/(%w*)$' .. ' found', vim.log.levels.WARN)
       end
       handler(err, result, ctx, cfg)
     end
@@ -130,18 +123,14 @@ end
 
 ---Setup all LSP servers
 local function lsp_setup()
-  local lspconfig = require('lspconfig')
-  local ft_servers = static.langs:map('lsp_server')
+  local lspconfig = require 'lspconfig'
+  local ft_servers = static.langs:map 'lsp_server'
   ---@param ft string file type
   ---@return boolean? is_setup
   local function setup_ft(ft)
     local servers = ft_servers[ft]
-    if not servers then
-      return false
-    end
-    if type(servers) ~= 'table' then
-      servers = { servers }
-    end
+    if not servers then return false end
+    if type(servers) ~= 'table' then servers = { servers } end
     for _, server in ipairs(servers) do
       lspconfig[server].setup(server_configs[server])
     end

@@ -4,7 +4,7 @@ local opt = vim.opt
 
 -- stylua: ignore start
 opt.cursorline     = true
-opt.colorcolumn    = '80'
+opt.colorcolumn    = '120'
 opt.eb             = false
 opt.foldlevelstart = 99
 opt.guifont        = 'JetbrainsMono Nerd Font:h13'

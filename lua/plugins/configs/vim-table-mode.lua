@@ -10,8 +10,6 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = { '*.txt', '*.md' },
   group = 'TableModeFormatOnSave',
   callback = function()
-    if vim.api.nvim_get_current_line():match('^%s*|') then
-      vim.cmd('silent! TableModeRealign')
-    end
+    if vim.api.nvim_get_current_line():match '^%s*|' then vim.cmd 'silent! TableModeRealign' end
   end,
 })

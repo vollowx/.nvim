@@ -1,4 +1,4 @@
-local ls = require('luasnip')
+local ls = require 'luasnip'
 local f = ls.function_node
 local sn = ls.snippet_node
 local t = ls.text_node
@@ -11,14 +11,11 @@ local fmta = require('luasnip.extras.fmt').fmta
 ---@param depth number
 ---@return string
 local function get_indent_str(depth)
-  if depth <= 0 then
-    return ''
-  end
+  if depth <= 0 then return '' end
 
   local sw = vim.fn.shiftwidth()
   return vim.bo.expandtab and string.rep(' ', sw * depth)
-    or string.rep('\t', math.floor(sw * depth / vim.bo.ts))
-      .. string.rep(' ', sw * depth % vim.bo.ts)
+    or string.rep('\t', math.floor(sw * depth / vim.bo.ts)) .. string.rep(' ', sw * depth % vim.bo.ts)
 end
 
 ---Returns a function node that returns a string for indentation at the given
@@ -37,9 +34,7 @@ end
 local quotation_cache = {}
 vim.api.nvim_create_autocmd({ 'BufDelete', 'BufWipeOut', 'BufUnload' }, {
   group = vim.api.nvim_create_augroup('LuaSnipClearQuotationCache', {}),
-  callback = function(info)
-    quotation_cache[info.buf] = nil
-  end,
+  callback = function(info) quotation_cache[info.buf] = nil end,
 })
 
 ---Returns function node that returns a quotation mark based on the number of
@@ -50,9 +45,7 @@ vim.api.nvim_create_autocmd({ 'BufDelete', 'BufWipeOut', 'BufUnload' }, {
 local function function_quotation_node(argnode_references, opts)
   return f(function()
     local buf = vim.api.nvim_get_current_buf()
-    if quotation_cache[buf] then
-      return quotation_cache[buf]
-    end
+    if quotation_cache[buf] then return quotation_cache[buf] end
     local lines = vim.api.nvim_buf_get_lines(buf, 0, 128, false)
     local num_double_quotes = 0
     local num_single_quotes = 0
@@ -73,9 +66,7 @@ end
 local function simple_suffix_dynamic_node(jump_index, opening, closing)
   return d(jump_index or 1, function(_, snip)
     local symbol = snip.captures[1]
-    if symbol == nil or not symbol:match('%S') then
-      return sn(nil, { t(opening), i(1), t(closing) })
-    end
+    if symbol == nil or not symbol:match '%S' then return sn(nil, { t(opening), i(1), t(closing) }) end
     return sn(nil, { t(opening), t(symbol), t(closing) })
   end)
 end

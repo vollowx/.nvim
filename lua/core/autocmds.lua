@@ -16,9 +16,7 @@ local autocmds = {
     {
       pattern = '*',
       group = 'YankHighlight',
-      callback = function()
-        vim.highlight.on_yank({ higroup = 'Visual', timeout = 300 })
-      end,
+      callback = function() vim.highlight.on_yank { higroup = 'Visual', timeout = 300 } end,
     },
   },
 
@@ -30,7 +28,7 @@ local autocmds = {
       group = 'YankToSystemClipboard',
       once = true,
       callback = function()
-        vim.opt.clipboard:append('unnamedplus')
+        vim.opt.clipboard:append 'unnamedplus'
         vim.cmd('silent! let @+ = @' .. vim.v.register)
         return true
       end,
@@ -44,9 +42,7 @@ local autocmds = {
       pattern = '*',
       group = 'WinCloseJmp',
       callback = function()
-        if '' ~= vim.api.nvim_win_get_config(0).relative then
-          return
-        end
+        if '' ~= vim.api.nvim_win_get_config(0).relative then return end
         -- Record the window we jump from (previous) and to (current)
         if nil == vim.t.winid_rec then
           vim.t.winid_rec = {
@@ -61,12 +57,12 @@ local autocmds = {
         end
         -- Loop through all windows to check if the
         -- previous one has been closed
-        for winnr = 1, vim.fn.winnr('$') do
+        for winnr = 1, vim.fn.winnr '$' do
           if vim.fn.win_getid(winnr) == vim.t.winid_rec.prev then
             return -- Return if previous window is not closed
           end
         end
-        vim.cmd('wincmd p')
+        vim.cmd 'wincmd p'
       end,
     },
   },
@@ -80,9 +76,7 @@ local autocmds = {
       callback = function(info)
         local ft = vim.bo[info.buf].ft
         -- don't apply to git messages
-        if ft:match('commit') or ft:match('rebase') then
-          return
-        end
+        if ft:match 'commit' or ft:match 'rebase' then return end
         -- get position of last saved edit
         local markpos = vim.api.nvim_buf_get_mark(0, '"')
         local line = markpos[1]
@@ -90,7 +84,7 @@ local autocmds = {
         -- if in range, go there
         if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
           vim.api.nvim_win_set_cursor(0, { line, col })
-          vim.cmd.normal({ 'zvzz', bang = true })
+          vim.cmd.normal { 'zvzz', bang = true }
         end
       end,
     },
@@ -103,18 +97,14 @@ local autocmds = {
       pattern = '*',
       group = 'AutoCwd',
       callback = function(info)
-        if info.file == '' or not vim.bo[info.buf].ma then
-          return
-        end
+        if info.file == '' or not vim.bo[info.buf].ma then return end
         local proj_dir = require('utils').fs.proj_dir(info.file)
         if proj_dir then
           vim.cmd.lcd(proj_dir)
         else
           local dirname = vim.fs.dirname(info.file)
           local stat = vim.uv.fs_stat(dirname)
-          if stat and stat.type == 'directory' then
-            vim.cmd.lcd(dirname)
-          end
+          if stat and stat.type == 'directory' then vim.cmd.lcd(dirname) end
         end
       end,
     },
@@ -127,10 +117,10 @@ local autocmds = {
       group = 'TermOptions',
       callback = function(info)
         if vim.bo[info.buf].buftype == 'terminal' then
-          vim.cmd.setlocal('nonu')
-          vim.cmd.setlocal('nornu')
-          vim.cmd.setlocal('statuscolumn=')
-          vim.cmd.setlocal('signcolumn=no')
+          vim.cmd.setlocal 'nonu'
+          vim.cmd.setlocal 'nornu'
+          vim.cmd.setlocal 'statuscolumn='
+          vim.cmd.setlocal 'signcolumn=no'
           vim.cmd.startinsert()
         end
       end,
@@ -152,7 +142,9 @@ local autocmds = {
       desc = 'User events for file detection (NvFile and NvGitFile)',
       group = 'FileUserEvents',
       callback = function(args)
-        if not (vim.fn.expand '%' == '' or vim.api.nvim_get_option_value('buftype', { buf = args.buf }) == 'nofile') then
+        if
+          not (vim.fn.expand '%' == '' or vim.api.nvim_get_option_value('buftype', { buf = args.buf }) == 'nofile')
+        then
           release_event 'File'
           if
             require('utils').git.file_worktree()

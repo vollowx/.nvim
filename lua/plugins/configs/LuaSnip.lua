@@ -1,6 +1,6 @@
 local fn = vim.fn
-local ls = require('luasnip')
-local ls_types = require('luasnip.util.types')
+local ls = require 'luasnip'
+local ls_types = require 'luasnip.util.types'
 local icons = require('utils.static').icons
 
 ---Load snippets for a given filetype
@@ -13,17 +13,12 @@ local function load_snippets(ft)
 end
 
 local function lazy_load_snippets()
-  local snippets_path = vim.split(
-    fn.globpath(fn.stdpath('config') .. '/lua/snippets', '*.lua'),
-    '\n'
-  )
+  local snippets_path = vim.split(fn.globpath(fn.stdpath 'config' .. '/lua/snippets', '*.lua'), '\n')
   vim.api.nvim_create_augroup('LuaSnipLazyLoadSnippets', { clear = true })
   for _, path in ipairs(snippets_path) do
     local ft = fn.fnamemodify(path, ':t:r')
     -- Load snippet immediately if ft matches the filetype of current buffer
-    if ft == vim.bo.ft then
-      load_snippets(ft)
-    end
+    if ft == vim.bo.ft then load_snippets(ft) end
     vim.api.nvim_create_autocmd('FileType', {
       pattern = ft,
       once = true,
@@ -45,18 +40,22 @@ local function set_keymap()
       return '<Tab>'
     end
   end, { noremap = false, expr = true })
-  vim.keymap.set({ 'n', 's' }, '<S-Tab>', function()
-    ls.jump(-1)
-  end, { noremap = false })
-  vim.keymap.set('s', '<C-n>', function()
-    return ls.choice_active() and '<Plug>luasnip-next-choice' or '<C-n>'
-  end, { silent = true, expr = true })
-  vim.keymap.set('s', '<C-p>', function()
-    return ls.choice_active() and '<Plug>luasnip-prev-choice' or '<C-p>'
-  end, { silent = true, expr = true })
+  vim.keymap.set({ 'n', 's' }, '<S-Tab>', function() ls.jump(-1) end, { noremap = false })
+  vim.keymap.set(
+    's',
+    '<C-n>',
+    function() return ls.choice_active() and '<Plug>luasnip-next-choice' or '<C-n>' end,
+    { silent = true, expr = true }
+  )
+  vim.keymap.set(
+    's',
+    '<C-p>',
+    function() return ls.choice_active() and '<Plug>luasnip-prev-choice' or '<C-p>' end,
+    { silent = true, expr = true }
+  )
 end
 
-ls.setup({
+ls.setup {
   history = true,
   region_check_events = 'CursorMoved,CursorMovedI',
   delete_check_events = 'TextChanged,TextChangedI',
@@ -75,7 +74,7 @@ ls.setup({
       },
     },
   },
-})
+}
 
 lazy_load_snippets()
 set_keymap()

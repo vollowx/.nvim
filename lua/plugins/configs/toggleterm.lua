@@ -1,7 +1,6 @@
-local toggleterm = require('toggleterm')
-local terminal = require('toggleterm.terminal')
+local toggleterm = require 'toggleterm'
 
-toggleterm.setup({
+toggleterm.setup {
   open_mapping = '<C-\\><C-\\>',
   shade_terminals = false,
   start_in_insert = true,
@@ -11,12 +10,8 @@ toggleterm.setup({
   direction = 'horizontal',
   float_opts = {
     border = 'rounded',
-    width = function()
-      return math.floor(vim.go.columns * 0.7)
-    end,
-    height = function()
-      return math.floor(vim.go.lines * 0.7)
-    end,
+    width = function() return math.floor(vim.go.columns * 0.7) end,
+    height = function() return math.floor(vim.go.lines * 0.7) end,
     winblend = 0,
   },
   size = function(term)
@@ -37,94 +32,5 @@ toggleterm.setup({
   winbar = {
     enabled = false,
   },
-  on_open = function()
-    vim.cmd('silent! normal! 0')
-  end,
-})
-
-local num_lazygits = 0
-local last_visited_git_repo = nil
-
----@type table<string, Terminal>
-local lazygits = setmetatable({}, {
-  __index = function(self, path)
-    if type(path) ~= 'string' or not vim.uv.fs_stat(path) then
-      return nil
-    end
-    local lazygit = terminal.Terminal:new({
-      count = 1000 + num_lazygits,
-      cmd = 'lazygit',
-      dir = path,
-      direction = 'float',
-      hidden = true,
-      on_open = function()
-        vim.cmd('silent! normal! 0')
-        vim.cmd('silent! startinsert!')
-      end,
-    })
-    self[path] = lazygit
-    num_lazygits = num_lazygits + 1
-    return lazygit
-  end,
-})
-
----Toggle lazygit
----@param dir string?
-local function lazygit_toggle(dir)
-  dir = vim.fs.normalize(dir or vim.fn.getcwd())
-  local git_repo = vim
-    .system({ 'git', '-C', dir, 'rev-parse', '--show-toplevel' })
-    :wait().stdout
-    :gsub('\n.*', '')
-  if lazygits[git_repo] then
-    lazygits[git_repo]:toggle()
-    if lazygits[git_repo]:is_open() then
-      last_visited_git_repo = git_repo
-    end
-  elseif last_visited_git_repo and lazygits[last_visited_git_repo] then
-    lazygits[last_visited_git_repo]:toggle()
-  else
-    vim.notify('[lazygit] not inside git repo', vim.log.levels.INFO)
-  end
-end
-
-local map = require('utils').keymap.set
-
-map('tn', '<M-i>', lazygit_toggle)
-map('tn', '<C-\\>g', lazygit_toggle)
-map('tn', '<C-\\><C-g>', lazygit_toggle)
-vim.api.nvim_create_user_command('Lazygit', function(info)
-  lazygit_toggle(info.fargs[1])
-end, {
-  nargs = '?',
-  complete = function(arglead)
-    local existing_paths = vim.tbl_keys(lazygits)
-    return vim.tbl_isempty(existing_paths)
-        and vim.fn.getcompletion(arglead, 'dir')
-      or existing_paths
-  end,
-})
-
--- stylua: ignore start
-map('tn', '<C-\\><C-\\>', function() toggleterm.toggle_command(nil,                    vim.v.count) end)
-map('tn', '<C-\\>v',      function() toggleterm.toggle_command('direction=vertical',   vim.v.count) end)
-map('tn', '<C-\\>s',      function() toggleterm.toggle_command('direction=horizontal', vim.v.count) end)
-map('tn', '<C-\\>t',      function() toggleterm.toggle_command('direction=tab',        vim.v.count) end)
-map('tn', '<C-\\>f',      function() toggleterm.toggle_command('direction=float',      vim.v.count) end)
-map('tn', '<C-\\><C-v>',  function() toggleterm.toggle_command('direction=vertical',   vim.v.count) end)
-map('tn', '<C-\\><C-s>',  function() toggleterm.toggle_command('direction=horizontal', vim.v.count) end)
-map('tn', '<C-\\><C-t>',  function() toggleterm.toggle_command('direction=tab',        vim.v.count) end)
-map('tn', '<C-\\><C-f>',  function() toggleterm.toggle_command('direction=float',      vim.v.count) end)
--- stylua: ignore end
-
--- Hijack toggleterm's toggle_command function to set splitkeep option before
--- opening a terminal and restore it after opening it
-local _toggle_command = toggleterm.toggle_command
-
----@diagnostic disable-next-line: duplicate-set-field
-function toggleterm.toggle_command(args, count)
-  vim.g.splitkeep = vim.go.splitkeep
-  vim.go.splitkeep = 'screen'
-  _toggle_command(args, count)
-  vim.go.splitkeep = vim.g.splitkeep
-end
+  on_open = function() vim.cmd 'silent! normal! 0' end,
+}

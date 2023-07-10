@@ -1,9 +1,9 @@
-local npairs = require('nvim-autopairs')
-local Rule = require('nvim-autopairs.rule')
-local cond = require('nvim-autopairs.conds')
-local utils = require('utils')
+local npairs = require 'nvim-autopairs'
+local Rule = require 'nvim-autopairs.rule'
+local cond = require 'nvim-autopairs.conds'
+local utils = require 'utils'
 
-npairs.setup({
+npairs.setup {
   check_ts = true,
   map_c_h = true,
   map_c_w = true,
@@ -21,7 +21,7 @@ npairs.setup({
     highlight = 'Search',
     highlight_grey = 'Comment',
   },
-})
+}
 
 -- stylua: ignore start
 npairs.add_rules({

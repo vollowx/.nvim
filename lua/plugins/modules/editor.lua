@@ -8,9 +8,7 @@ return {
       { 'S', mode = 'x' },
       { '<C-g>s', mode = 'i' },
     },
-    config = function()
-      require('plugins.configs.nvim-surround')
-    end,
+    config = function() require 'plugins.configs.nvim-surround' end,
   },
 
   {
@@ -19,9 +17,7 @@ return {
       { 'gc', mode = { 'n', 'x' } },
       { 'gb', mode = { 'n', 'x' } },
     },
-    config = function()
-      require('plugins.configs.Comment')
-    end,
+    config = function() require 'plugins.configs.Comment' end,
   },
 
   --[[ {
@@ -32,9 +28,7 @@ return {
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    config = function()
-      require('plugins.configs.nvim-autopairs')
-    end,
+    config = function() require 'plugins.configs.nvim-autopairs' end,
   },
 
   {
@@ -48,8 +42,6 @@ return {
       { 'ga', mode = { 'n', 'x' } },
       { 'gA', mode = { 'n', 'x' } },
     },
-    config = function()
-      require('plugins.configs.vim-easy-align')
-    end,
+    config = function() require 'plugins.configs.vim-easy-align' end,
   },
 }

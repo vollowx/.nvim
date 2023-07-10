@@ -1,12 +1,10 @@
-require('fidget').setup({
+require('fidget').setup {
   text = {
     spinner = 'dots',
     done = vim.trim(require('utils.static').icons.ui.Ok),
   },
   fmt = {
-    fidget = function(fidget_name, spinner)
-      return string.format('%s %s   ', spinner, fidget_name)
-    end,
+    fidget = function(fidget_name, spinner) return string.format('%s %s   ', spinner, fidget_name) end,
     task = function(task_name, message, percentage)
       return string.format(
         '%s%s (%s)   ',
@@ -16,4 +14,4 @@ require('fidget').setup({
       )
     end,
   },
-})
+}

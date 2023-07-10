@@ -18,9 +18,7 @@ return {
       'TSEditQueryUserAfter',
     },
     event = 'User NvFile',
-    config = function()
-      require('plugins.configs.nvim-treesitter')
-    end,
+    config = function() require 'plugins.configs.nvim-treesitter' end,
     dependencies = {
       'nvim-treesitter-textobjects',
       'nvim-ts-context-commentstring',
@@ -43,9 +41,7 @@ return {
     event = 'User NvFile',
     keys = '<Leader><Leader>',
     dependencies = 'nvim-treesitter',
-    config = function()
-      require('plugins.configs.ts-node-action')
-    end,
+    config = function() require 'plugins.configs.ts-node-action' end,
   },
 
   -- Will break startup screen texts

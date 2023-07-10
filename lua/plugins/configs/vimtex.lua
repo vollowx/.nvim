@@ -11,8 +11,8 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   group = 'VimTexInitMarkdown',
   callback = function(tbl)
-    vim.api.nvim_eval('vimtex#init()')
-    vim.api.nvim_eval('vimtex#text_obj#init_buffer()')
+    vim.api.nvim_eval 'vimtex#init()'
+    vim.api.nvim_eval 'vimtex#text_obj#init_buffer()'
     vim.bo[tbl.buf].formatexpr = ''
   end,
 })

@@ -2,9 +2,7 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local borders = require('utils.static').borders
 local icons = require('utils.static').icons
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+local t = function(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
 
 ---Filter out unwanted entries
 ---@param entry cmp.Entry
@@ -78,11 +76,7 @@ cmp.setup {
         if field_width > max_width then
           local former_width = math.floor(max_width * 0.6)
           local latter_width = math.max(0, max_width - former_width - 1)
-          cmp_item[field] = string.format(
-            '%s…%s',
-            field_str:sub(1, former_width),
-            field_str:sub(-latter_width)
-          )
+          cmp_item[field] = string.format('%s…%s', field_str:sub(1, former_width), field_str:sub(-latter_width))
         elseif field_width < min_width then
           cmp_item[field] = string.format('%-' .. min_width .. 's', field_str)
         end

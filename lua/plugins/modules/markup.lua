@@ -2,9 +2,7 @@ return {
   {
     'lervag/vimtex',
     ft = { 'tex', 'markdown' },
-    config = function()
-      require('plugins.configs.vimtex')
-    end,
+    config = function() require 'plugins.configs.vimtex' end,
   },
 
   {
@@ -22,8 +20,6 @@ return {
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModToggle',
     event = 'User NvFile',
-    config = function()
-      require('plugins.configs.vim-table-mode')
-    end,
+    config = function() require 'plugins.configs.vim-table-mode' end,
   },
 }

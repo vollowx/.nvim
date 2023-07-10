@@ -1,12 +1,12 @@
-local null_ls = require('null-ls')
-local null_ls_sources = require('null-ls.sources')
+local null_ls = require 'null-ls'
+local null_ls_sources = require 'null-ls.sources'
 
 ---Check if null-ls supports a given method for a given filetype
 ---@param ft string filetype
 ---@param method string method
 local function null_ls_supports(ft, method)
   return not vim.tbl_isempty(null_ls_sources.get_available(ft, method))
-    and not vim.tbl_isempty(vim.lsp.get_active_clients({ name = 'null-ls' }))
+    and not vim.tbl_isempty(vim.lsp.get_active_clients { name = 'null-ls' })
 end
 
 ---Disable other LSP's formatting capabilities if null-ls supports it
@@ -14,12 +14,8 @@ end
 local function null_ls_disable_other_formatters(tbl)
   local ft = vim.bo[tbl.buf].ft
   local client = vim.lsp.get_client_by_id(tbl.data.client_id)
-  if client.name == 'null-ls' then
-    return
-  end
-  if null_ls_supports(ft, 'NULL_LS_FORMATTING') then
-    client.server_capabilities.documentFormattingProvider = false
-  end
+  if client.name == 'null-ls' then return end
+  if null_ls_supports(ft, 'NULL_LS_FORMATTING') then client.server_capabilities.documentFormattingProvider = false end
   if null_ls_supports(ft, 'NULL_LS_RANGE_FORMATTING') then
     client.server_capabilities.documentRangeFormattingProvider = false
   end
@@ -31,19 +27,16 @@ end
 local function null_ls_on_attach(_, bufnr)
   -- Disable other LSP's formatting capabilities if null-ls supports it
   local ft = vim.bo[bufnr].ft
-  local active_clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+  local active_clients = vim.lsp.get_active_clients { bufnr = bufnr }
   if null_ls_supports(ft, 'NULL_LS_FORMATTING') then
     for _, active_client in ipairs(active_clients) do
-      if active_client.name ~= 'null-ls' then
-        active_client.server_capabilities.documentFormattingProvider = false
-      end
+      if active_client.name ~= 'null-ls' then active_client.server_capabilities.documentFormattingProvider = false end
     end
   end
   if null_ls_supports(ft, 'NULL_LS_RANGE_FORMATTING') then
     for _, active_client in ipairs(active_clients) do
       if active_client.name ~= 'null-ls' then
-        active_client.server_capabilities.documentRangeFormattingProvider =
-          false
+        active_client.server_capabilities.documentRangeFormattingProvider = false
       end
     end
   end
@@ -62,11 +55,8 @@ end
 ---@param type string source type
 ---@param name string source name
 local function null_ls_config_source(type, name)
-  local ok, config =
-    pcall(require, 'plugins.configs.null-ls-configs.' .. type .. '.' .. name)
-  if not ok then
-    return null_ls.builtins[type][name]
-  end
+  local ok, config = pcall(require, 'plugins.configs.null-ls-configs.' .. type .. '.' .. name)
+  if not ok then return null_ls.builtins[type][name] end
   return config.config(null_ls.builtins[type][name])
 end
 
@@ -91,12 +81,11 @@ local function null_ls_get_sources()
   return sources
 end
 
-null_ls.setup({
+null_ls.setup {
   sources = null_ls_get_sources(),
   on_attach = function(client, bufnr)
-    local lsp_default_config =
-      require('plugins.configs.lsp-server-configs.shared.default')
+    local lsp_default_config = require 'plugins.configs.lsp-server-configs.shared.default'
     lsp_default_config.on_attach(client, bufnr)
     null_ls_on_attach(client, bufnr)
   end,
-})
+}

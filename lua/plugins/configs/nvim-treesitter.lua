@@ -1,12 +1,10 @@
-local ts_configs = require('nvim-treesitter.configs')
+local ts_configs = require 'nvim-treesitter.configs'
 
 -- Get all filetypes that have treesitter parsers
 local ts_filetypes = {}
 local langs = require('utils.static').langs
 for lang, _ in pairs(langs) do
-  if langs[lang].ts then
-    table.insert(ts_filetypes, langs[lang].ft)
-  end
+  if langs[lang].ts then table.insert(ts_filetypes, langs[lang].ft) end
 end
 
 -- Set treesitter folds
@@ -20,8 +18,8 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-ts_configs.setup({
-  ensure_installed = require('utils.static').langs:list('ts'),
+ts_configs.setup {
+  ensure_installed = require('utils.static').langs:list 'ts',
   sync_install = true,
   ignore_install = {},
   highlight = {
@@ -129,4 +127,4 @@ ts_configs.setup({
       },
     },
   },
-})
+}

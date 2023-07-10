@@ -1,9 +1,8 @@
-local default = require('plugins.configs.lsp-server-configs.shared.default')
+local default = require 'plugins.configs.lsp-server-configs.shared.default'
 
 return setmetatable({}, {
   __index = function(self, key)
-    local config_exists, config =
-      pcall(require, 'plugins.configs.lsp-server-configs.' .. key)
+    local config_exists, config = pcall(require, 'plugins.configs.lsp-server-configs.' .. key)
     if not config_exists then
       config = vim.deepcopy(default)
     else

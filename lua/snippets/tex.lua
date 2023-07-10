@@ -1,7 +1,7 @@
 local M = {}
-local un = require('snippets.utils.nodes')
-local us = require('snippets.utils.snips')
-local ls = require('luasnip')
+local un = require 'snippets.utils.nodes'
+local us = require 'snippets.utils.snips'
+local ls = require 'luasnip'
 local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
@@ -9,7 +9,7 @@ local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
 
-M.math = require('snippets.shared.math')
+M.math = require 'snippets.shared.math'
 
 M.env = {
   us.sM(
@@ -28,18 +28,18 @@ M.env = {
     )
   ),
   us.sM({ trig = 'cs' }, {
-    t({
+    t {
       '\\begin{equation}',
       '\\begin{cases}',
       '',
-    }),
+    },
     un.idnt(1),
     i(1),
-    t({
+    t {
       '',
       '\\end{cases}',
       '\\end{equation}',
-    }),
+    },
   }),
   us.sM(
     { trig = 'aln' },
@@ -80,23 +80,18 @@ M.env = {
 }
 
 M.style = {
-  us.sM({ trig = 'em' }, { t('\\emph{'), i(1), t('}') }),
-  us.sM({ trig = 'bf' }, { t('\\textbf{'), i(1), t('}') }),
-  us.sM({ trig = 'ul' }, { t('\\underline{'), i(1), t('}') }),
+  us.sM({ trig = 'em' }, { t '\\emph{', i(1), t '}' }),
+  us.sM({ trig = 'bf' }, { t '\\textbf{', i(1), t '}' }),
+  us.sM({ trig = 'ul' }, { t '\\underline{', i(1), t '}' }),
 }
 
 M.style_auto = {
-  us.sM(
-    {
-      trig = '^(%s*)- ',
-      regTrig = true,
-      hidden = true,
-      snippetType = 'autosnippet',
-    },
-    f(function(_, snip, _)
-      return snip.captures[1] .. '\\item'
-    end)
-  ),
+  us.sM({
+    trig = '^(%s*)- ',
+    regTrig = true,
+    hidden = true,
+    snippetType = 'autosnippet',
+  }, f(function(_, snip, _) return snip.captures[1] .. '\\item' end)),
   us.sM(
     {
       trig = '\\item(%w)',
@@ -104,13 +99,16 @@ M.style_auto = {
       hidden = true,
       snippetType = 'autosnippet',
     },
-    d(1, function(_, snip)
-      return sn(nil, {
-        t('\\item{' .. snip.captures[1]),
-        i(1),
-        t('}'),
-      })
-    end)
+    d(
+      1,
+      function(_, snip)
+        return sn(nil, {
+          t('\\item{' .. snip.captures[1]),
+          i(1),
+          t '}',
+        })
+      end
+    )
   ),
 }
 

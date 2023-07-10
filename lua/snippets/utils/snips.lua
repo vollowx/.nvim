@@ -1,5 +1,5 @@
-local ls = require('luasnip')
-local conds = require('snippets.utils.conds')
+local ls = require 'luasnip'
+local conds = require 'snippets.utils.conds'
 
 -- Map snippet attribute string to snippet attribute options
 local snip_attr_map = {
@@ -47,12 +47,12 @@ local snip_attr_map = {
   },
   -- After text block
   b = {
-    condition = conds.after_pattern('[%w%d%)%]%}%>]%s*'),
-    show_condition = conds.after_pattern('[%w%d%)%]%}%>]%s*'),
+    condition = conds.after_pattern '[%w%d%)%]%}%>]%s*',
+    show_condition = conds.after_pattern '[%w%d%)%]%}%>]%s*',
   },
   B = {
-    condition = -conds.after_pattern('[%w%d%)%]%}%>]%s*'),
-    show_condition = -conds.after_pattern('[%w%d%)%]%}%>]%s*'),
+    condition = -conds.after_pattern '[%w%d%)%]%}%>]%s*',
+    show_condition = -conds.after_pattern '[%w%d%)%]%}%>]%s*',
   },
 }
 
@@ -61,15 +61,13 @@ local snip_attr_map = {
 ---@param opt_key string
 ---@param opt_val any
 local function snip_attr_add_new_opt(snip_attr, opt_key, opt_val)
-  if opt_val == nil then
-    return
-  end
+  if opt_val == nil then return end
   local opt_orig_val = snip_attr[opt_key]
   if opt_orig_val == nil then
     snip_attr[opt_key] = opt_val
     return
   end
-  if opt_key:match('condition$') then
+  if opt_key:match 'condition$' then
     snip_attr[opt_key] = opt_orig_val * opt_val
     return
   end
@@ -92,7 +90,7 @@ return setmetatable({}, {
         end
       end
     end
-    if snip_name:match('^m') then
+    if snip_name:match '^m' then
       self[snip_name] = ls.extend_decorator.apply(ls.multi_snippet, {
         common = snip_attr,
       })

@@ -1,5 +1,5 @@
 _G.statusline = {}
-local utils = require('utils')
+local utils = require 'utils'
 
 ---@type table<string, string>
 local signs_text_cache = {}
@@ -67,9 +67,7 @@ function statusline.gitdiff()
   -- Integration with gitsigns.nvim
   ---@diagnostic disable-next-line: undefined-field
   local diff = vim.b.gitsigns_status_dict or utils.git.diffstat()
-  if diff.added == 0 and diff.removed == 0 and diff.changed == 0 then
-    return ''
-  end
+  if diff.added == 0 and diff.removed == 0 and diff.changed == 0 then return '' end
   return string.format(
     '+%s~%s-%s',
     utils.stl.hl(tostring(diff.added), 'StatusLineGitAdded'),
@@ -82,35 +80,27 @@ end
 ---@return string
 function statusline.branch()
   ---@diagnostic disable-next-line: undefined-field
-  local branch = vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head
-    or utils.git.branch()
+  local branch = vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head or utils.git.branch()
   return branch == '' and '' or '#' .. branch
 end
 
 ---Get current filetype
 ---@return string
-function statusline.ft()
-  return vim.bo.ft == '' and '' or vim.bo.ft:gsub('^%l', string.upper)
-end
+function statusline.ft() return vim.bo.ft == '' and '' or vim.bo.ft:gsub('^%l', string.upper) end
 
 ---Additional info for the current buffer enclosed in parentheses
 ---@return string
 function statusline.info()
-  if vim.bo.bt ~= '' then
-    return ''
-  end
+  if vim.bo.bt ~= '' then return '' end
   local info = {}
   ---@param section string
   local function add_section(section)
-    if section ~= '' then
-      table.insert(info, section)
-    end
+    if section ~= '' then table.insert(info, section) end
   end
   add_section(statusline.ft())
   add_section(statusline.branch())
   add_section(statusline.gitdiff())
-  return vim.tbl_isempty(info) and ''
-    or string.format('(%s)', table.concat(info, ', '))
+  return vim.tbl_isempty(info) and '' or string.format('(%s)', table.concat(info, ', '))
 end
 
 ---Get string representation of diagnostics for current buffer
@@ -124,8 +114,7 @@ function statusline.diagnostics()
     counts[diagnostic.severity] = counts[diagnostic.severity] + 1
   end
   for _, diagnostic in ipairs(diagnostics_workspace) do
-    counts_workspace[diagnostic.severity] = counts_workspace[diagnostic.severity]
-      + 1
+    counts_workspace[diagnostic.severity] = counts_workspace[diagnostic.severity] + 1
   end
   ---@param severity string
   ---@return string
@@ -133,21 +122,16 @@ function statusline.diagnostics()
     local severity_num = vim.diagnostic.severity[severity:upper()]
     local count = counts[severity_num]
     local count_workspace = counts_workspace[severity_num]
-    if count + count_workspace == 0 then
-      return ''
-    end
+    if count + count_workspace == 0 then return '' end
     return utils.stl.hl(
-      get_sign_text('DiagnosticSign' .. severity)
-        .. string.format('%d/%d', count, count_workspace),
+      get_sign_text('DiagnosticSign' .. severity) .. string.format('%d/%d', count, count_workspace),
       'StatusLineDiagnostic' .. severity
     )
   end
   local result = ''
-  for _, severity in ipairs({ 'Error', 'Warn', 'Info', 'Hint' }) do
+  for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
     local diag_str = get_diagnostics_str(severity)
-    if diag_str ~= '' then
-      result = result .. (result == '' and '' or ' ') .. diag_str
-    end
+    if diag_str ~= '' then result = result .. (result == '' and '' or ' ') .. diag_str end
   end
   return result
 end
@@ -172,7 +156,7 @@ local groupid = vim.api.nvim_create_augroup('StatusLine', {})
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
   group = groupid,
   callback = function()
-    vim.wo.statusline = table.concat({
+    vim.wo.statusline = table.concat {
       components.padding,
       components.mode,
       components.truncate,
@@ -182,19 +166,19 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
       components.diagnostics,
       components.position,
       components.padding,
-    })
+    }
   end,
 })
 vim.api.nvim_create_autocmd('WinLeave', {
   group = groupid,
   callback = function()
-    vim.wo.statusline = table.concat({
+    vim.wo.statusline = table.concat {
       components.padding,
       components.truncate,
       components.fname_nc,
       components.align,
       components.padding,
-    })
+    }
   end,
 })
 vim.api.nvim_create_autocmd('FileChangedShellPost', {

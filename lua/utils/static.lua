@@ -65,11 +65,7 @@ M.borders = {
 local icons_mt = {}
 
 function icons_mt:__index(key)
-  return self.debug[key]
-    or self.diagnostics[key]
-    or self.kinds[key]
-    or self.ui[key]
-    or icons_mt[key]
+  return self.debug[key] or self.diagnostics[key] or self.kinds[key] or self.ui[key] or icons_mt[key]
 end
 
 ---Flatten the layered icons table into a single type-icon table.

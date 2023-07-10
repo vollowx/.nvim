@@ -20,9 +20,7 @@ end
 ---@param val any
 ---@return table
 function M.build_nested(key_parts, val)
-  return key_parts[1]
-      and { [key_parts[1]] = M.build_nested({ unpack(key_parts, 2) }, val) }
-    or val
+  return key_parts[1] and { [key_parts[1]] = M.build_nested({ unpack(key_parts, 2) }, val) } or val
 end
 
 ---@class parsed_arg_t table
@@ -34,14 +32,10 @@ function M.parse_cmdline_args(fargs)
   local parsed = {}
   -- First pass: parse arguments into a plain table
   for _, arg in ipairs(fargs) do
-    local key, val = arg:match('^%-%-(%S+)=(.*)$')
-    if not key then
-      key = arg:match('^%-%-(%S+)$')
-    end
+    local key, val = arg:match '^%-%-(%S+)=(.*)$'
+    if not key then key = arg:match '^%-%-(%S+)$' end
     local val_expanded = vim.fn.expand(val)
-    if type(val) == 'string' and vim.uv.fs_stat(val_expanded) then
-      val = val_expanded
-    end
+    if type(val) == 'string' and vim.uv.fs_stat(val_expanded) then val = val_expanded end
     if key and val then -- '--key=value'
       local eval_valid, eval_result = pcall(vim.fn.eval, val)
       parsed[key] = not eval_valid and val or eval_result
@@ -55,8 +49,7 @@ function M.parse_cmdline_args(fargs)
   for key, val in pairs(parsed) do
     if type(key) == 'string' then
       local key_parts = vim.split(key, '%.')
-      parsed =
-        vim.tbl_deep_extend('force', parsed, M.build_nested(key_parts, val))
+      parsed = vim.tbl_deep_extend('force', parsed, M.build_nested(key_parts, val))
       if #key_parts > 1 then
         parsed[key] = nil -- Remove the original dot-separated key
       end
@@ -95,37 +88,25 @@ function M.complete_opts(opts)
   ---@param cursorpos integer cursor position in the command line
   ---@return string[] completion completion results
   return function(arglead, cmdline, cursorpos)
-    if not opts or vim.tbl_isempty(opts) then
-      return {}
-    end
-    local optkey, eq, optval = arglead:match('^%-%-([^%s=]+)(=?)([^%s=]*)$')
+    if not opts or vim.tbl_isempty(opts) then return {} end
+    local optkey, eq, optval = arglead:match '^%-%-([^%s=]+)(=?)([^%s=]*)$'
     -- Complete option values
     if optkey and eq == '=' then
       local candidate_vals = vim.tbl_map(
         tostring,
-        type(opts[optkey]) == 'function'
-            and opts[optkey](arglead, cmdline, cursorpos)
-          or opts[optkey]
+        type(opts[optkey]) == 'function' and opts[optkey](arglead, cmdline, cursorpos) or opts[optkey]
       )
       return candidate_vals
           and vim.tbl_map(
-            function(val)
-              return '--' .. optkey .. '=' .. val
-            end,
-            vim.tbl_filter(function(val)
-              return val:find(optval, 1, true) == 1
-            end, candidate_vals)
+            function(val) return '--' .. optkey .. '=' .. val end,
+            vim.tbl_filter(function(val) return val:find(optval, 1, true) == 1 end, candidate_vals)
           )
         or {}
     end
     -- Complete option keys
     return vim.tbl_filter(
-      function(compl)
-        return compl:find(arglead, 1, true) == 1
-      end,
-      vim.tbl_map(function(k)
-        return '--' .. k
-      end, M.optkeys(opts))
+      function(compl) return compl:find(arglead, 1, true) == 1 end,
+      vim.tbl_map(function(k) return '--' .. k end, M.optkeys(opts))
     )
   end
 end
@@ -135,9 +116,7 @@ end
 ---@return fun(arglead: string, cmdline: string, cursorpos: integer): string[]
 function M.complete_params(params)
   return function(arglead, _, _)
-    return vim.tbl_filter(function(arg)
-      return arg:find(arglead, 1, true) == 1
-    end, params or {})
+    return vim.tbl_filter(function(arg) return arg:find(arglead, 1, true) == 1 end, params or {})
   end
 end
 

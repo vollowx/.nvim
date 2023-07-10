@@ -1,6 +1,6 @@
 local icons = require('utils.static').icons
 
-require('nvim-web-devicons').setup({
+require('nvim-web-devicons').setup {
   override = {
     default_icon = {
       color = '#b4b4b9',
@@ -15,4 +15,4 @@ require('nvim-web-devicons').setup({
       name = 'DesktopEntry',
     },
   },
-})
+}

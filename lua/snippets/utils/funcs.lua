@@ -32,12 +32,8 @@ end
 ---Returns the depth of the current indent given the indent of the current line
 ---@param indent number|string
 local function get_indent_depth(indent)
-  if type(indent) == 'string' then
-    indent = #indent:match('^%s*'):gsub('\t', string.rep(' ', vim.bo.ts))
-  end
-  if indent <= 0 then
-    return 0
-  end
+  if type(indent) == 'string' then indent = #indent:match('^%s*'):gsub('\t', string.rep(' ', vim.bo.ts)) end
+  if indent <= 0 then return 0 end
   local sts
   if vim.bo.sts > 0 then
     sts = vim.bo.sts

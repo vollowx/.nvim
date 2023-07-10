@@ -1,7 +1,7 @@
-local telescope = require('telescope')
-local builtin = require('telescope.builtin')
-local actions = require('telescope.actions')
-local static = require('utils.static')
+local telescope = require 'telescope'
+local builtin = require 'telescope.builtin'
+local actions = require 'telescope.actions'
+local static = require 'utils.static'
 
 ---Record buffers whose LSP clients are ready for 'textDocument/documentSymbol'
 ---requests
@@ -10,9 +10,7 @@ local buf_client_ready = {}
 
 vim.api.nvim_create_autocmd('LspDetach', {
   group = vim.api.nvim_create_augroup('TelescopeClearBufClientCache', {}),
-  callback = function(info)
-    buf_client_ready[info.buf] = nil
-  end,
+  callback = function(info) buf_client_ready[info.buf] = nil end,
   desc = 'Clear buf_client_ready cache on LspDetach.',
 })
 
@@ -30,12 +28,10 @@ local function override_lsp_picker(name, lsp_method)
       return
     end
     local client = vim.tbl_filter(
-      function(client)
-        return client.supports_method(lsp_method)
-      end,
-      vim.lsp.get_active_clients({
+      function(client) return client.supports_method(lsp_method) end,
+      vim.lsp.get_active_clients {
         bufnr = buf,
-      })
+      }
     )[1]
     if not client then
       builtin.treesitter(...)
@@ -57,46 +53,13 @@ override_lsp_picker('lsp_document_symbols', 'textDocument/documentSymbol')
 override_lsp_picker('lsp_workspace_symbols', 'workspace/symbol')
 override_lsp_picker('lsp_dynamic_workspace_symbols', 'workspace/symbol')
 
-local map = require('utils').keymap.set
-
--- stylua: ignore start
-map('n', '<C-p>',  function() builtin.keymaps() end, { desc = 'ui: Open command panel'  })
-map('n', '<Leader>F',  function() builtin.builtin() end)
-map('n', '<Leader>f',  function() builtin.builtin() end)
-map('n', '<Leader>ff', function() builtin.find_files() end)
-map('n', '<Leader>fo', function() builtin.oldfiles() end)
-map('n', '<Leader>fw', function() builtin.live_grep() end)
-map('n', '<Leader>f*', function() builtin.grep_string() end)
-map('n', '<Leader>fh', function() builtin.help_tags() end)
-map('n', '<Leader>f/', function() builtin.current_buffer_fuzzy_find() end)
-map('n', '<Leader>fb', function() builtin.buffers() end)
-map('n', '<Leader>fr', function() builtin.lsp_references() end)
-map('n', '<Leader>fd', function() builtin.lsp_definitions() end)
-map('n', '<Leader>fa', function() builtin.lsp_code_actions() end)
-map('n', '<Leader>fe', function() builtin.diagnostics() end)
-map('n', '<Leader>fp', function() builtin.treesitter() end)
-map('n', '<Leader>fs', function() builtin.lsp_document_symbols() end)
-map('n', '<Leader>fS', function() builtin.lsp_workspace_symbols() end)
-map('n', '<Leader>fg', function() builtin.git_status() end)
-map('n', '<Leader>fm', function() builtin.marks() end)
-map('n', '<Leader>fu', function() telescope.extensions.undo.undo() end)
-map('n', '<Leader>f<Esc>', '<Ignore>')
--- stylua: ignore end
-
 -- Workaround for nvim-telescope/telescope.nvim #2501
 -- to prevent opening files in insert mode
 vim.api.nvim_create_autocmd('WinLeave', {
   group = vim.api.nvim_create_augroup('TelescopeConfig', {}),
   callback = function(info)
-    if
-      vim.bo[info.buf].ft == 'TelescopePrompt'
-      and vim.startswith(vim.fn.mode(), 'i')
-    then
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes('<Esc>', true, false, true),
-        'in',
-        false
-      )
+    if vim.bo[info.buf].ft == 'TelescopePrompt' and vim.startswith(vim.fn.mode(), 'i') then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'in', false)
     end
   end,
 })
@@ -110,7 +73,7 @@ local layout_dropdown = {
   },
 }
 
-telescope.setup({
+telescope.setup {
   defaults = {
     prompt_prefix = static.icons.Magnify,
     selection_caret = static.icons.ArrowRight,
@@ -191,17 +154,15 @@ telescope.setup({
       },
     },
   },
-})
+}
 
 -- load telescope extensions
-if
-  not vim.tbl_isempty(vim.fs.find({ 'libfzf.so' }, {
-    path = vim.g.package_path,
-    type = 'file',
-  }))
-then
-  telescope.load_extension('fzf')
+if not vim.tbl_isempty(vim.fs.find({ 'libfzf.so' }, {
+  path = vim.g.package_path,
+  type = 'file',
+})) then
+  telescope.load_extension 'fzf'
 else
   vim.notify_once('[telescope] libfzf.so not found', vim.log.levels.WARN)
 end
-telescope.load_extension('undo')
+telescope.load_extension 'undo'

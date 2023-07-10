@@ -1,8 +1,8 @@
 local M = {}
-local un = require('snippets.utils.nodes')
-local uf = require('snippets.utils.funcs')
-local us = require('snippets.utils.snips')
-local ls = require('luasnip')
+local un = require 'snippets.utils.nodes'
+local uf = require 'snippets.utils.funcs'
+local us = require 'snippets.utils.snips'
+local ls = require 'luasnip'
 local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
@@ -16,9 +16,9 @@ M.syntax = {
     { trig = 'lc' },
     { trig = 'l=' },
   }, {
-    t('local '),
+    t 'local ',
     i(1, 'var'),
-    t(' = '),
+    t ' = ',
     i(0, 'value'),
   }),
   us.msn({
@@ -28,14 +28,14 @@ M.syntax = {
     { trig = 'lfunc' },
     { trig = 'lfunction' },
   }, {
-    t('local function '),
+    t 'local function ',
     i(1, 'func'),
-    t('('),
+    t '(',
     i(2),
-    t({ ')', '' }),
+    t { ')', '' },
     un.idnt(1),
     i(3),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'fn' },
@@ -45,21 +45,21 @@ M.syntax = {
   }, {
     c(1, {
       sn(nil, {
-        t('function('),
+        t 'function(',
         r(1, 'params'),
-        t({ ')', '' }),
+        t { ')', '' },
       }),
       sn(nil, {
-        t('function '),
+        t 'function ',
         i(1, 'fn_name'),
-        t('('),
+        t '(',
         r(2, 'params'),
-        t({ ')', '' }),
+        t { ')', '' },
       }),
     }),
     un.idnt(1),
     i(2),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }, {
     stored = {
       params = i(1),
@@ -69,122 +69,118 @@ M.syntax = {
     { trig = 'me' },
     { trig = 'method' },
   }, {
-    t('function '),
+    t 'function ',
     i(1, 'class'),
-    t(':'),
+    t ':',
     i(2, 'method'),
-    t('('),
+    t '(',
     i(3),
-    t({ ')', '' }),
+    t { ')', '' },
     un.idnt(1),
     i(4),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.sn({ trig = 'if' }, {
-    t('if '),
+    t 'if ',
     i(1, 'condition'),
-    t({ ' then', '' }),
+    t { ' then', '' },
     un.idnt(1),
     i(2),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'ife' },
     { trig = 'ifel' },
     { trig = 'ifelse' },
   }, {
-    t('if '),
+    t 'if ',
     i(1, 'condition'),
-    t({ ' then', '' }),
+    t { ' then', '' },
     un.idnt(1),
     i(2),
-    t({ '', 'else', '' }),
+    t { '', 'else', '' },
     un.idnt(1),
     i(3),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'ifelif' },
     { trig = 'ifelseif' },
   }, {
-    t('if '),
+    t 'if ',
     i(1, 'condition_1'),
-    t({ ' then', '' }),
+    t { ' then', '' },
     un.idnt(1),
     i(2),
-    t({ '', 'elseif ' }),
+    t { '', 'elseif ' },
     i(3, 'condition_2'),
-    t({ '', '' }),
+    t { '', '' },
     un.idnt(1),
     i(4),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.san({ trig = 'else' }, {
-    t({ 'else', '' }),
+    t { 'else', '' },
     un.idnt(1),
   }),
   us.sanr({ trig = '^(%s*)elif' }, {
-    un.idnt(function(_, snip)
-      return uf.get_indent_depth(snip.captures[1]) - 1
-    end),
-    t({ 'elseif ' }),
+    un.idnt(function(_, snip) return uf.get_indent_depth(snip.captures[1]) - 1 end),
+    t { 'elseif ' },
     i(1, 'condition'),
-    t({ ' then', '' }),
-    un.idnt(function(_, snip)
-      return uf.get_indent_depth(snip.captures[1])
-    end),
+    t { ' then', '' },
+    un.idnt(function(_, snip) return uf.get_indent_depth(snip.captures[1]) end),
   }),
   us.sanr({ trig = 'else%s*if' }, {
-    t('elseif '),
+    t 'elseif ',
     i(1, 'condition'),
-    t({ ' then', '' }),
+    t { ' then', '' },
     un.idnt(1),
   }),
   us.sn({ trig = 'for' }, {
-    t('for '),
+    t 'for ',
     c(1, {
       sn(nil, {
         i(1, '_'),
-        t(', '),
+        t ', ',
         i(2, 'v'),
-        t(' in ipairs('),
+        t ' in ipairs(',
         i(3, 'tbl'),
-        t(')'),
+        t ')',
       }),
       sn(nil, {
         i(1, 'k'),
-        t(', '),
+        t ', ',
         i(2, 'v'),
-        t(' in pairs('),
+        t ' in pairs(',
         i(3, 'tbl'),
-        t(')'),
+        t ')',
       }),
       sn(nil, {
         i(1, 'elements'),
-        t(' in '),
+        t ' in ',
         i(2, 'iterable'),
       }),
       sn(nil, {
-        t('i'),
-        t(' = '),
+        t 'i',
+        t ' = ',
         i(1, 'start'),
-        t(', '),
+        t ', ',
         i(2, 'stop'),
-        t(', '),
+        t ', ',
         i(3, 'step'),
       }),
       sn(nil, {
-        t('i'),
-        t(' = '),
+        t 'i',
+        t ' = ',
         i(1, 'start'),
-        t(', '),
+        t ', ',
         i(2, 'stop'),
       }),
     }),
-    t({ ' do', '' }),
+    t { ' do', '' },
     un.idnt(1),
     i(2),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'fr' },
@@ -193,29 +189,29 @@ M.syntax = {
     { trig = 'forange' },
     { trig = 'forrange' },
   }, {
-    t('for '),
+    t 'for ',
     c(1, {
       sn(nil, {
         i(1, 'i'),
-        t(' = '),
+        t ' = ',
         i(2, 'start'),
-        t(', '),
+        t ', ',
         i(3, 'stop'),
       }),
       sn(nil, {
         i(1, 'i'),
-        t(' = '),
+        t ' = ',
         i(2, 'start'),
-        t(', '),
+        t ', ',
         i(3, 'stop'),
-        t(', '),
+        t ', ',
         i(4, 'step'),
       }),
     }),
-    t({ ' do', '' }),
+    t { ' do', '' },
     un.idnt(1),
     i(2),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'fp' },
@@ -225,16 +221,16 @@ M.syntax = {
     { trig = 'forps' },
     { trig = 'forpairs' },
   }, {
-    t('for '),
+    t 'for ',
     i(1, '_'),
-    t(', '),
+    t ', ',
     i(2, 'v'),
-    t(' in pairs('),
+    t ' in pairs(',
     i(3, 'tbl'),
-    t({ ') do', '' }),
+    t { ') do', '' },
     un.idnt(1),
     i(4),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'fip' },
@@ -244,67 +240,67 @@ M.syntax = {
     { trig = 'forips' },
     { trig = 'foripairs' },
   }, {
-    t('for '),
+    t 'for ',
     i(1, '_'),
-    t(', '),
+    t ', ',
     i(2, 'v'),
-    t(' in ipairs('),
+    t ' in ipairs(',
     i(3, 'tbl'),
-    t({ ') do', '' }),
+    t { ') do', '' },
     un.idnt(1),
     i(4),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'wh' },
     { trig = 'while' },
   }, {
-    t('while '),
+    t 'while ',
     i(1, 'condition'),
-    t({ ' do', '' }),
+    t { ' do', '' },
     un.idnt(1),
     i(2),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.sn({ trig = 'do' }, {
-    t({ 'do', '' }),
+    t { 'do', '' },
     un.idnt(1),
     i(1),
-    t({ '', 'end' }),
+    t { '', 'end' },
   }),
   us.msn({
     { trig = 'rt' },
     { trig = 'ret' },
   }, {
-    t('return '),
+    t 'return ',
   }),
   us.msn({
     { trig = 'p' },
   }, {
-    t('print('),
+    t 'print(',
     i(1),
-    t(')'),
+    t ')',
   }),
   us.msn({
     { trig = 'rq' },
     { trig = 'req' },
   }, {
-    t('require('),
+    t 'require(',
     i(1),
-    t(')'),
+    t ')',
   }),
   us.sn({ trig = 'ps' }, {
-    t('pairs('),
+    t 'pairs(',
     i(1),
-    t(')'),
+    t ')',
   }),
   us.msn({
     { trig = 'ip' },
     { trig = 'ips' },
   }, {
-    t('ipairs('),
+    t 'ipairs(',
     i(1),
-    t(')'),
+    t ')',
   }),
 }
 
@@ -322,13 +318,11 @@ M.nvim = {
       ]],
       {
         plugin_name = i(1),
-        plugin_base_name = f(function(text, _, _)
-          return text[1][1]:gsub('%..*', '')
-        end, { 1 }),
+        plugin_base_name = f(function(text, _, _) return text[1][1]:gsub('%..*', '') end, { 1 }),
         author = i(2),
         cont = i(3),
         fin = i(0),
-        idnt = t('\t'),
+        idnt = t '\t',
         q = un.qt(),
       }
     )
@@ -339,9 +333,9 @@ M.nvim = {
     { trig = 'noti' },
     { trig = 'notify' },
   }, {
-    t('vim.notify('),
+    t 'vim.notify(',
     i(1),
-    t(', vim.log.levels.'),
+    t ', vim.log.levels.',
     c(2, {
       i(nil, 'DEBUG'),
       i(nil, 'WARN'),
@@ -350,33 +344,33 @@ M.nvim = {
       i(nil, 'OFF'),
       i(nil, 'TRACE'),
     }),
-    t(')'),
+    t ')',
   }),
   us.sn({ trig = 'api' }, {
-    t('vim.api.nvim_'),
+    t 'vim.api.nvim_',
   }),
   us.sn({ trig = 'vfn' }, {
-    t('vim.fn.'),
+    t 'vim.fn.',
   }),
   us.msn({
     { trig = 'in' },
     { trig = 'ins' },
     { trig = 'insp' },
   }, {
-    t('vim.inspect('),
+    t 'vim.inspect(',
     i(1),
-    t(')'),
+    t ')',
   }),
   us.msn({
     { trig = 'pin' },
     { trig = 'pins' },
     { trig = 'pinsp' },
   }, {
-    t('print(vim.inspect('),
+    t 'print(vim.inspect(',
     i(1),
-    t(')'),
+    t ')',
     i(2),
-    t(')'),
+    t ')',
   }),
   us.msn(
     {
@@ -406,10 +400,11 @@ M.nvim = {
       { trig = '(%S*)(%s*)%.%.%s*check' },
     },
     un.fmtad('<spc>.. <q>, <v>: <q> .. vim.inspect(<v>)', {
-      spc = f(function(_, snip, _)
-        return snip.captures[1] == '' and snip.captures[2]
-          or snip.captures[1] .. ' '
-      end, {}, {}),
+      spc = f(
+        function(_, snip, _) return snip.captures[1] == '' and snip.captures[2] or snip.captures[1] .. ' ' end,
+        {},
+        {}
+      ),
       q = un.qt(),
       v = i(1),
     })

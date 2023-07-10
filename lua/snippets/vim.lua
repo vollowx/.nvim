@@ -1,7 +1,7 @@
 local M = {}
-local un = require('snippets.utils.nodes')
-local us = require('snippets.utils.snips')
-local ls = require('luasnip')
+local un = require 'snippets.utils.nodes'
+local us = require 'snippets.utils.snips'
+local ls = require 'luasnip'
 local i = ls.insert_node
 local t = ls.text_node
 
@@ -10,7 +10,7 @@ M.snippets = {
     { trig = 'e' },
     { trig = 'ech' },
     { trig = 'echom' },
-  }, t('echom ')),
+  }, t 'echom '),
   us.msn(
     {
       { trig = 'eck' },

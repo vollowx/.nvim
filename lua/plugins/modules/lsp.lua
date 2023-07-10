@@ -3,18 +3,14 @@ return {
     'neovim/nvim-lspconfig',
     event = 'User NvFile',
     cmd = { 'LspInfo', 'LspStart' },
-    config = function()
-      require('plugins.configs.nvim-lspconfig')
-    end,
+    config = function() require 'plugins.configs.nvim-lspconfig' end,
   },
 
   {
     'p00f/clangd_extensions.nvim',
     ft = { 'c', 'cpp' },
     dependencies = 'nvim-lspconfig',
-    config = function()
-      require('plugins.configs.clangd_extensions')
-    end,
+    config = function() require 'plugins.configs.clangd_extensions' end,
   },
 
   {
@@ -26,31 +22,23 @@ return {
       'NullLsFormatOnSaveToggle',
     },
     dependencies = { 'plenary.nvim' },
-    config = function()
-      require('plugins.configs.null-ls')
-    end,
+    config = function() require 'plugins.configs.null-ls' end,
   },
 
   {
     'folke/neodev.nvim',
-    config = function()
-      require('plugins.configs.neodev')
-    end,
+    config = function() require 'plugins.configs.neodev' end,
   },
 
   {
     'dnlhc/glance.nvim',
     event = 'LspAttach',
-    config = function()
-      require('plugins.configs.glance')
-    end,
+    config = function() require 'plugins.configs.glance' end,
   },
 
   {
     'j-hui/fidget.nvim',
     event = 'LspAttach',
-    config = function()
-      require('plugins.configs.fidget')
-    end,
+    config = function() require 'plugins.configs.fidget' end,
   },
 }

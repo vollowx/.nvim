@@ -1,7 +1,7 @@
 local icons = require('utils.static').icons
-local default_config = require('configs.lsp-server-configs.shared.default')
+local default_config = require 'configs.lsp-server-configs.shared.default'
 
-require('clangd_extensions').setup({
+require('clangd_extensions').setup {
   server = default_config,
   extensions = {
     autoSetHints = false,
@@ -35,7 +35,7 @@ require('clangd_extensions').setup({
       border = 'shadow',
     },
   },
-})
+}
 
 -- Insert comparator in nvim-cmp's comparators list
 local cmp_ok, cmp = pcall(require, 'cmp')
@@ -43,7 +43,7 @@ if cmp_ok then
   cmp.setup.filetype({ 'c', 'cpp' }, {
     sorting = {
       comparators = vim.list_extend({
-        require('clangd_extensions.cmp_scores'),
+        require 'clangd_extensions.cmp_scores',
       }, require('cmp.config').get().sorting.comparators),
     },
   })

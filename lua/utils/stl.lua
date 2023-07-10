@@ -8,9 +8,9 @@ local M = {}
 function M.hl(str, hl, restore)
   restore = restore == nil and true or restore
   if restore then
-    return table.concat({ '%#', hl or '', '#', str or '', '%*' })
+    return table.concat { '%#', hl or '', '#', str or '', '%*' }
   else
-    return table.concat({ '%#', hl or '', '#', str or '' })
+    return table.concat { '%#', hl or '', '#', str or '' }
   end
 end
 
@@ -18,8 +18,6 @@ end
 ---@param str string
 ---@param callback string
 ---@return string
-function M.make_clickable(str, callback)
-  return string.format('%%@%s@%s%%X', callback, str)
-end
+function M.make_clickable(str, callback) return string.format('%%@%s@%s%%X', callback, str) end
 
 return M
