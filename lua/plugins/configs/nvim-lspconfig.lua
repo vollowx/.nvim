@@ -9,8 +9,6 @@ local function lspconfig_floating_preview()
   local function update_floating_preview_opts()
     opts_override = {
       border = 'rounded',
-      max_width = math.ceil(vim.go.columns * 0.75),
-      max_height = math.ceil(vim.go.lines * 0.4),
       close_events = {
         'CursorMoved',
         'CursorMovedI',

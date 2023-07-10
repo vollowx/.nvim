@@ -19,8 +19,18 @@ map('nx', 'k', 'v:count ? "k" : "gk"', { expr = true })
 
 -- Buffer navigation
 map('n', '<S-q>', '<Cmd>bd!<CR>', { desc = 'buffer: Delete buffer' })
-map('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>', { desc = 'buffer: Next buffer' })
-map('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>', { desc = 'buffer: Previous buffer' })
+map(
+  'n',
+  ']b',
+  '<Cmd>exec v:count1 . "bn"<CR>',
+  { desc = 'buffer: Next buffer' }
+)
+map(
+  'n',
+  '[b',
+  '<Cmd>exec v:count1 . "bp"<CR>',
+  { desc = 'buffer: Previous buffer' }
+)
 
 -- Close all floating windows
 map('n', 'q', function()
@@ -48,7 +58,10 @@ map('n', 'q', function()
   end
 end, { desc = 'window: Close floating windows' })
 
-map('t', '<C-Esc>', vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), { desc = 'terminal: Exit terminal mode' })
-map('n', '<A-f>', function()
-  vim.lsp.buf.format { async = true }
-end, { desc = 'lsp: Format', expr = true })
+map(
+  't',
+  '<C-Esc>',
+  vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true),
+  { desc = 'terminal: Exit terminal mode' }
+)
+map('n', '<A-f>', function() vim.lsp.buf.format() end, { desc = 'lsp: Format' })
