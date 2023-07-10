@@ -48,6 +48,9 @@ require('cokeline').setup({
       text = function(buffer) return buffer.filename .. ' ' end,
     },
     {
+      text = function(buffer) return buffer.is_modified and icons.Dot or '' end,
+    },
+    {
       text = icons.Cross,
       fg = get_hex('Error', 'fg'),
       on_click = function(_, _, _, _, buffer)
