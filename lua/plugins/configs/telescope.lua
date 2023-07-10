@@ -81,16 +81,14 @@ telescope.setup {
     dynamic_preview_title = true,
     layout_strategy = 'flex',
     layout_config = {
+      width = 0.87,
+      height = 0.8,
       horizontal = {
         prompt_position = 'top',
-        width = 0.8,
-        height = 0.8,
-        preview_width = 0.5,
+        preview_width = 0.55,
       },
       vertical = {
         prompt_position = 'top',
-        width = 0.8,
-        height = 0.8,
         mirror = true,
       },
     },
