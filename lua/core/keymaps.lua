@@ -50,6 +50,3 @@ map(
   vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true),
   { desc = 'terminal: Exit terminal mode' }
 )
-map('n', '<A-f>', function() vim.lsp.buf.format() end, { desc = 'lsp: Format' })
-
--- For nvim-tree

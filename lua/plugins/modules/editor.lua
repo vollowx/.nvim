@@ -1,6 +1,6 @@
 local map = require('utils').keymap.set
 
-map('nx', 'ga', '<Cmd>EasyAlign<CR>', { desc = 'edit: Align with delimiter' })
+map('nx', 'gea', '<Cmd>EasyAlign<CR>', { desc = 'edit: Align with delimiter' })
 
 return {
   {
