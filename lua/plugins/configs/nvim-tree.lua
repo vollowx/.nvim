@@ -1,3 +1,5 @@
+local icons = require('utils').static.icons
+
 require('nvim-tree').setup {
   hijack_cursor = true,
   sync_root_with_cwd = true,
@@ -10,6 +12,10 @@ require('nvim-tree').setup {
 
     icons = {
       git_placement = 'after',
+
+      glyphs = {
+        default = vim.trim(icons.File)
+      }
     },
   },
 }
