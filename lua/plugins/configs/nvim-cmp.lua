@@ -4,6 +4,8 @@ local borders = require('utils.static').borders
 local icons = require('utils.static').icons
 local t = function(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
 
+local border = require('core.settings').border
+
 ---Filter out unwanted entries
 ---@param entry cmp.Entry
 ---@param _ cmp.Context ignored
@@ -196,11 +198,11 @@ cmp.setup {
   -- cmp floating window config
   window = {
     completion = {
-      border = borders.single_clc,
+      border = borders[border .. '_clc'],
       winhighlight = 'Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel',
     },
     documentation = {
-      border = borders.single_clc,
+      border = borders[border .. '_clc'],
       winhighlight = 'Normal:CmpDoc,FloatBorder:CmpDocBorder',
     },
   },

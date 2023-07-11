@@ -1,5 +1,7 @@
 local toggleterm = require 'toggleterm'
 
+local border = require('core.settings').border
+
 toggleterm.setup {
   open_mapping = '<C-\\><C-\\>',
   shade_terminals = false,
@@ -9,7 +11,7 @@ toggleterm.setup {
   persist_size = false,
   direction = 'horizontal',
   float_opts = {
-    border = 'single',
+    border = border,
     width = function() return math.floor(vim.go.columns * 0.7) end,
     height = function() return math.floor(vim.go.lines * 0.7) end,
     winblend = 0,

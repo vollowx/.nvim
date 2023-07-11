@@ -1,6 +1,8 @@
 local icons = require('utils.static').icons
 local default_config = require 'configs.lsp-server-configs.shared.default'
 
+local border = require('core.settings').border
+
 require('clangd_extensions').setup {
   server = default_config,
   extensions = {
@@ -29,10 +31,10 @@ require('clangd_extensions').setup {
       },
     },
     memory_usage = {
-      border = 'single',
+      border = border,
     },
     symbol_info = {
-      border = 'single',
+      border = border,
     },
   },
 }

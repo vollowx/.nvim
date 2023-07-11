@@ -1,4 +1,5 @@
 local settings = require 'core.settings'
+local border = settings.border
 local use_ssh = settings.use_ssh
 local utils = require 'utils'
 
@@ -26,8 +27,7 @@ local function create_autocmd_applypatch()
         if vim.uv.fs_stat(plugin_path) then
           if
             info.match:match 'Pre$'
-            and utils.git.dir_execute(plugin_path, { 'diff', '--stat' }, vim.log.levels.WARN).output
-              ~= ''
+            and utils.git.dir_execute(plugin_path, { 'diff', '--stat' }, vim.log.levels.WARN).output ~= ''
           then
             vim.notify('[plugins] reverting patch' .. patch_path)
             utils.git.dir_execute(plugin_path, {
@@ -94,7 +94,7 @@ local function enable_modules(module_names)
       url_format = use_ssh and 'git@github.com:%s.git' or 'https://github.com/%s.git',
     },
     ui = {
-      border = 'single',
+      border = border,
     },
     checker = { enabled = false },
     change_detection = { notify = false },

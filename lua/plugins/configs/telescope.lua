@@ -3,6 +3,8 @@ local builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
 local static = require 'utils.static'
 
+local border = require('core.settings').border
+
 ---Record buffers whose LSP clients are ready for 'textDocument/documentSymbol'
 ---requests
 ---@type table<integer, boolean>
@@ -77,7 +79,7 @@ telescope.setup {
   defaults = {
     prompt_prefix = static.icons.Magnify,
     selection_caret = static.icons.ArrowRight,
-    borderchars = static.borders.single,
+    borderchars = static.borders[border],
     results_title = false,
     layout_strategy = 'flex',
     layout_config = {
