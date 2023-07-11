@@ -18,9 +18,9 @@ map('nx', 'j', 'v:count ? "j" : "gj"', { expr = true })
 map('nx', 'k', 'v:count ? "k" : "gk"', { expr = true })
 
 -- Buffer navigation
-map('n', '<S-q>', '<Cmd>bd!<CR>', { desc = 'buffer: Delete buffer' })
-map('n', ']b', '<Plug>(cokeline-focus-next)', { desc = 'buffer: Next buffer' })
-map('n', '[b', '<Plug>(cokeline-focus-prev)', { desc = 'buffer: Previous buffer' })
+map('n', '<A-q>', '<Cmd>bdelete!<CR>', { desc = 'buffer: Delete buffer' })
+map('n', '<A-j>', '<Cmd>bnext<CR>', { desc = 'buffer: Next buffer' })
+map('n', '<A-k>', '<Cmd>bprevious<CR>', { desc = 'buffer: Previous buffer' })
 
 -- Close all floating windows
 map('n', 'q', function()
