@@ -2,7 +2,7 @@ return {
   use_ssh = false,
 
   colorscheme = 'catppuccin',
-  transparent_background = false,
+  transparent_background = true,
 
   palette_overwrite = {},
 
