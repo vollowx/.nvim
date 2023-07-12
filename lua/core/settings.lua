@@ -5,7 +5,7 @@ return {
   -- Appearance
   colorscheme = 'catppuccin',
   palette_overwrite = {},
-  transparent_background = true,
+  transparent_background = false,
   border = 'rounded',
   icons = {
     debug = {
