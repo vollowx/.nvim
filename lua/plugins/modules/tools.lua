@@ -23,8 +23,8 @@ map('n', '<Leader>fu', function() require('telescope').extensions.undo.undo() en
 -- stylua: ignore end
 
 map('tn', '<A-d>', '<cmd>ToggleTerm direction=float<cr>', { desc = 'terminal: Toggle floating' })
-map('tn', '<A-v>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = 'terminal: Toggle vertical' })
-map('tn', '<A-\\>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = 'terminal: Toggle horizontal' })
+map('tn', '<A-\\>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = 'terminal: Toggle vertical' })
+map('tn', '<A-e>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = 'terminal: Toggle horizontal' })
 
 -- stylua: ignore start
 map('n', ']g', function() require('gitsigns').next_hunk() end, { desc = 'git: Next Git hunk' })
@@ -42,19 +42,19 @@ map('n', '<Leader>gd', function() require('gitsigns').diffthis() end, { desc = '
 
 local lazygit = nil
 local toggle_lazygit = function()
-	if vim.fn.executable('lazygit') == 1 then
-		if not lazygit then
-			lazygit = require('toggleterm.terminal').Terminal:new({
-				cmd = 'lazygit',
-				direction = 'float',
-				close_on_exit = true,
-				hidden = true,
-			})
-		end
-		lazygit:toggle()
-	else
-		vim.notify('[toggleterm.nvim] `lazygit` not found!', vim.log.levels.ERROR)
-	end
+  if vim.fn.executable 'lazygit' == 1 then
+    if not lazygit then
+      lazygit = require('toggleterm.terminal').Terminal:new {
+        cmd = 'lazygit',
+        direction = 'float',
+        close_on_exit = true,
+        hidden = true,
+      }
+    end
+    lazygit:toggle()
+  else
+    vim.notify('[toggleterm.nvim] `lazygit` not found!', vim.log.levels.ERROR)
+  end
 end
 
 map('tn', '<A-g>', toggle_lazygit, { desc = 'terminal: Toggle LazyGit' })
