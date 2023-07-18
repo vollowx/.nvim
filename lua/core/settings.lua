@@ -6,7 +6,7 @@ return {
   colorscheme = 'catppuccin',
   palette_overwrite = {},
   transparent_background = false,
-  border = 'rounded',
+  border = 'single',
   icons = {
     debug = {
       StackFrame = ' ',
