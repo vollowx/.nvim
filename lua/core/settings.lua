@@ -178,6 +178,10 @@ return {
       },
       lsp_server = 'marksman',
     },
+    nix = {
+      ts = 'nix',
+      formatting = 'nixfmt',
+    },
     python = {
       ts = 'python',
       ft = 'python',
