@@ -1,5 +1,5 @@
 local map = require('utils').keymap.set
-map('n', '<Leader><Leader>', function() pcall(require'ts-node-action'.node_action) end)
+map('n', '<Leader><Leader>', function() require('ts-node-action').node_action() end)
 
 return {
   {

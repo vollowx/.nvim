@@ -18,41 +18,6 @@ local function entry_filter(entry, _)
   }, entry.completion_item.label)
 end
 
----Filter out unwanted entries for fuzzy_path source
----@param entry cmp.Entry
----@param context cmp.Context
-local function entry_filter_fuzzy_path(entry, context)
-  return entry_filter(entry, context)
-    -- Don't show fuzzy-path entries in markdown/tex mathzone
-    and not (
-      vim.g.loaded_vimtex == 1
-      and (vim.bo.ft == 'markdown' or vim.bo.ft == 'tex')
-      and vim.api.nvim_eval 'vimtex#syntax#in_mathzone()' == 1
-    )
-end
-
----Options for fuzzy_path source
-local fuzzy_path_option = {
-  fd_timeout_msec = 100,
-  fd_cmd = {
-    'fd',
-    '--hidden',
-    '--full-path',
-    '--type',
-    'f',
-    '--type',
-    'd',
-    '--type',
-    'l',
-    '--max-depth',
-    '10',
-    '--max-results',
-    '20',
-    '--exclude',
-    '.git',
-  },
-}
-
 cmp.setup {
   formatting = {
     fields = { 'kind', 'abbr', 'menu' },
@@ -177,17 +142,12 @@ cmp.setup {
     },
     { name = 'buffer' },
     { name = 'spell' },
-    {
-      name = 'fuzzy_path',
-      entry_filter = entry_filter_fuzzy_path,
-      option = fuzzy_path_option,
-    },
+    { name = 'path' },
     { name = 'calc' },
   },
   sorting = {
     ---@type table[]|function[]
     comparators = {
-      require 'cmp_fuzzy_path.compare',
       cmp.config.compare.kind,
       cmp.config.compare.locality,
       cmp.config.compare.recently_used,
@@ -225,12 +185,7 @@ cmp.setup.cmdline('?', {
 cmp.setup.cmdline(':', {
   enabled = true,
   sources = {
-    {
-      name = 'fuzzy_path',
-      group_index = 1,
-      entry_filter = entry_filter_fuzzy_path,
-      option = fuzzy_path_option,
-    },
+    { name = 'path', group_index = 1 },
     { name = 'cmdline', group_index = 2 },
   },
 })
@@ -238,12 +193,7 @@ cmp.setup.cmdline(':', {
 cmp.setup.cmdline('@', {
   enabled = true,
   sources = {
-    {
-      name = 'fuzzy_path',
-      group_index = 1,
-      entry_filter = entry_filter_fuzzy_path,
-      option = fuzzy_path_option,
-    },
+    { name = 'path', group_index = 1 },
     { name = 'cmdline', group_index = 2 },
     { name = 'buffer', group_index = 3 },
   },

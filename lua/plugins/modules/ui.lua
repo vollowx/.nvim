@@ -7,6 +7,10 @@ map('n', '<A-k>', '<Plug>(cokeline-focus-prev)', { desc = 'buffer: Previous buff
 
 map('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>', { desc = 'ui: Toggle file tree' })
 
+map('n', '<Leader>;', function() require('dropbar.api').pick() end)
+map('n', '[C', function() require('dropbar.api').goto_context_start() end)
+map('n', ']C', function() require('dropbar.api').select_next_context() end)
+
 return {
   {
     'catppuccin/nvim',
@@ -44,11 +48,16 @@ return {
   },
   {
     'Bekaboo/deadcolumn.nvim',
-    event = 'BufEnter',
+    lazy = false,
   },
   {
     'lukas-reineke/indent-blankline.nvim',
     event = 'User NvFile',
     config = function() require 'plugins.configs.indent-blankline' end,
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = 'User NvFile',
+    config = function() require 'plugins.configs.dropbar' end,
   },
 }

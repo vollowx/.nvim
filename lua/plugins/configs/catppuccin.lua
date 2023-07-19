@@ -22,6 +22,7 @@ require('catppuccin').setup {
     aerial = true,
     cmp = true,
     dap = { enabled = true, enable_ui = true },
+    dropbar = true;
     fidget = true,
     gitsigns = true,
     hop = false,
