@@ -43,7 +43,7 @@ return {
   },
   {
     'dstein64/nvim-scrollview',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    lazy = false,
     config = function() require 'plugins.configs.nvim-scrollview' end,
   },
   {
