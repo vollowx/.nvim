@@ -38,6 +38,11 @@ return {
     config = function() require 'plugins.configs.nvim-tree' end,
   },
   {
+    'dstein64/nvim-scrollview',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    config = function() require 'plugins.configs.nvim-scrollview' end,
+  },
+  {
     'Bekaboo/deadcolumn.nvim',
     event = 'BufEnter',
   },
