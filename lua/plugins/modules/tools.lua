@@ -109,7 +109,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = 'User NvGitFile',
+    event = { "CursorHold", "CursorHoldI" },
     dependencies = 'plenary.nvim',
     config = function() require 'plugins.configs.gitsigns' end,
   },
@@ -155,7 +155,7 @@ return {
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = 'User NvFile',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function() require 'plugins.configs.nvim-colorizer' end,
   },
 }

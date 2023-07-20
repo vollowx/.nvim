@@ -152,6 +152,11 @@ return {
       ts = 'vimdoc',
       ft = 'help',
     },
+    javascript = {
+      ts = 'javascript',
+      ft = 'js',
+      lsp_server = 'tsserver',
+    },
     -- paru -S lua-language-server stylua
     lua = {
       ts = 'lua',

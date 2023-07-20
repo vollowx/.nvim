@@ -135,28 +135,6 @@ local autocmds = {
       command = 'echo',
     },
   },
-
-  {
-    { 'BufReadPost', 'BufNewFile', 'BufWritePost' },
-    {
-      desc = 'User events for file detection (NvFile and NvGitFile)',
-      group = 'FileUserEvents',
-      callback = function(args)
-        if
-          not (vim.fn.expand '%' == '' or vim.api.nvim_get_option_value('buftype', { buf = args.buf }) == 'nofile')
-        then
-          release_event 'File'
-          if
-            require('utils').git.file_worktree()
-            or require('utils').command.cmd({ 'git', '-C', vim.fn.expand '%:p:h', 'rev-parse' }, false)
-          then
-            release_event 'GitFile'
-            vim.api.nvim_del_augroup_by_name 'FileUserEvents'
-          end
-        end
-      end,
-    },
-  },
 }
 
 set_autocmds(autocmds)

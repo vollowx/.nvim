@@ -20,7 +20,7 @@ return {
       'TSEditQuery',
       'TSEditQueryUserAfter',
     },
-    event = 'User NvFile',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function() require 'plugins.configs.nvim-treesitter' end,
     dependencies = {
       'nvim-treesitter-textobjects',
@@ -41,18 +41,18 @@ return {
 
   {
     'CKolkey/ts-node-action',
-    event = 'User NvFile',
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = 'nvim-treesitter',
     config = function() require 'plugins.configs.ts-node-action' end,
   },
 
   -- Will break startup screen texts
-  --[[ {
+  {
     'Eandrju/cellular-automaton.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = { 'BufReadPost', 'BufNewFile' },
     cmd = 'CellularAutomaton',
     dependencies = 'nvim-treesitter',
-  }, ]]
+  },
 
   {
     'RRethy/nvim-treesitter-endwise',

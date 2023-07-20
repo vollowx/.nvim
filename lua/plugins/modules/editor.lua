@@ -36,13 +36,8 @@ return {
   },
 
   {
-    'h-hg/fcitx.nvim',
-    event = 'InsertEnter',
-  },
-
-  {
     'junegunn/vim-easy-align',
-    event = 'User NvFile',
+    cmd = 'EasyAlign',
     config = function() require 'plugins.configs.vim-easy-align' end,
   },
 }

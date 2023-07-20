@@ -43,21 +43,21 @@ return {
   },
   {
     'dstein64/nvim-scrollview',
-    lazy = false,
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function() require 'plugins.configs.nvim-scrollview' end,
   },
   {
     'Bekaboo/deadcolumn.nvim',
-    lazy = false,
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'User NvFile',
+    event = 'BufReadPost',
     config = function() require 'plugins.configs.indent-blankline' end,
   },
   {
     'Bekaboo/dropbar.nvim',
-    event = 'User NvFile',
+    event = 'BufReadPost',
     config = function() require 'plugins.configs.dropbar' end,
   },
 }
