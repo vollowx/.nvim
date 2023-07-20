@@ -84,13 +84,11 @@ return {
     dependencies = { 'plenary.nvim', 'telescope.nvim' },
   },
 
-  -- {
-  --   'willothy/flatten.nvim',
-  --   event = 'BufReadPre',
-  --   config = function()
-  --     require('configs.flatten')
-  --   end,
-  -- },
+  {
+    'willothy/flatten.nvim',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    config = function() require 'plugins.configs.flatten' end,
+  },
 
   {
     'akinsho/toggleterm.nvim',
@@ -109,7 +107,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = { "CursorHold", "CursorHoldI" },
+    event = 'BufReadPost',
     dependencies = 'plenary.nvim',
     config = function() require 'plugins.configs.gitsigns' end,
   },

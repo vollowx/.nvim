@@ -55,7 +55,7 @@ end
 ---@return boolean success
 local function bootstrap()
   create_autocmd_applypatch()
-  vim.g.package_path = vim.fn.stdpath 'data' .. '/site/pack/packages/opt'
+  vim.g.package_path = vim.fn.stdpath 'data' .. '/site/lazy'
   vim.g.package_lock = vim.fn.stdpath 'config' .. '/lazy-lock.json'
   local lazy_path = vim.g.package_path .. '/lazy.nvim'
   vim.opt.rtp:prepend(lazy_path)

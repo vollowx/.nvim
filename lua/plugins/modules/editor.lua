@@ -24,10 +24,10 @@ return {
     config = function() require 'plugins.configs.Comment' end,
   },
 
-  --[[ {
+  {
     'tpope/vim-sleuth',
-    event = 'BufReadPre',
-  }, ]]
+    event = 'BufReadPost',
+  },
 
   {
     'windwp/nvim-autopairs',

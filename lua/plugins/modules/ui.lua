@@ -20,7 +20,7 @@ return {
   },
   {
     'willothy/nvim-cokeline',
-    event = 'BufEnter',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function() require 'plugins.configs.cokeline' end,
   },
   {
@@ -52,12 +52,12 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'BufReadPost',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function() require 'plugins.configs.indent-blankline' end,
   },
   {
     'Bekaboo/dropbar.nvim',
-    event = 'BufReadPost',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
     config = function() require 'plugins.configs.dropbar' end,
   },
 }

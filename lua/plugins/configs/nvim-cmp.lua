@@ -155,16 +155,10 @@ cmp.setup {
       cmp.config.compare.score,
     },
   },
-  -- cmp floating window config
+  -- Scrollbar provided by nvim-scrollview
   window = {
-    completion = {
-      border = borders[border .. '_clc'],
-      winhighlight = 'Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel',
-    },
-    documentation = {
-      border = borders[border .. '_clc'],
-      winhighlight = 'Normal:CmpDoc,FloatBorder:CmpDocBorder',
-    },
+    completion = { scrollbar = false },
+    documentation = { scrollbar = false },
   },
   performance = {
     async_budget = 1,

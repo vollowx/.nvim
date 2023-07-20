@@ -1,8 +1,11 @@
+local map = require('utils').keymap.set
+
+map('n', '<Leader>li', '<Cmd>LspInfo<CR>', { desc = 'lsp: Server info' })
+
 return {
   {
     'neovim/nvim-lspconfig',
-    event = { "CursorHold", "CursorHoldI" },
-    cmd = { 'LspInfo', 'LspStart' },
+    event = 'FileType',
     config = function() require 'plugins.configs.nvim-lspconfig' end,
   },
 
@@ -15,7 +18,7 @@ return {
 
   {
     'jose-elias-alvarez/null-ls.nvim',
-    event = { "CursorHold", "CursorHoldI" },
+    event = 'FileType',
     cmd = {
       'NullLsLog',
       'NullLsInfo',

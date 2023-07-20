@@ -5,7 +5,7 @@ local opt = vim.opt
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '120'
-opt.eb             = false
+opt.errorbells     = false
 opt.foldlevelstart = 99
 opt.guifont        = 'JetbrainsMono Nerd Font:h13'
 opt.laststatus     = 3
@@ -20,12 +20,13 @@ opt.scrolloff      = 4
 opt.sidescrolloff  = 8
 opt.signcolumn     = 'yes:1'
 opt.splitright     = true
+opt.splitbelow     = true
 opt.swapfile       = false
 opt.termguicolors  = true
 opt.undofile       = true
 opt.updatetime     = 10
-opt.vb             = true
-opt.wrap           = false
+opt.visualbell     = true
+opt.wrap           = true
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
@@ -42,7 +43,7 @@ opt.gcr:append 'r-cr:hor20,o:hor50'
 opt.diffopt:append 'algorithm:patience'
 
 opt.backup = true
-opt.backupdir = fn.stdpath 'data' .. '/backup//'
+opt.backupdir = { fn.stdpath 'data' .. '/backup//' }
 
 -- stylua: ignore start
 opt.list = true

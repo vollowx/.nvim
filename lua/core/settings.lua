@@ -6,7 +6,7 @@ return {
   colorscheme = 'catppuccin',
   palette_overwrite = {},
   transparent_background = false,
-  border = 'single',
+  border = 'solid',
   icons = {
     debug = {
       StackFrame = ' ',
@@ -148,14 +148,39 @@ return {
       dap = 'codelldb',
       formatting = 'clang-format',
     },
+    css = {
+      ts = 'css',
+      ft = { 'css', 'scss', 'less' },
+      lsp_server = 'cssls',
+      formatting = 'prettier',
+    },
     help = {
       ts = 'vimdoc',
       ft = 'help',
+    },
+    html = {
+      ts = 'html',
+      ft = 'html',
+      lsp_server = 'html',
+      formatting = 'prettier',
     },
     javascript = {
       ts = 'javascript',
       ft = 'js',
       lsp_server = 'tsserver',
+      formatting = 'prettier',
+    },
+    json = {
+      ts = 'json',
+      ft = { 'json', 'jsonc' },
+      lsp_server = 'jsonls',
+      formatting = 'prettier',
+    },
+    typescript = {
+      ts = 'typescript',
+      ft = 'ts',
+      lsp_server = 'tsserver',
+      formatting = 'prettier',
     },
     -- paru -S lua-language-server stylua
     lua = {
@@ -197,6 +222,13 @@ return {
       },
       dap = 'debugpy',
       formatting = 'black',
+    },
+    yaml = {
+      -- Not running at NixOS
+      -- ts = 'yaml',
+      ft = 'yaml',
+      lsp_server = 'yamlls',
+      formatting = 'prettier',
     },
     vim = {
       ts = 'vim',
