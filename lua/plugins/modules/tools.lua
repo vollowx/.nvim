@@ -1,25 +1,20 @@
 local map = require('utils').keymap.set
 
 -- stylua: ignore start
-map('n', '<C-p>', function() require('telescope.builtin').keymaps() end, { desc = 'ui: Open command panel' })
-map('n', '<Leader>F', function() require('telescope.builtin').builtin() end, { desc = 'telescope: Find finders' })
-map('n', '<Leader>ff', function() require('telescope.builtin').find_files() end, { desc = 'telescope: Find files' })
-map('n', '<Leader>fo', function() require('telescope.builtin').oldfiles() end, { desc = 'telescope: Find recent files' })
-map('n', '<Leader>fw', function() require('telescope.builtin').live_grep() end, { desc = 'telescope: Find string' })
-map('n', '<Leader>f*', function() require('telescope.builtin').grep_string() end, { desc = 'telescope: Find string' })
-map('n', '<Leader>fh', function() require('telescope.builtin').help_tags() end, { desc = 'telescope: Find help pages' })
-map('n', '<Leader>f/', function() require('telescope.builtin').current_buffer_fuzzy_find() end, { desc = 'telescope: Find in current buffer' })
-map('n', '<Leader>fb', function() require('telescope.builtin').buffers() end, { desc = 'telescope: Find buffers' })
-map('n', '<Leader>fr', function() require('telescope.builtin').lsp_references() end, { desc = 'telescope: Find LSP references' })
-map('n', '<Leader>fd', function() require('telescope.builtin').lsp_definitions() end, { desc = 'telescope: Find LSP definitions' })
-map('n', '<Leader>fa', function() require('telescope.builtin').lsp_code_actions() end, { desc = 'telescope: Find LSP code actions' })
-map('n', '<Leader>fe', function() require('telescope.builtin').diagnostics() end, { desc = 'telescope: Find diagnostics' })
-map('n', '<Leader>fp', function() require('telescope.builtin').treesitter() end, { desc = 'telescope: Find Treesitter symbols' })
-map('n', '<Leader>fs', function() require('telescope.builtin').lsp_document_symbols() end, { desc = 'telescope: Find LSP document symbols' })
-map('n', '<Leader>fS', function() require('telescope.builtin').lsp_workspace_symbols() end, { desc = 'telescope: Find LSP workspace symbols' })
-map('n', '<Leader>fg', function() require('telescope.builtin').git_status() end, { desc = 'telescope: Find Git status' })
-map('n', '<Leader>fm', function() require('telescope.builtin').marks() end, { desc = 'telescope: Find marks' })
-map('n', '<Leader>fu', function() require('telescope').extensions.undo.undo() end, { desc = 'telescope: Find undoes' })
+map('n', '<C-p>', '<Cmd>Telescope keymaps<CR>', { desc = 'ui: Open command panel' })
+map('n', '<Leader>F', '<Cmd>Telescope builtin<CR>', { desc = 'find: Finders' })
+map('n', '<Leader>ff', '<Cmd>Telescope find_files<CR>', { desc = 'find: File' })
+map('n', '<Leader>fo', '<Cmd>Telescope oldfiles<CR>', { desc = 'find: Recent files' })
+map('n', '<Leader>fw', '<Cmd>Telescope live_grep<CR>', { desc = 'find: Word' })
+map('n', '<Leader>fb', '<Cmd>Telescope buffers<CR>', { desc = 'find: Buffers' })
+map('n', '<Leader>fe', '<Cmd>Telescope diagnostics<CR>', { desc = 'find: Diagnostics' })
+map('n', '<Leader>fr', '<Cmd>Telescope lsp_references<CR>', { desc = 'find: LSP references' })
+map('n', '<Leader>fd', '<Cmd>Telescope lsp_definitions<CR>', { desc = 'find: LSP definitions' })
+map('n', '<Leader>fg', '<Cmd>Telescope git_status<CR>', { desc = 'find: Git status' })
+map('n', '<Leader>fh', '<Cmd>Telescope help_tags<CR>', { desc = 'find: Help pages' })
+map('n', '<Leader>fm', '<Cmd>Telescope marks<CR>', { desc = 'find: Marks' })
+map('n', '<Leader>fu', '<Cmd>Telescope undo<CR>', { desc = 'find: Undoes' })
+map('n', '<Leader>fn', '<Cmd>Telescope notify<CR>', { desc = 'find: Notifications' })
 -- stylua: ignore end
 
 map('tn', '<A-d>', '<cmd>ToggleTerm direction=float<cr>', { desc = 'terminal: Toggle floating' })
@@ -65,18 +60,9 @@ return {
     cmd = 'Telescope',
     dependencies = {
       'plenary.nvim',
-      'telescope-fzf-native.nvim',
       'telescope-undo.nvim',
     },
     config = function() require 'plugins.configs.telescope' end,
-  },
-
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    -- If it complains 'fzf doesn't exists, run 'make' inside
-    -- the root folder of this plugin
-    build = 'make',
-    dependencies = { 'plenary.nvim', 'telescope.nvim' },
   },
 
   {
@@ -107,7 +93,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = 'BufReadPost',
+    event = 'User GitFile',
     dependencies = 'plenary.nvim',
     config = function() require 'plugins.configs.gitsigns' end,
   },
@@ -153,7 +139,7 @@ return {
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = { 'BufReadPost', 'BufNewFile' },
-    config = function() require 'plugins.configs.nvim-colorizer' end,
+    event = 'User File',
+    config = function() require 'plugins.configs.colorizer' end,
   },
 }

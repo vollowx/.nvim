@@ -5,7 +5,7 @@ map('n', '<Leader>li', '<Cmd>LspInfo<CR>', { desc = 'lsp: Server info' })
 return {
   {
     'neovim/nvim-lspconfig',
-    event = 'FileType',
+    event = 'User File',
     config = function() require 'plugins.configs.nvim-lspconfig' end,
   },
 
@@ -18,7 +18,7 @@ return {
 
   {
     'jose-elias-alvarez/null-ls.nvim',
-    event = 'FileType',
+    event = 'User File',
     cmd = {
       'NullLsLog',
       'NullLsInfo',
@@ -43,5 +43,11 @@ return {
     'j-hui/fidget.nvim',
     event = 'LspAttach',
     config = function() require 'plugins.configs.fidget' end,
+  },
+
+  {
+    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    event = 'LspAttach',
+    config = function() require 'plugins.configs.lsp_lines' end,
   },
 }

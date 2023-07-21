@@ -1,8 +1,6 @@
 local icons = require('utils.static').icons
 
 require('scrollview').setup {
-  winblend = 0,
-  scrollview_mode = 'virtual',
   floating_windows = true,
   signs_on_startup = { 'diagnostics', 'folds', 'marks', 'search', 'spell' },
   diagnostics_error_symbol = icons.DiagnosticSignError,

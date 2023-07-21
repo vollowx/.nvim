@@ -14,7 +14,7 @@ return {
   {
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModToggle',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = 'User File',
     config = function() require 'plugins.configs.vim-table-mode' end,
   },
 }

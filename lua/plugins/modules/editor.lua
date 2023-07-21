@@ -26,7 +26,7 @@ return {
 
   {
     'tpope/vim-sleuth',
-    event = 'BufReadPost',
+    event = 'User File',
   },
 
   {

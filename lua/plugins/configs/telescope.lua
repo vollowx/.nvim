@@ -156,13 +156,5 @@ telescope.setup {
   },
 }
 
--- load telescope extensions
-if not vim.tbl_isempty(vim.fs.find({ 'libfzf.so' }, {
-  path = vim.g.package_path,
-  type = 'file',
-})) then
-  telescope.load_extension 'fzf'
-else
-  vim.notify_once('[telescope] libfzf.so not found', vim.log.levels.WARN)
-end
 telescope.load_extension 'undo'
+telescope.load_extension 'notify'

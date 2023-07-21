@@ -1,9 +1,9 @@
 local map = require('utils').keymap.set
 
 -- Override keymaps in core.keymaps
-map('n', '<A-q>', function() require('cokeline.buffers').get_current():delete() end, { desc = 'buffer: Delete buffer' })
-map('n', '<A-j>', '<Plug>(cokeline-focus-next)', { desc = 'buffer: Next buffer' })
-map('n', '<A-k>', '<Plug>(cokeline-focus-prev)', { desc = 'buffer: Previous buffer' })
+-- map('n', '<A-q>', function() require('cokeline.buffers').get_current():delete() end, { desc = 'buffer: Delete buffer' })
+-- map('n', '<A-j>', '<Plug>(cokeline-focus-next)', { desc = 'buffer: Next buffer' })
+-- map('n', '<A-k>', '<Plug>(cokeline-focus-prev)', { desc = 'buffer: Previous buffer' })
 
 map('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>', { desc = 'ui: Toggle file tree' })
 
@@ -18,11 +18,28 @@ return {
     config = function() require 'plugins.configs.catppuccin' end,
     lazy = false,
   },
+
+  -- Unchangeable UI components
   {
-    'willothy/nvim-cokeline',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-    config = function() require 'plugins.configs.cokeline' end,
+    'Bekaboo/deadcolumn.nvim',
+    lazy = false,
   },
+  {
+    'Bekaboo/dropbar.nvim',
+    lazy = false,
+    config = function() require 'plugins.configs.dropbar' end,
+  },
+  {
+    'dstein64/nvim-scrollview',
+    lazy = false,
+    config = function() require 'plugins.configs.scrollview' end,
+  },
+  {
+    'rcarriga/nvim-notify',
+    lazy = false,
+    config = function() require 'plugins.configs.notify' end,
+  },
+
   {
     'nvim-tree/nvim-tree.lua',
     cmd = {
@@ -41,23 +58,11 @@ return {
     },
     config = function() require 'plugins.configs.nvim-tree' end,
   },
-  {
-    'dstein64/nvim-scrollview',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-    config = function() require 'plugins.configs.nvim-scrollview' end,
-  },
-  {
-    'Bekaboo/deadcolumn.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-  },
+
+
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = 'User File',
     config = function() require 'plugins.configs.indent-blankline' end,
-  },
-  {
-    'Bekaboo/dropbar.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-    config = function() require 'plugins.configs.dropbar' end,
   },
 }

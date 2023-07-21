@@ -20,7 +20,7 @@ return {
       'TSEditQuery',
       'TSEditQueryUserAfter',
     },
-    event = 'FileType',
+    event = 'User File',
     config = function() require 'plugins.configs.nvim-treesitter' end,
     dependencies = {
       'nvim-treesitter-textobjects',
@@ -41,7 +41,7 @@ return {
 
   {
     'CKolkey/ts-node-action',
-    event = 'FileType',
+    event = 'User File',
     dependencies = 'nvim-treesitter',
     config = function() require 'plugins.configs.ts-node-action' end,
   },
@@ -49,7 +49,6 @@ return {
   -- Will break startup screen texts
   {
     'Eandrju/cellular-automaton.nvim',
-    event = 'FileType',
     cmd = 'CellularAutomaton',
     dependencies = 'nvim-treesitter',
   },

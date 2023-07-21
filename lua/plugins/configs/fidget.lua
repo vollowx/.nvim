@@ -1,7 +1,7 @@
 require('fidget').setup {
   text = {
     spinner = 'dots',
-    done = vim.trim(require('utils.static').icons.ui.Ok),
+    done = vim.trim(require('utils.static').icons.ui.Check),
   },
   fmt = {
     fidget = function(fidget_name, spinner) return string.format('%s %s   ', spinner, fidget_name) end,

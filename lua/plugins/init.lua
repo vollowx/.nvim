@@ -23,7 +23,7 @@ local function create_autocmd_applypatch()
       local patches_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua/plugins/patches')
       for patch in vim.fs.dir(patches_path) do
         local patch_path = vim.fs.joinpath(patches_path, patch)
-        local plugin_path = vim.fs.joinpath(vim.g.package_path, (patch:gsub('%.patch$', '')))
+        local plugin_path = vim.fs.joinpath(vim.g.plugin_path, (patch:gsub('%.patch$', '')))
         if vim.uv.fs_stat(plugin_path) then
           if
             info.match:match 'Pre$'
@@ -55,19 +55,19 @@ end
 ---@return boolean success
 local function bootstrap()
   create_autocmd_applypatch()
-  vim.g.package_path = vim.fn.stdpath 'data' .. '/site/lazy'
-  vim.g.package_lock = vim.fn.stdpath 'config' .. '/lazy-lock.json'
-  local lazy_path = vim.g.package_path .. '/lazy.nvim'
+  vim.g.plugin_path = vim.fn.stdpath 'data' .. '/lazy'
+  vim.g.plugin_lock = vim.fn.stdpath 'config' .. '/lazy-lock.json'
+  local lazy_path = vim.g.plugin_path .. '/lazy.nvim'
   vim.opt.rtp:prepend(lazy_path)
   vim.opt.pp:prepend(lazy_path)
   if vim.uv.fs_stat(lazy_path) then return true end
 
-  local lock = read_file(vim.g.package_lock)
-  local lock_data = lock and vim.json.decode(lock) or nil
+  local lock = read_file(vim.g.plugin_lock)
+  local lock_data = lock and vim.json.decode(lock, {}) or nil
   local commit = lock_data and lock_data['lazy.nvim'] and lock_data['lazy.nvim'].commit or nil
   local url = use_ssh and 'git@github.com:folke/lazy.nvim.git' or 'https://github.com/folke/lazy.nvim.git'
   vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
-  vim.fn.mkdir(vim.g.package_path, 'p')
+  vim.fn.mkdir(vim.g.plugin_path, 'p')
   if
     not utils.git.execute({
       'clone',
@@ -88,8 +88,8 @@ end
 local function enable_modules(module_names)
   local config = {
     defaults = { lazy = true },
-    root = vim.g.package_path,
-    lockfile = vim.g.package_lock,
+    root = vim.g.plugin_path,
+    lockfile = vim.g.plugin_lock,
     git = {
       url_format = use_ssh and 'git@github.com:%s.git' or 'https://github.com/%s.git',
     },
@@ -103,10 +103,7 @@ local function enable_modules(module_names)
       cache = {
         enabled = true,
         path = vim.fn.stdpath 'cache' .. '/lazy/cache',
-        -- Once one of the following events triggers, caching will be disabled.
-        -- To cache all modules, set this to `{}`, but that is not recommended.
         disable_events = { 'UIEnter', 'BufReadPre' },
-        ttl = 3600 * 24 * 2, -- keep unused modules for up to 2 days
       },
       reset_packpath = true,
       rtp = {
