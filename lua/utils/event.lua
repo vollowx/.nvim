@@ -6,7 +6,7 @@ function M.release(event)
   vim.schedule(
     function()
       vim.api.nvim_exec_autocmds('User', {
-        pattern = 'Nv' .. event,
+        pattern = event,
         modeline = false,
       })
     end

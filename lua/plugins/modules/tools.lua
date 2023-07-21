@@ -20,6 +20,7 @@ map('n', '<Leader>fn', '<Cmd>Telescope notify<CR>', { desc = 'find: Notification
 map('tn', '<A-d>', '<cmd>ToggleTerm direction=float<cr>', { desc = 'terminal: Toggle floating' })
 map('tn', '<A-\\>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = 'terminal: Toggle vertical' })
 map('tn', '<A-e>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = 'terminal: Toggle horizontal' })
+map('tn', '<A-g>', '<Cmd>Lazygit<CR>', { desc = 'terminal: Toggle LazyGit' })
 
 -- stylua: ignore start
 map('n', ']g', function() require('gitsigns').next_hunk() end, { desc = 'git: Next Git hunk' })
@@ -34,25 +35,6 @@ map('n', '<Leader>gS', function() require('gitsigns').stage_buffer() end, { desc
 map('n', '<Leader>gu', function() require('gitsigns').undo_stage_hunk() end, { desc = 'git: Unstage Git hunk' })
 map('n', '<Leader>gd', function() require('gitsigns').diffthis() end, { desc = 'git: View Git diff' })
 -- stylua: ignore end
-
-local lazygit = nil
-local toggle_lazygit = function()
-  if vim.fn.executable 'lazygit' == 1 then
-    if not lazygit then
-      lazygit = require('toggleterm.terminal').Terminal:new {
-        cmd = 'lazygit',
-        direction = 'float',
-        close_on_exit = true,
-        hidden = true,
-      }
-    end
-    lazygit:toggle()
-  else
-    vim.notify('[toggleterm.nvim] `lazygit` not found!', vim.log.levels.ERROR)
-  end
-end
-
-map('tn', '<A-g>', toggle_lazygit, { desc = 'terminal: Toggle LazyGit' })
 
 return {
   {
@@ -72,7 +54,7 @@ return {
 
   {
     'willothy/flatten.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    lazy = false,
     config = function() require 'plugins.configs.flatten' end,
   },
 
@@ -99,36 +81,10 @@ return {
   },
 
   {
-    'tpope/vim-fugitive',
-    cmd = {
-      'G',
-      'Gcd',
-      'Gclog',
-      'Gdiffsplit',
-      'Gdrop',
-      'Gedit',
-      'Ggrep',
-      'Git',
-      'Glcd',
-      'Glgrep',
-      'Gllog',
-      'Gpedit',
-      'Gread',
-      'Gsplit',
-      'Gtabedit',
-      'Gvdiffsplit',
-      'Gvsplit',
-      'Gwq',
-      'Gwrite',
-    },
-    config = function() require 'plugins.configs.vim-fugitive' end,
-  },
-
-  --[[ {
     'akinsho/git-conflict.nvim',
-    event = 'BufReadPre',
+    event = 'User GitFile',
     config = true,
-  }, ]]
+  },
 
   -- {
   --   'kevinhwang91/rnvimr',

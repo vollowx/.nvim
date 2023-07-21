@@ -1,7 +1,8 @@
 local settings = require 'core.settings'
 local border = settings.border
 local use_ssh = settings.use_ssh
-local utils = require 'utils'
+local git = require 'utils.git'
+local icons = require('utils.static').icons
 
 ---Read file contents
 ---@param path string
@@ -27,10 +28,10 @@ local function create_autocmd_applypatch()
         if vim.uv.fs_stat(plugin_path) then
           if
             info.match:match 'Pre$'
-            and utils.git.dir_execute(plugin_path, { 'diff', '--stat' }, vim.log.levels.WARN).output ~= ''
+            and git.dir_execute(plugin_path, { 'diff', '--stat' }, vim.log.levels.WARN).output ~= ''
           then
             vim.notify('[plugins] reverting patch' .. patch_path)
-            utils.git.dir_execute(plugin_path, {
+            git.dir_execute(plugin_path, {
               'apply',
               '--reverse',
               '--ignore-space-change',
@@ -38,7 +39,7 @@ local function create_autocmd_applypatch()
             }, vim.log.levels.WARN)
           else
             vim.notify('[plugins] applying patch' .. patch_path)
-            utils.git.dir_execute(plugin_path, {
+            git.dir_execute(plugin_path, {
               'apply',
               '--ignore-space-change',
               patch_path,
@@ -69,7 +70,7 @@ local function bootstrap()
   vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
   vim.fn.mkdir(vim.g.plugin_path, 'p')
   if
-    not utils.git.execute({
+    not git.execute({
       'clone',
       '--filter=blob:none',
       url,
@@ -78,7 +79,7 @@ local function bootstrap()
   then
     return false
   end
-  if commit then utils.git.dir_execute(lazy_path, { 'checkout', commit }, vim.log.levels.INFO) end
+  if commit then git.dir_execute(lazy_path, { 'checkout', commit }, vim.log.levels.INFO) end
   vim.notify('[plugins] lazy.nvim cloned to ' .. lazy_path, vim.log.levels.INFO)
   return true
 end
@@ -95,6 +96,29 @@ local function enable_modules(module_names)
     },
     ui = {
       border = border,
+      icons = {
+        cmd = vim.trim(icons.ui.Command),
+        config = vim.trim(icons.ui.Cog),
+        event = vim.trim(icons.ui.Lightning),
+        ft = vim.trim(icons.ui.FileDocument),
+        init = vim.trim(icons.ui.Flag),
+        import = vim.trim(icons.ui.Import),
+        keys = vim.trim(icons.ui.Keyboard),
+        lazy = icons.ui.Sleep,
+        loaded = vim.trim(icons.ui.CheckCircle),
+        not_loaded = vim.trim(icons.ui.Ghost),
+        plugin = vim.trim(icons.ui.Package),
+        runtime = vim.trim(icons.ui.Vim),
+        source = vim.trim(icons.ui.Code),
+        start = vim.trim(icons.ui.TriangleRight),
+        task = vim.trim(icons.ui.CheckList),
+        list = {
+          icons.ui.Circle,
+          icons.ui.CircleUnfilled,
+          icons.ui.TriangleRight,
+          icons.ui.Square,
+        },
+      },
     },
     checker = { enabled = false },
     change_detection = { notify = false },

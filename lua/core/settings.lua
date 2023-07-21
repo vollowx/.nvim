@@ -131,6 +131,7 @@ return {
       Package = '󰏖 ',
       Pencil = '󰲶 ',
       Pin = '󰐃 ',
+      Sleep = '󰒲 ',
       Square = '󰝤 ',
       TriangleDown = '▼ ',
       TriangleLeft = '◀ ',
@@ -142,14 +143,12 @@ return {
 
   -- Language Specified
   langs = {
-    -- paru -S bash-language-server shfmt
     sh = {
       ft = 'sh',
       lsp_server = 'bashls',
       dap = 'bashdb',
       formatting = 'shfmt',
     },
-    -- paru -S clang
     c = {
       ts = 'c',
       ft = 'c',
@@ -198,14 +197,12 @@ return {
       lsp_server = 'tsserver',
       formatting = 'prettier',
     },
-    -- paru -S lua-language-server stylua
     lua = {
       ts = 'lua',
       ft = 'lua',
       lsp_server = 'lua_ls',
       formatting = 'stylua',
     },
-    -- paru -S rustup rust-analyzer
     rust = {
       ts = 'rust',
       ft = 'rust',
@@ -216,7 +213,6 @@ return {
       ts = 'make',
       ft = 'make',
     },
-    -- paru -S marksman
     markdown = {
       ts = {
         'markdown_inline',

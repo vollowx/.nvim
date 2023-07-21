@@ -16,6 +16,7 @@
   "dropbar.nvim": { "branch": "master", "commit": "90fc6aa051d31f22b512f967cd1485dc0d1cf32a" },
   "fidget.nvim": { "branch": "main", "commit": "89b633f3bd0b7187f070236b348697de176860e2" },
   "flatten.nvim": { "branch": "main", "commit": "c6f3950d1b0e40fb267366c356d99ed5ab10a15a" },
+  "git-conflict.nvim": { "branch": "main", "commit": "3c89812a83ac749b8851a473863958325a1cd57c" },
   "gitsigns.nvim": { "branch": "main", "commit": "adcf2c7f2f495f5df148683764bf7cba6a70f34c" },
   "glance.nvim": { "branch": "master", "commit": "3e7158ffaaa0fa1f7268df30ae40f24c07b840d1" },
   "indent-blankline.nvim": { "branch": "master", "commit": "4541d690816cb99a7fc248f1486aa87f3abce91c" },
@@ -43,7 +44,6 @@
   "toggleterm.nvim": { "branch": "main", "commit": "00c13dccc78c09fa5da4c5edda990a363e75035e" },
   "ts-node-action": { "branch": "master", "commit": "266bbe493f1285107341dd27875875ec1d80553d" },
   "vim-easy-align": { "branch": "master", "commit": "12dd6316974f71ce333e360c0260b4e1f81169c3" },
-  "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },
   "vim-sleuth": { "branch": "master", "commit": "1cc4557420f215d02c4d2645a748a816c220e99b" },
   "vim-table-mode": { "branch": "master", "commit": "9555a3e6e5bcf285ec181b7fc983eea90500feb4" },
   "vimtex": { "branch": "master", "commit": "08371bf97a9c4ce3dbdf996161faf04ff8b32aa0" }

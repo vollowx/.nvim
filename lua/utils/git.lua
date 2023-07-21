@@ -126,7 +126,7 @@ function M.file_worktree(file, worktrees)
   file = file or vim.fn.expand '%'
   for _, worktree in ipairs(worktrees) do
     if
-      require('utils').command.cmd({
+      vim.system({
         'git',
         '--work-tree',
         worktree.toplevel,
