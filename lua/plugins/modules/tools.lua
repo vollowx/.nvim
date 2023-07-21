@@ -83,7 +83,7 @@ return {
   {
     'akinsho/git-conflict.nvim',
     event = 'User GitFile',
-    config = true,
+    config = function() require 'plugins.configs.git-conflict' end,
   },
 
   -- {
