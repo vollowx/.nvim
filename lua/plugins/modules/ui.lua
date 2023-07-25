@@ -48,7 +48,7 @@ return {
   {
     'akinsho/bufferline.nvim',
     event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
-    config = function() require 'plugins.configs.bufferline' end
+    config = function() require 'plugins.configs.bufferline' end,
   },
   {
     'Bekaboo/dropbar.nvim',
@@ -74,7 +74,6 @@ return {
     },
     config = function() require 'plugins.configs.nvim-tree' end,
   },
-
 
   {
     'lukas-reineke/indent-blankline.nvim',

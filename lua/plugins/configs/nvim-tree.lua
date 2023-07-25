@@ -14,8 +14,8 @@ require('nvim-tree').setup {
       git_placement = 'after',
 
       glyphs = {
-        default = vim.trim(icons.File)
-      }
+        default = vim.trim(icons.File),
+      },
     },
   },
 }

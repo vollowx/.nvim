@@ -1,7 +1,7 @@
-local bufferline = require('bufferline')
+local bufferline = require 'bufferline'
 local icons = require('utils.static').icons
 
-bufferline.setup({
+bufferline.setup {
   options = {
     style_preset = bufferline.style_preset.no_italic,
     separator_style = { '', '' },
@@ -18,8 +18,8 @@ bufferline.setup({
       {
         filetype = 'NvimTree',
         text = '',
-      }
+      },
     },
-    highlights = require("catppuccin.groups.integrations.bufferline").get()
+    highlights = require('catppuccin.groups.integrations.bufferline').get(),
   },
-})
+}

@@ -6,7 +6,7 @@ require('catppuccin').setup {
     treesitter = true,
     native_lsp = { enabled = true },
     cmp = true,
-    dropbar = true;
+    dropbar = true,
     fidget = true,
     gitsigns = true,
     indent_blankline = { enabled = true, colored_indent_levels = false },

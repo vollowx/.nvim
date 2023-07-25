@@ -42,9 +42,7 @@ local autocmds = {
       pattern = '*',
       group = 'WinCloseJmp',
       callback = function()
-        if '' ~= vim.api.nvim_win_get_config(0).relative then
-          return
-        end
+        if '' ~= vim.api.nvim_win_get_config(0).relative then return end
         -- Record the window we jump from (previous) and to (current)
         if nil == vim.t.winid_rec then
           vim.t.winid_rec = {
@@ -59,12 +57,12 @@ local autocmds = {
         end
         -- Loop through all windows to check if the
         -- previous one has been closed
-        for winnr = 1, vim.fn.winnr('$') do
+        for winnr = 1, vim.fn.winnr '$' do
           if vim.fn.win_getid(winnr) == vim.t.winid_rec.prev then
             return -- Return if previous window is not closed
           end
         end
-        vim.cmd('wincmd p')
+        vim.cmd 'wincmd p'
       end,
     },
   },
@@ -78,9 +76,7 @@ local autocmds = {
       callback = function(info)
         local ft = vim.bo[info.buf].ft
         -- don't apply to git messages
-        if ft:match('commit') or ft:match('rebase') then
-          return
-        end
+        if ft:match 'commit' or ft:match 'rebase' then return end
         -- get position of last saved edit
         local markpos = vim.api.nvim_buf_get_mark(0, '"')
         local line = markpos[1]
@@ -88,7 +84,7 @@ local autocmds = {
         -- if in range, go there
         if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
           vim.api.nvim_win_set_cursor(0, { line, col })
-          vim.cmd.normal({ 'zvzz', bang = true })
+          vim.cmd.normal { 'zvzz', bang = true }
         end
       end,
     },
@@ -121,13 +117,9 @@ local autocmds = {
       group = 'RestoreBackground',
       once = true,
       callback = function()
-        if vim.g.theme_restored then
-          return
-        end
+        if vim.g.theme_restored then return end
         vim.g.theme_restored = true
-        if vim.g.BACKGROUND and vim.g.BACKGROUND ~= vim.go.background then
-          vim.go.background = vim.g.BACKGROUND
-        end
+        if vim.g.BACKGROUND and vim.g.BACKGROUND ~= vim.go.background then vim.go.background = vim.g.BACKGROUND end
         if not vim.g.colors_name or vim.g.COLORSNAME ~= vim.g.colors_name then
           vim.cmd('silent! colorscheme ' .. (vim.g.COLORSNAME or 'catppuccin-mocha'))
         end
@@ -153,21 +145,15 @@ local autocmds = {
         -- -> receiving signals from other nvim instances
         -- -> setting bg
         -- -> ...
-        if vim.g.sig_hrtime and hrtime - vim.g.sig_hrtime < 500000000 then
-          return
-        end
+        if vim.g.sig_hrtime and hrtime - vim.g.sig_hrtime < 500000000 then return end
         vim.g.sig_hrtime = hrtime
         vim.cmd.rshada()
         -- Must save the background and colorscheme name read from ShaDa
         -- because setting background or colorscheme will overwrite them
         local background = vim.g.BACKGROUND or 'dark'
         local colors_name = vim.g.COLORSNAME or 'catppuccin-mocha'
-        if vim.go.background ~= background then
-          vim.go.background = background
-        end
-        if vim.g.colors_name ~= colors_name then
-          vim.cmd('silent! colorscheme ' .. colors_name)
-        end
+        if vim.go.background ~= background then vim.go.background = background end
+        if vim.g.colors_name ~= colors_name then vim.cmd('silent! colorscheme ' .. colors_name) end
       end,
     },
   },
@@ -180,12 +166,10 @@ local autocmds = {
         vim.g.COLORSNAME = vim.g.colors_name
         vim.cmd.wshada()
         local hrtime = vim.uv.hrtime()
-        if vim.g.sig_hrtime and hrtime - vim.g.sig_hrtime < 500000000 then
-          return
-        end
+        if vim.g.sig_hrtime and hrtime - vim.g.sig_hrtime < 500000000 then return end
         vim.g.sig_hrtime = hrtime
         local pid = vim.fn.getpid()
-        if vim.fn.executable('setbg') == 1 then
+        if vim.fn.executable 'setbg' == 1 then
           vim.uv.spawn('setbg', {
             args = {
               vim.go.background,
@@ -194,7 +178,7 @@ local autocmds = {
             stdio = { nil, nil, nil },
           })
         end
-        if vim.fn.executable('setcolors') == 1 then
+        if vim.fn.executable 'setcolors' == 1 then
           vim.uv.spawn('setcolors', {
             args = {
               vim.g.colors_name,

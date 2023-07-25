@@ -1,5 +1,5 @@
 local toggleterm = require 'toggleterm'
-local terminal = require('toggleterm.terminal')
+local terminal = require 'toggleterm.terminal'
 
 local border = require('core.settings').border
 
