@@ -35,6 +35,65 @@ local autocmds = {
     },
   },
 
+  -- Jump to last accessed window on closing the current one
+  {
+    { 'WinEnter' },
+    {
+      pattern = '*',
+      group = 'WinCloseJmp',
+      callback = function()
+        if '' ~= vim.api.nvim_win_get_config(0).relative then
+          return
+        end
+        -- Record the window we jump from (previous) and to (current)
+        if nil == vim.t.winid_rec then
+          vim.t.winid_rec = {
+            prev = vim.fn.win_getid(),
+            current = vim.fn.win_getid(),
+          }
+        else
+          vim.t.winid_rec = {
+            prev = vim.t.winid_rec.current,
+            current = vim.fn.win_getid(),
+          }
+        end
+        -- Loop through all windows to check if the
+        -- previous one has been closed
+        for winnr = 1, vim.fn.winnr('$') do
+          if vim.fn.win_getid(winnr) == vim.t.winid_rec.prev then
+            return -- Return if previous window is not closed
+          end
+        end
+        vim.cmd('wincmd p')
+      end,
+    },
+  },
+
+  -- Last-position-jump
+  {
+    { 'BufReadPost' },
+    {
+      pattern = '*',
+      group = 'LastPosJmp',
+      callback = function(info)
+        local ft = vim.bo[info.buf].ft
+        -- don't apply to git messages
+        if ft:match('commit') or ft:match('rebase') then
+          return
+        end
+        -- get position of last saved edit
+        local markpos = vim.api.nvim_buf_get_mark(0, '"')
+        local line = markpos[1]
+        local col = markpos[2]
+        -- if in range, go there
+        if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
+          vim.api.nvim_win_set_cursor(0, { line, col })
+          vim.cmd.normal({ 'zvzz', bang = true })
+        end
+      end,
+    },
+  },
+
   -- Automatically change local current directory
   {
     { 'BufReadPost', 'BufWinEnter', 'FileChangedShellPost' },
@@ -311,7 +370,7 @@ local autocmds = {
   {
     { 'BufReadPost', 'BufNewFile', 'BufWritePost' },
     {
-      group = 'file_user_events',
+      group = 'FileEvents',
       callback = function(args)
         if
           not (vim.fn.expand '%' == '' or vim.api.nvim_get_option_value('buftype', { buf = args.buf }) == 'nofile')
@@ -322,7 +381,7 @@ local autocmds = {
             or require('utils').command.cmd({ 'git', '-C', vim.fn.expand '%:p:h', 'rev-parse' }, false)
           then
             release_event 'GitFile'
-            vim.api.nvim_del_augroup_by_name 'file_user_events'
+            vim.api.nvim_del_augroup_by_name 'FileEvents'
           end
         end
       end,

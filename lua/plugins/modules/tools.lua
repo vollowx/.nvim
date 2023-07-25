@@ -86,13 +86,6 @@ return {
     config = function() require 'plugins.configs.git-conflict' end,
   },
 
-  -- {
-  --   'kevinhwang91/rnvimr',
-  --   config = function()
-  --     require('configs.rnvimr')
-  --   end,
-  -- },
-
   {
     'NvChad/nvim-colorizer.lua',
     event = 'User File',
