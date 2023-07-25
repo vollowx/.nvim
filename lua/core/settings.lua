@@ -3,8 +3,6 @@ return {
   use_ssh = false,
 
   -- Appearance
-  colorscheme = 'catppuccin',
-  palette_overwrite = {},
   transparent_background = false,
   border = 'single',
   icons = {
@@ -119,6 +117,7 @@ return {
       CheckList = '󰗇 ',
       Circle = '󰝥 ',
       CircleUnfilled = '󰝦 ',
+      CircleSmall = '󰧞 ',
       Diamond = '󰣏 ',
       Ellipsis = '… ',
       FileDocument = '󰈙 ',

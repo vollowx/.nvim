@@ -4,38 +4,17 @@ require('catppuccin').setup {
   transparent_background = transparent_background,
   integrations = {
     treesitter = true,
-    native_lsp = {
-      enabled = true,
-      virtual_text = {
-        errors = { 'italic' },
-        hints = { 'italic' },
-        warnings = { 'italic' },
-        information = { 'italic' },
-      },
-      underlines = {
-        errors = { 'underline' },
-        hints = { 'underline' },
-        warnings = { 'underline' },
-        information = { 'underline' },
-      },
-    },
-    aerial = true,
+    native_lsp = { enabled = true },
     cmp = true,
-    dap = { enabled = true, enable_ui = true },
     dropbar = true;
     fidget = true,
     gitsigns = true,
-    hop = false,
     indent_blankline = { enabled = true, colored_indent_levels = false },
     markdown = true,
-    mason = true,
     notify = true,
     nvimtree = true,
     semantic_tokens = true,
     telescope = { enabled = true, style = 'nvchad' },
-    treesitter_context = false,
-    ts_rainbow = true,
-    which_key = false,
   },
   highlight_overrides = {
     ---@param cp palette
@@ -44,13 +23,7 @@ require('catppuccin').setup {
       return {
         -- For indent-blankline
         IndentBlanklineChar = { fg = cp.surface0 },
-        IndentBlanklineContextChar = { fg = cp.surface2, style = { 'bold' } },
-
-        -- For nvim-tree
-        NvimTreeIndentMarker = { fg = cp.surface0 },
-
-        -- For nvim-cokeline
-        TabLineFill = { link = 'StatusLine' },
+        IndentBlanklineContextChar = { fg = cp.surface2 },
 
         -- For status line
         StatusLineHeader = { fg = cp.lavender, bg = cp.crust },

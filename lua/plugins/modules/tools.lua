@@ -3,9 +3,9 @@ local map = require('utils').keymap.set
 -- stylua: ignore start
 map('n', '<C-p>', '<Cmd>Telescope keymaps<CR>', { desc = 'ui: Open command panel' })
 map('n', '<Leader>F', '<Cmd>Telescope builtin<CR>', { desc = 'find: Finders' })
-map('n', '<Leader>ff', '<Cmd>Telescope find_files<CR>', { desc = 'find: File' })
+map('n', '<Leader>ff', '<Cmd>Telescope find_files<CR>', { desc = 'find: Files' })
 map('n', '<Leader>fo', '<Cmd>Telescope oldfiles<CR>', { desc = 'find: Recent files' })
-map('n', '<Leader>fw', '<Cmd>Telescope live_grep<CR>', { desc = 'find: Word' })
+map('n', '<Leader>fw', '<Cmd>Telescope live_grep<CR>', { desc = 'find: Words' })
 map('n', '<Leader>fb', '<Cmd>Telescope buffers<CR>', { desc = 'find: Buffers' })
 map('n', '<Leader>fe', '<Cmd>Telescope diagnostics<CR>', { desc = 'find: Diagnostics' })
 map('n', '<Leader>fr', '<Cmd>Telescope lsp_references<CR>', { desc = 'find: LSP references' })
@@ -13,6 +13,7 @@ map('n', '<Leader>fd', '<Cmd>Telescope lsp_definitions<CR>', { desc = 'find: LSP
 map('n', '<Leader>fg', '<Cmd>Telescope git_status<CR>', { desc = 'find: Git status' })
 map('n', '<Leader>fh', '<Cmd>Telescope help_tags<CR>', { desc = 'find: Help pages' })
 map('n', '<Leader>fm', '<Cmd>Telescope marks<CR>', { desc = 'find: Marks' })
+map('n', '<Leader>fc', '<Cmd>Telescope colorscheme<CR>', { desc = 'find: Color-Schemes' })
 map('n', '<Leader>fu', '<Cmd>Telescope undo<CR>', { desc = 'find: Undoes' })
 map('n', '<Leader>fn', '<Cmd>Telescope notify<CR>', { desc = 'find: Notifications' })
 -- stylua: ignore end

@@ -25,9 +25,9 @@ return {
     lazy = false,
   },
   {
-    'Bekaboo/dropbar.nvim',
+    'rcarriga/nvim-notify',
     lazy = false,
-    config = function() require 'plugins.configs.dropbar' end,
+    config = function() require 'plugins.configs.notify' end,
   },
   {
     'dstein64/nvim-scrollview',
@@ -35,9 +35,14 @@ return {
     config = function() require 'plugins.configs.scrollview' end,
   },
   {
-    'rcarriga/nvim-notify',
-    lazy = false,
-    config = function() require 'plugins.configs.notify' end,
+    'akinsho/bufferline.nvim',
+    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    config = function() require 'plugins.configs.bufferline' end
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = 'User File',
+    config = function() require 'plugins.configs.dropbar' end,
   },
 
   {
