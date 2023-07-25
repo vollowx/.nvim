@@ -221,6 +221,7 @@ return {
     },
     nix = {
       ts = 'nix',
+      -- lsp_server = 'nil',
       formatting = 'nixfmt',
     },
     python = {
@@ -235,7 +236,6 @@ return {
       formatting = 'black',
     },
     yaml = {
-      -- Not running at NixOS
       -- ts = 'yaml',
       ft = 'yaml',
       lsp_server = 'yamlls',
