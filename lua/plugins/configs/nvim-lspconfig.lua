@@ -65,10 +65,12 @@ local function lspconfig_diagnostics()
     -- Enable underline, use default values
     underline = true,
     -- Enable virtual text, override spacing to 4
-    virtual_text = {
-      spacing = 4,
-      prefix = vim.trim(static.icons.AngleLeft),
-    },
+    -- virtual_text = {
+    --   spacing = 4,
+    --   prefix = vim.trim(static.icons.AngleLeft),
+    -- },
+    -- Provided by lsp_lines.nvim
+    virtual_text = false,
   })
 
   -- Disable LSP diagnostics in diff mode

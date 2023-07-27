@@ -29,13 +29,6 @@ ts_configs.setup {
     disable = { 'markdown', 'tex', 'latex' },
     additional_vim_regex_highlighting = false,
   },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
-  endwise = {
-    enable = true,
-  },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -44,6 +37,7 @@ ts_configs.setup {
       node_decremental = 'in',
     },
   },
+
   textobjects = {
     select = {
       enable = true,
@@ -128,5 +122,18 @@ ts_configs.setup {
         ['<C-o>'] = '@function.outer',
       },
     },
+  },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+  },
+  endwise = {
+    enable = true,
+  },
+  autotag = {
+    enable = true,
+    enable_rename = true,
+    enable_close = true,
+    enable_close_on_slash = true,
   },
 }

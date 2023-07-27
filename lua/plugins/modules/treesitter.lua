@@ -26,6 +26,8 @@ return {
       'nvim-treesitter-textobjects',
       'nvim-ts-context-commentstring',
       'nvim-treesitter-endwise',
+      'windwp/nvim-ts-autotag',
+      'CKolkey/ts-node-action',
     },
   },
 
@@ -40,21 +42,24 @@ return {
   },
 
   {
+    'RRethy/nvim-treesitter-endwise',
+    dependencies = 'nvim-treesitter',
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    dependencies = 'nvim-treesitter',
+  },
+
+  {
     'CKolkey/ts-node-action',
-    event = 'User File',
     dependencies = 'nvim-treesitter',
     config = function() require 'plugins.configs.ts-node-action' end,
   },
 
-  -- Will break startup screen texts
   {
     'Eandrju/cellular-automaton.nvim',
     cmd = 'CellularAutomaton',
-    dependencies = 'nvim-treesitter',
-  },
-
-  {
-    'RRethy/nvim-treesitter-endwise',
     dependencies = 'nvim-treesitter',
   },
 }

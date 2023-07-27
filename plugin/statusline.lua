@@ -146,7 +146,7 @@ local components = {
   fname_nc    = ' %#StatusLineWeak#%t%* ',
   info        = '%{%v:lua.statusline.info()%}',
   mode        = '%{%v:lua.statusline.mode()%}',
-  padding     = '%#None#  %*',
+  padding     = '%#StatusLine#  %*',
   position    = '%#StatusLineFaded#%l:%c%* ',
   truncate    = '%<',
 }
