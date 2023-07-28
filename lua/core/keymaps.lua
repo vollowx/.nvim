@@ -46,7 +46,7 @@ end, { desc = 'window: Close floating windows' })
 
 map(
   't',
-  '<C-Esc>',
+  '<C-x>',
   vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true),
   { desc = 'terminal: Exit terminal mode' }
 )
