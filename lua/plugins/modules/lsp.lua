@@ -49,5 +49,6 @@ return {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',
     config = function() require 'plugins.configs.lsp_lines' end,
+    enabled = false,
   },
 }

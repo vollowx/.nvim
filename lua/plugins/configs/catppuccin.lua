@@ -21,6 +21,12 @@ require('catppuccin').setup {
     all = function(cp)
       local status_line_bg = transparent_background and cp.none or cp.mantle
       return {
+        -- For base configs
+        NormalFloat = { fg = cp.text, bg = transparent_background and cp.none or cp.mantle },
+        FloatBorder = {
+          fg = transparent_background and cp.surface1 or cp.mantle,
+          bg = transparent_background and cp.none or cp.mantle,
+        },
         -- For indent-blankline
         IndentBlanklineChar = { fg = cp.surface0 },
         IndentBlanklineContextChar = { fg = cp.surface2 },
