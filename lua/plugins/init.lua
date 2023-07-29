@@ -111,7 +111,7 @@ local function enable_modules(module_names)
         runtime = vim.trim(icons.ui.Vim),
         source = vim.trim(icons.ui.Code),
         start = vim.trim(icons.ui.TriangleRight),
-        task = vim.trim(icons.ui.CheckList),
+        task = icons.ui.CheckList,
         list = {
           icons.ui.Circle,
           icons.ui.CircleUnfilled,

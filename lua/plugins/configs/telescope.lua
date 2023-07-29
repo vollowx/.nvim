@@ -84,7 +84,7 @@ telescope.setup {
     layout_strategy = 'flex',
     layout_config = {
       width = 0.87,
-      height = 0.8,
+      height = 0.80,
       horizontal = {
         prompt_position = 'top',
         preview_width = 0.55,

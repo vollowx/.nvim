@@ -1,11 +1,13 @@
 local map = require('utils').keymap.set
 
-map('n', '<Leader>li', '<Cmd>LspInfo<CR>', { desc = 'lsp: Server info' })
+map('n', '<Leader>li', '<Cmd>LspInfo<CR>', { desc = 'lsp: Server information' })
+map('n', '<Leader>ni', '<Cmd>NullLsInfo<CR>', { desc = 'null-ls: Server information' })
 
 return {
   {
     'neovim/nvim-lspconfig',
     event = 'User File',
+    cmd = { 'LspInfo', 'LspStart' },
     config = function() require 'plugins.configs.nvim-lspconfig' end,
   },
 
@@ -22,7 +24,6 @@ return {
     cmd = {
       'NullLsLog',
       'NullLsInfo',
-      'NullLsFormatOnSaveToggle',
     },
     dependencies = { 'plenary.nvim' },
     config = function() require 'plugins.configs.null-ls' end,

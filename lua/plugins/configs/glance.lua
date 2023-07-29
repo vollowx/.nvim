@@ -1,20 +1,17 @@
 local glance = require 'glance'
 local actions = glance.actions
-local utils = require 'utils'
+local icons = require('utils.static').icons
 local horiz = vim.opt.fillchars:get().horiz
 
 glance.setup {
-  height = 16,
-  detached = function(win) return vim.api.nvim_win_get_width(win) < 80 end,
   theme = {
     mode = 'darken',
   },
   folds = {
-    fold_closed = utils.static.icons.AngleRight,
-    fold_open = utils.static.icons.AngleDown,
+    fold_closed = icons.AngleRight,
+    fold_open = icons.AngleDown,
   },
   indent_lines = {
-    enable = true,
     icon = ' ',
   },
   border = {
