@@ -42,6 +42,7 @@ return {
 
   {
     'j-hui/fidget.nvim',
+    branch = 'legacy',
     event = 'LspAttach',
     config = function() require 'plugins.configs.fidget' end,
   },

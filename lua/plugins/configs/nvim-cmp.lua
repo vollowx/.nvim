@@ -1,10 +1,7 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-local borders = require('utils.static').borders
 local icons = require('utils.static').icons
 local t = function(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
-
-local border = require('core.settings').border
 
 ---Filter out unwanted entries
 ---@param entry cmp.Entry
@@ -20,38 +17,30 @@ end
 
 cmp.setup {
   formatting = {
-    fields = { 'kind', 'abbr', 'menu' },
+    fields = { 'abbr', 'kind', 'menu' },
     format = function(entry, cmp_item)
       ---@type table<string, string> override icons with `entry.source.name`
       local icon_override = {
-        cmdline = icons.Terminal,
+        cmdline = icons.Command,
         calc = icons.Calculator,
       }
-      cmp_item.kind = icon_override[entry.source.name] or icons[cmp_item.kind]
-      ---@param field string
-      ---@param min_width integer
-      ---@param max_width integer
-      ---@return nil
-      local function clamp(field, min_width, max_width)
-        if not cmp_item[field] or not type(cmp_item) == 'string' then return end
-        -- In case that min_width > max_width
-        if min_width > max_width then
-          min_width, max_width = max_width, min_width
-        end
-        local field_str = cmp_item[field]
-        local field_width = vim.fn.strdisplaywidth(field_str)
-        if field_width > max_width then
-          local former_width = math.floor(max_width * 0.6)
-          local latter_width = math.max(0, max_width - former_width - 1)
-          cmp_item[field] = string.format('%s…%s', field_str:sub(1, former_width), field_str:sub(-latter_width))
-        elseif field_width < min_width then
-          cmp_item[field] = string.format('%-' .. min_width .. 's', field_str)
-        end
-      end
-      clamp('abbr', vim.go.pumwidth, 32)
-      clamp('menu', 0, 16)
+      cmp_item.kind = (icon_override[entry.source.name] or icons[cmp_item.kind]) .. ' ' .. cmp_item.kind
       return cmp_item
     end,
+  },
+  -- Scrollbar provided by nvim-scrollview
+  window = {
+    completion = {
+      border = 'solid',
+      col_offset = -1,
+    },
+    documentation = {
+      border = 'solid',
+    },
+  },
+  performance = {
+    async_budget = 1,
+    max_view_entries = 120,
   },
   experimental = { ghost_text = { hl_group = 'Whitespace' } },
   snippet = {
@@ -154,15 +143,6 @@ cmp.setup {
       cmp.config.compare.exact,
       cmp.config.compare.score,
     },
-  },
-  -- Scrollbar provided by nvim-scrollview
-  window = {
-    completion = { scrollbar = false },
-    documentation = { scrollbar = false },
-  },
-  performance = {
-    async_budget = 1,
-    max_view_entries = 120,
   },
 }
 

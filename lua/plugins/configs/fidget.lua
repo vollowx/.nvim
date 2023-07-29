@@ -1,4 +1,5 @@
 require('fidget').setup {
+  window = { blend = 0 },
   text = {
     spinner = 'dots',
     done = vim.trim(require('utils.static').icons.ui.Check),
