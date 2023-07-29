@@ -16,8 +16,18 @@ require('catppuccin').setup {
     semantic_tokens = true,
     telescope = { enabled = true, style = 'nvchad' },
   },
+  -- OLED-ppuccin
+  color_overrides = {
+    mocha = {
+      surface2 = '#373737',
+      surface1 = '#2c2c2c',
+      surface0 = '#212121',
+      base = '#000000',
+      mantle = '#0b0b0b',
+      crust = '#161616',
+    },
+  },
   highlight_overrides = {
-    ---@param cp palette
     all = function(cp)
       local status_line_bg = transparent_background and cp.none or cp.mantle
       return {
@@ -27,6 +37,15 @@ require('catppuccin').setup {
           fg = transparent_background and cp.surface1 or cp.mantle,
           bg = transparent_background and cp.none or cp.mantle,
         },
+        TelescopeBorder = {
+          fg = transparent_background and cp.surface1 or cp.mantle,
+          bg = transparent_background and cp.none or cp.mantle,
+        },
+        TelescopePromptBorder = {
+          fg = transparent_background and cp.surface1 or cp.surface0,
+          bg = transparent_background and cp.none or cp.surface0,
+        },
+
         -- For indent-blankline
         IndentBlanklineChar = { fg = cp.surface0 },
         IndentBlanklineContextChar = { fg = cp.surface2 },

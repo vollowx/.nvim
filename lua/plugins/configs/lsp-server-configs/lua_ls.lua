@@ -61,26 +61,6 @@ return {
           },
         },
       })
-      -- Not using Awesome WM
-      --[[ elseif vim.startswith(root_dir, config_path('awesome')) then
-      config.settings = vim.tbl_deep_extend('force', settings, {
-        Lua = {
-          runtime = {
-            path = {
-              '/usr/share/awesome/lib',
-              '/usr/share/awesome/themes',
-            },
-          },
-          diagnostics = {
-            globals = {
-              'awesome',
-              'client',
-              'screen',
-              'root',
-            },
-          },
-        },
-      }) ]]
     end
   end,
 }
