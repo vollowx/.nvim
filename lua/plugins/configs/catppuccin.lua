@@ -20,12 +20,12 @@ require('catppuccin').setup {
   -- OLED-ppuccin
   color_overrides = {
     mocha = {
-      surface2 = '#373737',
-      surface1 = '#2c2c2c',
-      surface0 = '#212121',
+      surface2 = '#333333',
+      surface1 = '#212121',
+      surface0 = '#171717',
       base = '#000000',
-      mantle = '#0b0b0b',
-      crust = '#161616',
+      mantle = '#010101',
+      crust = '#020202',
     },
   },
   highlight_overrides = {
