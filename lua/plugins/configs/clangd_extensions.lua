@@ -6,9 +6,9 @@ local border = require('core.settings').border
 require('clangd_extensions').setup {
   server = default_config,
   extensions = {
-    autoSetHints = false,
+    autoSetHints = true,
     inlay_hints = {
-      only_current_line = true,
+      only_current_line = false,
       highlight = 'LspInlayHint',
     },
     ast = {
