@@ -162,7 +162,7 @@ else
   enable_modules {
     'base',
     'completion',
-    -- 'debug',
+    'debug',
     'editor',
     'lsp',
     'markup',
