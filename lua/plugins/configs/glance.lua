@@ -4,9 +4,6 @@ local icons = require('utils.static').icons
 local horiz = vim.opt.fillchars:get().horiz
 
 glance.setup {
-  theme = {
-    mode = 'darken',
-  },
   folds = {
     fold_closed = icons.AngleRight,
     fold_open = icons.AngleDown,

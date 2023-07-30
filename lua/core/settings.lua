@@ -96,7 +96,10 @@ return {
     git = {
       Add = '󰜄 ',
       Mod = '󱗝 ',
+      Rename = '󰜶 ',
       Remove = '󰛲 ',
+      Unmerged = ' ',
+      Untracked = '󰘥 '
     },
     ui = {
       AngleDown = '󰅀 ',
@@ -122,10 +125,13 @@ return {
       Ellipsis = '… ',
       FileDocument = '󰈙 ',
       Flag = '󰈼 ',
+      FolderEmpty = '󰉖 ',
+      FolderEmptyOpen = '󰷏 ',
+      FolderLink = '󰉒 ',
+      FolderOpen = '󰝰 ',
       Ghost = '󰊠 ',
       Import = '󰋺 ',
       Keyboard = '󰌌 ',
-      Lightning = '󱐋 ',
       Magnify = '󰍉 ',
       Package = '󰏖 ',
       Pencil = '󰲶 ',

@@ -99,7 +99,7 @@ local function enable_modules(module_names)
       icons = {
         cmd = vim.trim(icons.ui.Command),
         config = vim.trim(icons.ui.Cog),
-        event = vim.trim(icons.ui.Lightning),
+        event = vim.trim(icons.kinds.Event),
         ft = vim.trim(icons.ui.FileDocument),
         init = vim.trim(icons.ui.Flag),
         import = vim.trim(icons.ui.Import),
