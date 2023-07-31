@@ -41,7 +41,7 @@ return {
 
   {
     'willothy/flatten.nvim',
-    event = 'VeryLazy',
+    lazy = false,
     config = function() require 'plugins.configs.flatten' end,
   },
 
