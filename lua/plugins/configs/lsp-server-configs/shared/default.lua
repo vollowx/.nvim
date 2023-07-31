@@ -40,7 +40,7 @@ local function setup_keymaps(_, bufnr)
       end
     end
   end
-  local map = require('utils').keymap.set
+  local map = utils.keymap.set
   -- stylua: ignore start
   map('n', '<A-f>',      vim.lsp.buf.format,        { buffer = bufnr, desc = 'lsp: Format' })
   map('n', 'ga',         vim.lsp.buf.code_action,   { buffer = bufnr, desc = 'lsp: Go to code actions' })
@@ -815,6 +815,13 @@ local function setup_diagnostics_on_mode_change(_, bufnr)
   })
 end
 
+---Automatically enable / disable diagnostics on mode change
+---@param _ table LS client, ignored
+---@param bufnr number buffer handler
+local function setup_inlay_hints(_, bufnr)
+  if _.server_capabilities.inlayHintProvider ~= nil then vim.lsp.inlay_hint(bufnr, true) end
+end
+
 ---Set up keymaps and commands
 ---@param client table LS client, ignored
 ---@param bufnr number buffer handler
@@ -825,6 +832,7 @@ local function on_attach(client, bufnr)
     setup_commands(client, bufnr, 'Lsp', subcommands.lsp.buf, vim.lsp.buf)
     setup_commands(client, bufnr, 'Diagnostic', subcommands.diagnostic, vim.diagnostic)
     setup_diagnostics_on_mode_change(client, bufnr)
+    setup_inlay_hints(client, bufnr)
   end
 end
 

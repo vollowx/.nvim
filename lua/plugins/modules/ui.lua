@@ -48,7 +48,7 @@ return {
   },
   {
     'akinsho/bufferline.nvim',
-    event = { 'BufReadPost', 'BufAdd', 'BufNewFile' },
+    event = { 'BufAdd', 'BufNewFile', 'BufReadPost' },
     config = function() require 'plugins.configs.bufferline' end,
   },
   {

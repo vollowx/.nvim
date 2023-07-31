@@ -1,6 +1,7 @@
 local icons = require('utils.static').icons
 
 require('nvim-tree').setup {
+  disable_netrw = true,
   hijack_cursor = true,
   sync_root_with_cwd = true,
   update_focused_file = {
@@ -10,10 +11,12 @@ require('nvim-tree').setup {
   filters = {
     git_ignored = false,
   },
+  view = {
+    preserve_window_proportions = true,
+  },
   renderer = {
-    highlight_git = true,
-
     icons = {
+      highlight_git = true,
       git_placement = 'after',
       symlink_arrow = ' ' .. icons.ui.ArrowRight,
       glyphs = {
@@ -34,7 +37,7 @@ require('nvim-tree').setup {
           unstaged = icons.git.Mod,
           staged = icons.git.Add,
           unmerged = icons.git.Unmerged,
-          renamed = icons.git.Rename, --󰁔
+          renamed = icons.git.Rename,
           untracked = icons.git.Untracked,
           deleted = icons.git.Remove,
           ignored = icons.ui.CircleUnfilled,

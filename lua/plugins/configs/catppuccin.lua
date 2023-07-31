@@ -24,8 +24,8 @@ require('catppuccin').setup {
       surface1 = '#212121',
       surface0 = '#171717',
       base = '#000000',
-      mantle = '#010101',
-      crust = '#020202',
+      mantle = '#000000',
+      crust = '#000000',
     },
   },
   highlight_overrides = {

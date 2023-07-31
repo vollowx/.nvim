@@ -372,17 +372,6 @@ local autocmds = {
     },
   },
 
-  {
-    'LspAttach',
-    {
-      group = 'LspKeymapLoader',
-      callback = function(event)
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client.server_capabilities.inlayHintProvider ~= nil then vim.lsp.inlay_hint(0, true) end
-      end,
-    },
-  },
-
   -- File detection (File and GitFile) for lazy.nvim
   {
     { 'BufReadPost', 'BufNewFile', 'BufWritePost' },

@@ -23,20 +23,6 @@ map('tn', '<A-\\>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = 'terminal
 map('tn', '<A-e>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = 'terminal: Toggle horizontal' })
 map('tn', '<A-g>', '<Cmd>Lazygit<CR>', { desc = 'terminal: Toggle LazyGit' })
 
--- stylua: ignore start
-map('n', ']g', function() require('gitsigns').next_hunk() end, { desc = 'git: Next Git hunk' })
-map('n', '[g', function() require('gitsigns').prev_hunk() end, { desc = 'git: Previous Git hunk' })
-map('n', '<Leader>gl', function() require('gitsigns').blame_line() end, { desc = 'git: View Git blame' })
-map('n', '<Leader>gL', function() require('gitsigns').blame_line { full = true } end, { desc = 'git: View full Git blame' })
-map('n', '<Leader>gp', function() require('gitsigns').preview_hunk() end, { desc = 'git: Preview Git hunk' })
-map('n', '<Leader>gh', function() require('gitsigns').reset_hunk() end, { desc = 'git: Reset Git hunk' })
-map('n', '<Leader>gr', function() require('gitsigns').reset_buffer() end, { desc = 'git: Reset Git buffer' })
-map('n', '<Leader>gs', function() require('gitsigns').stage_hunk() end, { desc = 'git: Stage Git hunk' })
-map('n', '<Leader>gS', function() require('gitsigns').stage_buffer() end, { desc = 'git: Stage Git buffer' })
-map('n', '<Leader>gu', function() require('gitsigns').undo_stage_hunk() end, { desc = 'git: Unstage Git hunk' })
-map('n', '<Leader>gd', function() require('gitsigns').diffthis() end, { desc = 'git: View Git diff' })
--- stylua: ignore end
-
 return {
   {
     'nvim-telescope/telescope.nvim',
@@ -55,7 +41,7 @@ return {
 
   {
     'willothy/flatten.nvim',
-    lazy = false,
+    event = 'VeryLazy',
     config = function() require 'plugins.configs.flatten' end,
   },
 
