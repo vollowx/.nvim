@@ -15,8 +15,8 @@ require('nvim-tree').setup {
     preserve_window_proportions = true,
   },
   renderer = {
+    highlight_git = true,
     icons = {
-      highlight_git = true,
       git_placement = 'after',
       symlink_arrow = ' ' .. icons.ui.ArrowRight,
       glyphs = {
