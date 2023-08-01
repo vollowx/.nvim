@@ -17,17 +17,6 @@ require('catppuccin').setup {
     semantic_tokens = true,
     telescope = { enabled = true, style = 'nvchad' },
   },
-  -- OLED-ppuccin
-  color_overrides = {
-    mocha = {
-      surface2 = '#333333',
-      surface1 = '#212121',
-      surface0 = '#171717',
-      base = '#000000',
-      mantle = '#000000',
-      crust = '#000000',
-    },
-  },
   highlight_overrides = {
     all = function(cp)
       local status_line_bg = transparent_background and cp.none or cp.mantle
