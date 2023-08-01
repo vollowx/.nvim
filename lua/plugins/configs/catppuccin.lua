@@ -19,7 +19,6 @@ require('catppuccin').setup {
   },
   highlight_overrides = {
     all = function(cp)
-      local status_line_bg = transparent_background and cp.none or cp.mantle
       return {
         -- For base configs
         NormalFloat = { fg = cp.text, bg = transparent_background and cp.none or cp.mantle },
@@ -41,19 +40,20 @@ require('catppuccin').setup {
         IndentBlanklineContextChar = { fg = cp.surface2 },
 
         -- For status line
+        StatusLineNone = { bg = cp.base },
         StatusLineHeader = { fg = cp.lavender, bg = cp.crust },
         StatusLineHeaderModified = { fg = cp.rosewater, bg = cp.crust },
-        StatusLineStrong = { fg = cp.text, bg = status_line_bg, style = { 'bold' } },
-        StatusLineWeak = { fg = cp.subtext0, bg = status_line_bg },
-        StatusLineFaded = { fg = cp.subtext0, bg = status_line_bg },
-        StatusLineGitAdded = { fg = cp.green, bg = status_line_bg },
-        StatusLineGitChanged = { fg = cp.blue, bg = status_line_bg },
-        StatusLineGitRemoved = { fg = cp.red, bg = status_line_bg },
-        StatusLineDiagnosticError = { fg = cp.red, bg = status_line_bg },
-        StatusLineDiagnosticWarn = { fg = cp.yellow, bg = status_line_bg },
-        StatusLineDiagnosticInfo = { fg = cp.blue, bg = status_line_bg },
-        StatusLineDiagnosticHint = { fg = cp.rosewater, bg = status_line_bg },
-        StatusLineDiagnosticOK = { fg = cp.green, bg = status_line_bg },
+        StatusLineStrong = { fg = cp.text, bg = cp.mantle, style = { 'bold' } },
+        StatusLineWeak = { fg = cp.subtext0, bg = cp.mantle },
+        StatusLineFaded = { fg = cp.subtext0, bg = cp.mantle },
+        StatusLineGitAdded = { fg = cp.green, bg = cp.mantle },
+        StatusLineGitChanged = { fg = cp.blue, bg = cp.mantle },
+        StatusLineGitRemoved = { fg = cp.red, bg = cp.mantle },
+        StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
+        StatusLineDiagnosticWarn = { fg = cp.yellow, bg = cp.mantle },
+        StatusLineDiagnosticInfo = { fg = cp.blue, bg = cp.mantle },
+        StatusLineDiagnosticHint = { fg = cp.rosewater, bg = cp.mantle },
+        StatusLineDiagnosticOK = { fg = cp.green, bg = cp.mantle },
       }
     end,
   },
