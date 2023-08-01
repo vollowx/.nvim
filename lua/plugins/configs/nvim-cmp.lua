@@ -28,11 +28,11 @@ cmp.setup {
       return cmp_item
     end,
   },
-  -- Scrollbar provided by nvim-scrollview
   window = {
     completion = {
       border = 'solid',
       col_offset = -1,
+      scrollbar = false,
     },
     documentation = {
       border = 'solid',

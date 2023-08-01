@@ -44,7 +44,6 @@ return {
     'dstein64/nvim-scrollview',
     lazy = false,
     config = function() require 'plugins.configs.scrollview' end,
-    enabled = false,
   },
   {
     'akinsho/bufferline.nvim',
