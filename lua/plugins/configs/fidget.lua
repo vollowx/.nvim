@@ -1,5 +1,5 @@
 require('fidget').setup {
-  window = { blend = require('core.settings').transparent_background and 0 or 100 },
+  window = { blend = require('core.settings').transparent and 0 or 100 },
   text = {
     spinner = 'dots',
     done = vim.trim(require('utils.static').icons.ui.Check),

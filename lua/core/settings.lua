@@ -3,7 +3,7 @@ return {
   use_ssh = false,
 
   -- Appearance
-  transparent_background = false,
+  transparent = false,
   border = 'single',
   icons = {
     debug = {

@@ -1,7 +1,7 @@
-local transparent_background = require('core.settings').transparent_background
+local transparent = require('core.settings').transparent
 
 require('catppuccin').setup {
-  transparent_background = transparent_background,
+  transparent_background = transparent,
   term_colors = true,
   integrations = {
     treesitter = true,
@@ -21,18 +21,22 @@ require('catppuccin').setup {
     all = function(cp)
       return {
         -- For base configs
-        NormalFloat = { fg = cp.text, bg = transparent_background and cp.none or cp.mantle },
+        NormalFloat = { fg = cp.text, bg = transparent and cp.none or cp.mantle },
+        FloatTitle = {
+          fg = transparent and cp.red or cp.base,
+          bg = transparent and cp.none or cp.red,
+        },
         FloatBorder = {
-          fg = transparent_background and cp.surface1 or cp.mantle,
-          bg = transparent_background and cp.none or cp.mantle,
+          fg = transparent and cp.surface1 or cp.mantle,
+          bg = transparent and cp.none or cp.mantle,
         },
         TelescopeBorder = {
-          fg = transparent_background and cp.surface1 or cp.mantle,
-          bg = transparent_background and cp.none or cp.mantle,
+          fg = transparent and cp.surface1 or cp.mantle,
+          bg = transparent and cp.none or cp.mantle,
         },
         TelescopePromptBorder = {
-          fg = transparent_background and cp.surface1 or cp.surface0,
-          bg = transparent_background and cp.none or cp.surface0,
+          fg = transparent and cp.surface1 or cp.surface0,
+          bg = transparent and cp.none or cp.surface0,
         },
 
         -- For indent-blankline

@@ -36,6 +36,11 @@ return {
     lazy = false,
   },
   {
+    'stevearc/dressing.nvim',
+    event = 'VeryLazy',
+    config = function() require 'plugins.configs.dressing' end,
+  },
+  {
     'rcarriga/nvim-notify',
     lazy = false,
     config = function() require 'plugins.configs.notify' end,
