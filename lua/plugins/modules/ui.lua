@@ -49,6 +49,7 @@ return {
     'dstein64/nvim-scrollview',
     lazy = false,
     config = function() require 'plugins.configs.scrollview' end,
+    enabled = false,
   },
   {
     'akinsho/bufferline.nvim',
@@ -84,5 +85,11 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     event = 'User File',
     config = function() require 'plugins.configs.indent-blankline' end,
+  },
+
+  {
+    'NvChad/nvim-colorizer.lua',
+    event = 'User File',
+    config = function() require 'plugins.configs.colorizer' end,
   },
 }

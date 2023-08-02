@@ -21,22 +21,13 @@ require('catppuccin').setup {
     all = function(cp)
       return {
         -- For base configs
-        NormalFloat = { fg = cp.text, bg = transparent and cp.none or cp.mantle },
         FloatTitle = {
           fg = transparent and cp.red or cp.base,
           bg = transparent and cp.none or cp.red,
         },
         FloatBorder = {
-          fg = transparent and cp.surface1 or cp.mantle,
+          fg = transparent and cp.blue or cp.mantle,
           bg = transparent and cp.none or cp.mantle,
-        },
-        TelescopeBorder = {
-          fg = transparent and cp.surface1 or cp.mantle,
-          bg = transparent and cp.none or cp.mantle,
-        },
-        TelescopePromptBorder = {
-          fg = transparent and cp.surface1 or cp.surface0,
-          bg = transparent and cp.none or cp.surface0,
         },
 
         -- For indent-blankline
@@ -60,9 +51,9 @@ require('catppuccin').setup {
         StatusLineDiagnosticOK = { fg = cp.green, bg = cp.mantle },
 
         -- For glance.nvim
-        GlanceWinBarFilename = { fg = cp.subtext1, bg = cp.mantle, style = { 'bold' } },
-        GlanceWinBarFilepath = { fg = cp.subtext0, bg = cp.mantle, style = { 'italic' } },
-        GlanceWinBarTitle = { fg = cp.teal, bg = cp.crust, style = { 'bold' } },
+        GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },
+        GlanceWinBarFilepath = { fg = cp.subtext0, style = { 'italic' } },
+        GlanceWinBarTitle = { fg = cp.teal, style = { 'bold' } },
         GlanceListCount = { fg = cp.lavender },
         GlanceListFilepath = { link = 'Comment' },
         GlanceListFilename = { fg = cp.blue },
