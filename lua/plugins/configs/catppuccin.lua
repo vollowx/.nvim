@@ -50,6 +50,9 @@ require('catppuccin').setup {
         StatusLineDiagnosticHint = { fg = cp.rosewater, bg = cp.mantle },
         StatusLineDiagnosticOK = { fg = cp.green, bg = cp.mantle },
 
+        -- For flash.nvim
+        FlashPromptIcon = { link = 'StatusLineHeaderModified' },
+
         -- For glance.nvim
         GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },
         GlanceWinBarFilepath = { fg = cp.subtext0, style = { 'italic' } },
