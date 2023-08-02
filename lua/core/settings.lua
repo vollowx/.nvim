@@ -227,7 +227,7 @@ return {
     },
     nix = {
       ts = 'nix',
-      -- lsp_server = 'nil',
+      lsp_server = 'nil_ls',
       formatting = 'nixfmt',
     },
     python = {
