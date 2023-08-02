@@ -7,7 +7,7 @@ require('catppuccin').setup {
     treesitter = true,
     native_lsp = { enabled = true },
     cmp = true,
-    dropbar = true,
+    dropbar = { enabled = true, color_mode = true },
     fidget = true,
     gitsigns = true,
     indent_blankline = { enabled = true, colored_indent_levels = false },
@@ -58,6 +58,16 @@ require('catppuccin').setup {
         StatusLineDiagnosticInfo = { fg = cp.blue, bg = cp.mantle },
         StatusLineDiagnosticHint = { fg = cp.rosewater, bg = cp.mantle },
         StatusLineDiagnosticOK = { fg = cp.green, bg = cp.mantle },
+
+        -- For glance.nvim
+        GlanceWinBarFilename = { fg = cp.subtext1, bg = cp.mantle, style = { 'bold' } },
+        GlanceWinBarFilepath = { fg = cp.subtext0, bg = cp.mantle, style = { 'italic' } },
+        GlanceWinBarTitle = { fg = cp.teal, bg = cp.crust, style = { 'bold' } },
+        GlanceListCount = { fg = cp.lavender },
+        GlanceListFilepath = { link = 'Comment' },
+        GlanceListFilename = { fg = cp.blue },
+        GlanceListMatch = { fg = cp.lavender, style = { 'bold' } },
+        GlanceFoldIcon = { fg = cp.green },
       }
     end,
   },

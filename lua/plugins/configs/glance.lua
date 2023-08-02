@@ -4,12 +4,14 @@ local icons = require('utils.static').icons
 local horiz = vim.opt.fillchars:get().horiz
 
 glance.setup {
+  height = 20,
+  zindex = 50,
+  theme = {
+    mode = 'darken',
+  },
   folds = {
     fold_closed = icons.AngleRight,
     fold_open = icons.AngleDown,
-  },
-  indent_lines = {
-    icon = ' ',
   },
   border = {
     enable = require('core.settings').transparent,
@@ -59,7 +61,6 @@ glance.setup {
   },
 }
 
----@diagnostic disable: duplicate-set-field
 -- Override LSP handler functions
 -- stylua: ignore start
 vim.lsp.buf.references = function() glance.open('references') end
@@ -67,4 +68,3 @@ vim.lsp.buf.definition = function() glance.open('definitions') end
 vim.lsp.buf.type_definition = function() glance.open('type_definitions') end
 vim.lsp.buf.implementations = function() glance.open('implementations') end
 -- stylua: ignore end
----@diagnostic enable: duplicate-set-field
