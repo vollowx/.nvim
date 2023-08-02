@@ -32,6 +32,7 @@ nvim
 
 ## Todoes
 
-- [ ] Inlay hints
-- [ ] Noice.nvim, maybe
+- [x] Inlay hints
+- [x] `dressing.nvim`
+- [ ] `noice.nvim`, maybe
 - [ ] How to use DAP...

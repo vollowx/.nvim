@@ -4,11 +4,12 @@ local terminal = require 'toggleterm.terminal'
 local border = require('core.settings').border
 
 toggleterm.setup {
-  open_mapping = '<C-\\><C-\\>',
+  open_mapping = false,
   shade_terminals = false,
   start_in_insert = false,
   hide_numbers = true,
   autochdir = false,
+  persist_mode = false,
   persist_size = false,
   direction = 'horizontal',
   float_opts = {

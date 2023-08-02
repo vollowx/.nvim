@@ -12,7 +12,7 @@ glance.setup {
     icon = ' ',
   },
   border = {
-    enable = false,
+    enable = require('core.settings').transparent,
     top_char = horiz,
     bottom_char = horiz,
   },
