@@ -1,5 +1,5 @@
 require('flash').setup {
   prompt = {
-    prefix = { { '  ', 'FlashPrompt' }, { ' SE ', 'FlashPromptIcon' }, { ' ', 'FlashPrompt' } },
+    prefix = { { '  ', 'FlashPrompt' }, { ' FL ', 'FlashPromptIcon' }, { ' ', 'FlashPrompt' } },
   },
 }
