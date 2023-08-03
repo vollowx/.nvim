@@ -1,5 +1,5 @@
 require('flash').setup {
   prompt = {
-    prefix = { { '  ', 'FlashPrompt' }, { ' FL ', 'FlashPromptIcon' }, { ' ', 'FlashPrompt' } },
+    prefix = { { '  ', 'StatusLineNone' }, { ' FL ', 'StatusLineHeaderModified' }, { ' ', 'StatusLineNone' } },
   },
 }
