@@ -48,6 +48,9 @@ opt.diffopt:append 'algorithm:patience'
 opt.backup = true
 opt.backupdir = { fn.stdpath 'data' .. '/backup//' }
 
+-- Disable intro texts
+opt.shortmess:append 'I'
+
 -- stylua: ignore start
 opt.list = true
 opt.listchars = {

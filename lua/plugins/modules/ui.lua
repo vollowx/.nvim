@@ -42,24 +42,24 @@ return {
   },
   {
     'rcarriga/nvim-notify',
-    lazy = false,
+    event = 'VeryLazy',
     config = function() require 'plugins.configs.notify' end,
+  },
+  {
+    'akinsho/bufferline.nvim',
+    event = 'VeryLazy',
+    config = function() require 'plugins.configs.bufferline' end,
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = 'VeryLazy', -- For stable UI layout
+    config = function() require 'plugins.configs.dropbar' end,
   },
   {
     'dstein64/nvim-scrollview',
     lazy = false,
     config = function() require 'plugins.configs.scrollview' end,
     enabled = false,
-  },
-  {
-    'akinsho/bufferline.nvim',
-    event = { 'BufAdd', 'BufNewFile', 'BufReadPost' },
-    config = function() require 'plugins.configs.bufferline' end,
-  },
-  {
-    'Bekaboo/dropbar.nvim',
-    event = 'User File',
-    config = function() require 'plugins.configs.dropbar' end,
   },
 
   {

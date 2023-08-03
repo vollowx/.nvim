@@ -40,12 +40,6 @@ return {
   },
 
   {
-    'willothy/flatten.nvim',
-    lazy = false,
-    config = function() require 'plugins.configs.flatten' end,
-  },
-
-  {
     'akinsho/toggleterm.nvim',
     cmd = {
       'Lazygit',
@@ -81,7 +75,12 @@ return {
       { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'flash: Jump' },
       { 'S', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'flash: Treesitter' },
       { 'r', mode = 'o', function() require('flash').remote() end, desc = 'flash: Remote' },
-      { 'R', mode = { 'o', 'x' }, function() require('flash').treesitter_search() end, desc = 'flash: Treesitter search' },
+      {
+        'R',
+        mode = { 'o', 'x' },
+        function() require('flash').treesitter_search() end,
+        desc = 'flash: Treesitter search',
+      },
       { '<C-s>', mode = { 'c' }, function() require('flash').toggle() end, desc = 'flash: Toggle search' },
     },
   },
