@@ -36,8 +36,8 @@ require('catppuccin').setup {
 
         -- For status line
         StatusLineNone = { bg = cp.base },
-        StatusLineHeader = { fg = cp.lavender, bg = cp.crust },
-        StatusLineHeaderModified = { fg = cp.rosewater, bg = cp.crust },
+        StatusLineHeader = { fg = cp.lavender, bg = cp.mantle },
+        StatusLineHeaderModified = { fg = cp.rosewater, bg = cp.mantle },
         StatusLineStrong = { fg = cp.text, bg = cp.mantle, style = { 'bold' } },
         StatusLineWeak = { fg = cp.subtext0, bg = cp.mantle },
         StatusLineFaded = { fg = cp.subtext0, bg = cp.mantle },

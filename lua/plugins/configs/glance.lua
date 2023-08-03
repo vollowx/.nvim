@@ -19,18 +19,18 @@ glance.setup {
     bottom_char = horiz,
   },
   hooks = {
-    before_open = function(results, open, jump)
+    before_open = function(results, open, _, method)
       if #results == 0 then
-        vim.notify('[glance.nvim] No results found', vim.log.levels.INFO)
-        return
-      end
-      if #results > 1 then
+        vim.notify(
+          'This method is not supported by any of the servers registered for the current buffer',
+          vim.log.levels.WARN,
+          { title = 'Glance' }
+        )
+      elseif #results == 1 and method == 'references' then
+        vim.notify('The identifier under cursor is the only one found', vim.log.levels.INFO, { title = 'Glance' })
+      else
         open(results)
-        return
       end
-      -- Only one result
-      vim.notify('[glance.nvim] Only one result found', vim.log.levels.INFO)
-      jump(results[1])
     end,
   },
   mappings = {

@@ -3,8 +3,8 @@ local g = vim.g
 local opt = vim.opt
 
 -- stylua: ignore start
-opt.cursorline     = true
 opt.colorcolumn    = '120'
+opt.cursorline     = true
 opt.eb             = false
 opt.foldlevelstart = 99
 opt.guifont        = 'JetbrainsMono Nerd Font:h13'
@@ -29,7 +29,7 @@ opt.undofile       = true
 opt.updatetime     = 10
 opt.visualbell     = true
 opt.winblend       = 0
-opt.wrap           = true
+opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
@@ -80,7 +80,7 @@ opt.hlsearch    = true
 opt.ignorecase  = true
 opt.smartcase   = true
 
-opt.spell         = false
+opt.spell         = true
 opt.spellcapcheck = ''
 opt.spelllang     = 'en,cjk'
 opt.spelloptions  = 'camel'
