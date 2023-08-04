@@ -12,13 +12,6 @@ return {
   },
 
   {
-    'p00f/clangd_extensions.nvim',
-    ft = { 'c', 'cpp' },
-    dependencies = 'nvim-lspconfig',
-    config = function() require 'plugins.configs.clangd_extensions' end,
-  },
-
-  {
     'jose-elias-alvarez/null-ls.nvim',
     event = 'User File',
     cmd = {
@@ -27,6 +20,18 @@ return {
     },
     dependencies = { 'plenary.nvim' },
     config = function() require 'plugins.configs.null-ls' end,
+  },
+
+  {
+    'p00f/clangd_extensions.nvim',
+    ft = { 'c', 'cpp' },
+    dependencies = 'nvim-lspconfig',
+    config = function() require 'plugins.configs.clangd_extensions' end,
+  },
+
+  {
+    'calops/hmts.nvim',
+    ft = 'nix',
   },
 
   {
