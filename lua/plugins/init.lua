@@ -107,7 +107,7 @@ local function enable_modules(module_names)
         lazy = icons.ui.Sleep,
         loaded = vim.trim(icons.ui.CheckCircle),
         not_loaded = vim.trim(icons.ui.Ghost),
-        plugin = vim.trim(icons.ui.Package),
+        plugin = vim.trim(icons.kinds.Package),
         runtime = vim.trim(icons.ui.Vim),
         source = vim.trim(icons.ui.Code),
         start = vim.trim(icons.ui.TriangleRight),
