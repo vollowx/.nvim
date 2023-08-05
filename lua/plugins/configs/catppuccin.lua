@@ -29,7 +29,6 @@ require('catppuccin').setup {
           fg = transparent and cp.red or cp.base,
           bg = transparent and cp.none or cp.red,
         },
-        CursorLineNr = { fg = cp.green },
 
         -- For indent-blankline
         IndentBlanklineChar = { fg = cp.surface0 },
@@ -51,7 +50,7 @@ require('catppuccin').setup {
         -- For glance.nvim
         GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },
         GlanceWinBarFilepath = { fg = cp.subtext0, style = { 'italic' } },
-        GlanceWinBarTitle = { fg = cp.teal, style = { 'bold' } },
+        GlanceWinBarTitle = { fg = cp.mauve, style = { 'bold' } },
         GlanceListCount = { fg = cp.lavender },
         GlanceListFilepath = { link = 'Comment' },
         GlanceListFilename = { fg = cp.blue },
