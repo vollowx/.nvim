@@ -52,7 +52,7 @@ return {
   },
   {
     'dstein64/nvim-scrollview',
-    lazy = false,
+    event = 'VeryLazy',
     config = function() require 'plugins.configs.scrollview' end,
   },
 
