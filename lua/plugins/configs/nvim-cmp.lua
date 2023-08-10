@@ -3,18 +3,6 @@ local luasnip = require 'luasnip'
 local icons = require('utils.static').icons
 local t = function(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
 
----Filter out unwanted entries
----@param entry cmp.Entry
----@param _ cmp.Context ignored
----@return boolean
-local function entry_filter(entry, _)
-  return not vim.tbl_contains({
-    'No matches found',
-    'Searching...',
-    'Workspace loading',
-  }, entry.completion_item.label)
-end
-
 cmp.setup {
   formatting = {
     fields = { 'abbr', 'kind', 'menu' },
@@ -37,6 +25,9 @@ cmp.setup {
     documentation = {
       border = 'solid',
     },
+  },
+  matching = {
+    disallow_partial_fuzzy_matching = false,
   },
   performance = {
     async_budget = 1,
@@ -122,26 +113,32 @@ cmp.setup {
     end, { 'i', 'c' }),
   },
   sources = {
-    { name = 'luasnip' },
     { name = 'nvim_lsp_signature_help' },
     {
       name = 'nvim_lsp',
       max_item_count = 350,
-      entry_filter = entry_filter,
     },
-    { name = 'buffer' },
-    { name = 'spell' },
+    { name = 'nvim_lua' },
+    { name = 'luasnip' },
     { name = 'path' },
+    { name = 'treesitter' },
+    { name = 'spell' },
+    { name = 'buffer' },
     { name = 'calc' },
   },
   sorting = {
+    priority_weight = 2,
     ---@type table[]|function[]
     comparators = {
-      cmp.config.compare.kind,
-      cmp.config.compare.locality,
-      cmp.config.compare.recently_used,
+      cmp.config.compare.offset,
       cmp.config.compare.exact,
+      cmp.config.compare.lsp_scores,
+      cmp.config.compare.sort_text,
       cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.kind,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
     },
   },
 }
