@@ -13,6 +13,12 @@ require('nvim-tree').setup {
   },
   view = {
     preserve_window_proportions = true,
+    float = {
+      enable = true,
+      open_win_config = {
+        col = 2,
+      },
+    },
   },
   renderer = {
     highlight_git = true,
