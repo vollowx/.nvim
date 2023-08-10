@@ -55,6 +55,13 @@ return {
   },
 
   {
+    'folke/todo-comments.nvim',
+    event = 'User File',
+    dependencies = 'plenary.nvim',
+    config = function() require 'plugins.configs.todo-comments' end,
+  },
+
+  {
     'lewis6991/gitsigns.nvim',
     event = 'User GitFile',
     dependencies = 'plenary.nvim',
