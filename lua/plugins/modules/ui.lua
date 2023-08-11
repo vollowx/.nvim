@@ -50,11 +50,6 @@ return {
     event = 'VeryLazy', -- For stable UI layout
     config = function() require 'plugins.configs.dropbar' end,
   },
-  {
-    'dstein64/nvim-scrollview',
-    event = 'VeryLazy',
-    config = function() require 'plugins.configs.scrollview' end,
-  },
 
   {
     'nvim-tree/nvim-tree.lua',
