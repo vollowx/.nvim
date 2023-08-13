@@ -42,7 +42,7 @@ local function setup_keymaps(_, bufnr)
   end
   local map = utils.keymap.set
   -- stylua: ignore start
-  map('n', '<A-f>',      vim.lsp.buf.format,        { buffer = bufnr, desc = 'lsp: Format' })
+  map('nv', '<A-f>',     vim.lsp.buf.format,        { buffer = bufnr, desc = 'lsp: Format' })
   map('n', 'ga',         vim.lsp.buf.code_action,   { buffer = bufnr, desc = 'lsp: Go to code actions' })
   map('n', 'gr',         vim.lsp.buf.rename,        { buffer = bufnr, desc = 'lsp: Rename' })
   map('n', 'gR',         vim.lsp.buf.references,    { buffer = bufnr, desc = 'lsp: Go to references' })
