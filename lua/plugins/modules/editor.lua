@@ -1,7 +1,3 @@
-local map = require('utils').keymap.set
-
-map('nx', 'gea', '<Cmd>EasyAlign<CR>', { desc = 'edit: Align with delimiter' })
-
 return {
   {
     'kylechui/nvim-surround',
@@ -18,8 +14,8 @@ return {
   {
     'numToStr/Comment.nvim',
     keys = {
-      { 'gc', mode = { 'n', 'x' } },
-      { 'gb', mode = { 'n', 'x' } },
+      { 'gc', mode = { 'n', 'x' }, desc = 'comment: toggle lines' },
+      { 'gb', mode = { 'n', 'x' }, desc = 'comment: toggle block' },
     },
     config = function() require 'plugins.configs.Comment' end,
   },
@@ -33,11 +29,5 @@ return {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function() require 'plugins.configs.nvim-autopairs' end,
-  },
-
-  {
-    'junegunn/vim-easy-align',
-    cmd = 'EasyAlign',
-    config = function() require 'plugins.configs.vim-easy-align' end,
   },
 }

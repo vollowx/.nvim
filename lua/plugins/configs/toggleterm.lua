@@ -5,13 +5,12 @@ local border = require('core.settings').border
 
 toggleterm.setup {
   open_mapping = false,
+  insert_mapping = false,
   shade_terminals = false,
-  start_in_insert = false,
-  hide_numbers = true,
   autochdir = false,
   persist_mode = false,
   persist_size = false,
-  direction = 'horizontal',
+  direction = 'float',
   float_opts = {
     border = border,
     width = function() return math.floor(vim.go.columns * 0.7) end,
@@ -36,7 +35,6 @@ toggleterm.setup {
   winbar = {
     enabled = false,
   },
-  on_open = function() vim.cmd 'silent! normal! 0' end,
 }
 
 local num_lazygits = 0

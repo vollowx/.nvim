@@ -1,14 +1,15 @@
-local map = require('utils').keymap.set
-
-map('n', '<Leader>li', '<Cmd>LspInfo<CR>', { desc = 'lsp: Server information' })
-map('n', '<Leader>ni', '<Cmd>NullLsInfo<CR>', { desc = 'null-ls: Server information' })
-
 return {
   {
     'neovim/nvim-lspconfig',
     event = 'User File',
     cmd = { 'LspInfo', 'LspStart' },
     config = function() require 'plugins.configs.nvim-lspconfig' end,
+    keys = {
+      { '<Leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp: Server information' },
+      { '<Leader>lr', '<Cmd>LspRestart<CR>', desc = 'lsp: Restart server' },
+      { '<Leader>ls', '<Cmd>LspStart<CR>', desc = 'lsp: Start server' },
+      { '<Leader>lp', '<Cmd>LspStop<CR>', desc = 'lsp: Stop server' },
+    },
   },
 
   {
@@ -20,6 +21,9 @@ return {
     },
     dependencies = { 'plenary.nvim' },
     config = function() require 'plugins.configs.null-ls' end,
+    keys = {
+      { '<Leader>ni', '<Cmd>NullLsInfo<CR>', desc = 'null-ls: Server information' },
+    },
   },
 
   {
@@ -27,11 +31,6 @@ return {
     ft = { 'c', 'cpp' },
     dependencies = 'nvim-lspconfig',
     config = function() require 'plugins.configs.clangd_extensions' end,
-  },
-
-  {
-    'calops/hmts.nvim',
-    ft = 'nix',
   },
 
   {
@@ -50,12 +49,5 @@ return {
     branch = 'legacy',
     event = 'LspAttach',
     config = function() require 'plugins.configs.fidget' end,
-  },
-
-  {
-    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    event = 'LspAttach',
-    config = function() require 'plugins.configs.lsp_lines' end,
-    enabled = false,
   },
 }

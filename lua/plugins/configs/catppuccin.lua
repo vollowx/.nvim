@@ -31,21 +31,11 @@ require('catppuccin').setup {
         },
 
         -- For indent-blankline
-        IndentBlanklineChar = { fg = cp.surface0 },
-        IndentBlanklineContextChar = { fg = cp.surface2 },
+        IndentBlanklineContextChar = { fg = cp.surface1 },
 
         -- For fidget
         FidgetTask = { bg = cp.none, fg = cp.surface2 },
         FidgetTitle = { fg = cp.blue, style = { 'bold' } },
-
-        -- For nvim-tree
-        NvimTreeRootFolder = { fg = cp.pink },
-
-        -- For telescope.nvim
-        TelescopeMatching = { fg = cp.lavender },
-        TelescopeResultsDiffAdd = { fg = cp.green },
-        TelescopeResultsDiffChange = { fg = cp.yellow },
-        TelescopeResultsDiffDelete = { fg = cp.red },
 
         -- For glance.nvim
         GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },

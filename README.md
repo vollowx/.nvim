@@ -35,4 +35,7 @@ nvim
 - [x] Inlay hints
 - [x] `dressing.nvim`
 - [ ] `noice.nvim`, maybe
-- [ ] How to use DAP...
+- [ ] `nvim-dap`
+- [ ] [lsp_line.nvim](https://git.sr.ht/~whynothugo/lsp_lines.nvim)
+- [ ] `vim-easy-align`
+- [ ] `vimtex`

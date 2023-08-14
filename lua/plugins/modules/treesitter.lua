@@ -1,6 +1,3 @@
-local map = require('utils').keymap.set
-map('n', '<Leader><Leader>', function() require('ts-node-action').node_action() end)
-
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -55,6 +52,13 @@ return {
     'CKolkey/ts-node-action',
     dependencies = 'nvim-treesitter',
     config = function() require 'plugins.configs.ts-node-action' end,
+    keys = {
+      {
+        '<Leader><Leader>',
+        function() require('ts-node-action').node_action() end,
+        desc = 'treesitter: Do node action',
+      },
+    },
   },
 
   {
