@@ -33,6 +33,11 @@ require('catppuccin').setup {
         -- For indent-blankline
         IndentBlanklineContextChar = { fg = cp.surface1 },
 
+        -- For telescope.nvim
+        TelescopePromptNormal = { bg = cp.crust },
+        TelescopePromptBorder = { fg = cp.crust, bg = cp.crust },
+        TelescopePromptPrefix = { bg = cp.crust },
+
         -- For glance.nvim
         GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },
         GlanceWinBarFilepath = { fg = cp.subtext0, style = { 'italic' } },
