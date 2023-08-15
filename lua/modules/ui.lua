@@ -60,4 +60,17 @@ return {
     event = 'User File',
     config = function() require 'configs.colorizer' end,
   },
+
+  {
+    'ojroques/nvim-bufdel',
+    cmd = {
+      'BufDel',
+      'BufDelAll',
+      'BufDelOthers',
+    },
+    keys = {
+      { '<A-q>', '<Cmd>BufDel<CR>', desc = 'buffer: Delete current' },
+      { '<A-S-q>', '<Cmd>BufDel!<CR>', desc = 'buffer: Force delete current' },
+    },
+  },
 }

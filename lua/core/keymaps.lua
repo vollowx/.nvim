@@ -20,8 +20,8 @@ vim.keymap.set({ 'x', 'o' }, '>', '>gv', { desc = 'edit: Increase indent' })
 vim.keymap.set({ 'x', 'o' }, '<', '<gv', { desc = 'edit: Decrease indent' })
 
 -- Buffer navigation
-vim.keymap.set('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>')
-vim.keymap.set('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>')
+vim.keymap.set('n', '<A-j>', '<Cmd>exec v:count1 . "bn"<CR>')
+vim.keymap.set('n', '<A-k>', '<Cmd>exec v:count1 . "bp"<CR>')
 
 -- Correct misspelled word / mark as correct
 vim.keymap.set('i', '<C-S-L>', '<Esc>[szg`]a')
