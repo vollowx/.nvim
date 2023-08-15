@@ -20,6 +20,7 @@ require('catppuccin').setup {
     all = function(cp)
       return {
         -- For base configs
+        None = { bg = cp.none },
         FloatBorder = {
           fg = transparent and cp.blue or cp.mantle,
           bg = transparent and cp.none or cp.mantle,
@@ -48,9 +49,8 @@ require('catppuccin').setup {
         ['@error.cpp'] = { fg = cp.none, style = {} },
 
         -- For status line
-        StatusLineNone = { bg = cp.base },
-        StatusLineHeader = { fg = cp.lavender, bg = cp.mantle },
-        StatusLineHeaderModified = { fg = cp.peach, bg = cp.mantle },
+        StatusLineHeader = { fg = cp.lavender, bg = cp.surface0 },
+        StatusLineHeaderModified = { fg = cp.peach, bg = cp.surface0 },
         StatusLineStrong = { fg = cp.text, bg = cp.mantle, style = { 'bold' } },
         StatusLineWeak = { fg = cp.subtext0, bg = cp.mantle },
         StatusLineFaded = { fg = cp.subtext0, bg = cp.mantle },
