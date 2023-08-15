@@ -1,5 +1,5 @@
 local static = require 'utils.static'
-local server_configs = require 'plugins.configs.lsp-server-configs'
+local server_configs = require 'configs.lsp-server-configs'
 
 local border = require('core.settings').border
 

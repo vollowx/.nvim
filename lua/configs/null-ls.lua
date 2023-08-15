@@ -55,7 +55,7 @@ end
 ---@param type string source type
 ---@param name string source name
 local function null_ls_config_source(type, name)
-  local ok, config = pcall(require, 'plugins.configs.null-ls-configs.' .. type .. '.' .. name)
+  local ok, config = pcall(require, 'configs.null-ls-configs.' .. type .. '.' .. name)
   if not ok then return null_ls.builtins[type][name] end
   return config.config(null_ls.builtins[type][name])
 end
@@ -84,7 +84,7 @@ end
 null_ls.setup {
   sources = null_ls_get_sources(),
   on_attach = function(client, bufnr)
-    local lsp_default_config = require 'plugins.configs.lsp-server-configs.shared.default'
+    local lsp_default_config = require 'configs.lsp-server-configs.shared.default'
     lsp_default_config.on_attach(client, bufnr)
     null_ls_on_attach(client, bufnr)
   end,

@@ -1,7 +1,7 @@
 return {
   {
     'hrsh7th/nvim-cmp',
-    config = function() require 'plugins.configs.nvim-cmp' end,
+    config = function() require 'configs.nvim-cmp' end,
     dependencies = 'LuaSnip',
   },
 
@@ -55,6 +55,6 @@ return {
   {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
-    config = function() require 'plugins.configs.LuaSnip' end,
+    config = function() require 'configs.LuaSnip' end,
   },
 }

@@ -3,7 +3,7 @@ return {
     'neovim/nvim-lspconfig',
     event = 'User File',
     cmd = { 'LspInfo', 'LspStart' },
-    config = function() require 'plugins.configs.nvim-lspconfig' end,
+    config = function() require 'configs.nvim-lspconfig' end,
     keys = {
       { '<Leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp: Server information' },
       { '<Leader>lr', '<Cmd>LspRestart<CR>', desc = 'lsp: Restart server' },
@@ -20,7 +20,7 @@ return {
       'NullLsInfo',
     },
     dependencies = { 'plenary.nvim' },
-    config = function() require 'plugins.configs.null-ls' end,
+    config = function() require 'configs.null-ls' end,
     keys = {
       { '<Leader>ni', '<Cmd>NullLsInfo<CR>', desc = 'null-ls: Server information' },
     },
@@ -30,17 +30,17 @@ return {
     'p00f/clangd_extensions.nvim',
     ft = { 'c', 'cpp' },
     dependencies = 'nvim-lspconfig',
-    config = function() require 'plugins.configs.clangd_extensions' end,
+    config = function() require 'configs.clangd_extensions' end,
   },
 
   {
     'folke/neodev.nvim',
-    config = function() require 'plugins.configs.neodev' end,
+    config = function() require 'configs.neodev' end,
   },
 
   {
     'dnlhc/glance.nvim',
     event = 'LspAttach',
-    config = function() require 'plugins.configs.glance' end,
+    config = function() require 'configs.glance' end,
   },
 }

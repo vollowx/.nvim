@@ -6,7 +6,7 @@ return {
       'plenary.nvim',
       'telescope-undo.nvim',
     },
-    config = function() require 'plugins.configs.telescope' end,
+    config = function() require 'configs.telescope' end,
     keys = {
       { '<C-p>', '<Cmd>Telescope keymaps<CR>', desc = 'ui: Open command panel' },
       { '<Leader>F', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
@@ -43,7 +43,7 @@ return {
       'ToggleTermSendVisualLines',
       'ToggleTermSendVisualSelection',
     },
-    config = function() require 'plugins.configs.toggleterm' end,
+    config = function() require 'configs.toggleterm' end,
     keys = {
       { '<A-i>', '<Cmd>ToggleTerm direction=float<CR>', mode = { 'n', 't' }, desc = 'terminal: Toggle floating' },
       { '<A-v>', '<Cmd>ToggleTerm direction=vertical<CR>', mode = { 'n', 't' }, desc = 'terminal: Toggle vertical' },
@@ -61,14 +61,14 @@ return {
     'folke/todo-comments.nvim',
     event = 'User File',
     dependencies = 'plenary.nvim',
-    config = function() require 'plugins.configs.todo-comments' end,
+    config = function() require 'configs.todo-comments' end,
   },
 
   {
     'lewis6991/gitsigns.nvim',
     event = 'User GitFile',
     dependencies = 'plenary.nvim',
-    config = function() require 'plugins.configs.gitsigns' end,
+    config = function() require 'configs.gitsigns' end,
     keys = {
       { ']g', '<Cmd>Gitsigns next_hunk<CR>', desc = 'git: Next hunk' },
       { '[g', '<Cmd>Gitsigns prev_hunk<CR>', desc = 'git: Previous hunk' },
@@ -88,6 +88,6 @@ return {
   {
     'akinsho/git-conflict.nvim',
     event = 'User GitFile',
-    config = function() require 'plugins.configs.git-conflict' end,
+    config = function() require 'configs.git-conflict' end,
   },
 }

@@ -18,7 +18,7 @@ return {
       'TSEditQueryUserAfter',
     },
     event = 'User File',
-    config = function() require 'plugins.configs.nvim-treesitter' end,
+    config = function() require 'configs.nvim-treesitter' end,
     dependencies = {
       'nvim-treesitter-textobjects',
       'nvim-ts-context-commentstring',
@@ -51,7 +51,7 @@ return {
   {
     'CKolkey/ts-node-action',
     dependencies = 'nvim-treesitter',
-    config = function() require 'plugins.configs.ts-node-action' end,
+    config = function() require 'configs.ts-node-action' end,
     keys = {
       {
         '<Leader><Leader>',

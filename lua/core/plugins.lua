@@ -1,8 +1,10 @@
 local settings = require 'core.settings'
 local border = settings.border
-local use_ssh = settings.use_ssh
 local git = require 'utils.git'
 local icons = require('utils.static').icons
+
+local confpath = vim.fn.stdpath 'config'
+local datapath = vim.fn.stdpath 'data'
 
 ---Read file contents
 ---@param path string
@@ -21,10 +23,10 @@ local function create_autocmd_applypatch()
     pattern = { 'LazyInstall*', 'LazyUpdate*' },
     group = vim.api.nvim_create_augroup('LazyPatches', {}),
     callback = function(info)
-      local patches_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua/plugins/patches')
+      local patches_path = vim.fs.joinpath(confpath, 'patches')
       for patch in vim.fs.dir(patches_path) do
         local patch_path = vim.fs.joinpath(patches_path, patch)
-        local plugin_path = vim.fs.joinpath(vim.g.plugin_path, (patch:gsub('%.patch$', '')))
+        local plugin_path = vim.fs.joinpath(vim.g.package_path, (patch:gsub('%.patch$', '')))
         if vim.uv.fs_stat(plugin_path) then
           if
             info.match:match 'Pre$'
@@ -56,19 +58,19 @@ end
 ---@return boolean success
 local function bootstrap()
   create_autocmd_applypatch()
-  vim.g.plugin_path = vim.fn.stdpath 'data' .. '/lazy'
-  vim.g.plugin_lock = vim.fn.stdpath 'config' .. '/lazy-lock.json'
-  local lazy_path = vim.g.plugin_path .. '/lazy.nvim'
+  vim.g.package_path = datapath .. '/lazy'
+  vim.g.package_lock = confpath .. '/lazy-lock.json'
+  local lazy_path = vim.g.package_path .. '/lazy.nvim'
   vim.opt.rtp:prepend(lazy_path)
   vim.opt.pp:prepend(lazy_path)
   if vim.uv.fs_stat(lazy_path) then return true end
 
-  local lock = read_file(vim.g.plugin_lock)
-  local lock_data = lock and vim.json.decode(lock, {}) or nil
+  local lock = read_file(vim.g.package_lock)
+  local lock_data = lock and vim.json.decode(lock) or nil
   local commit = lock_data and lock_data['lazy.nvim'] and lock_data['lazy.nvim'].commit or nil
-  local url = use_ssh and 'git@github.com:folke/lazy.nvim.git' or 'https://github.com/folke/lazy.nvim.git'
+  local url = 'https://github.com/folke/lazy.nvim.git'
   vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
-  vim.fn.mkdir(vim.g.plugin_path, 'p')
+  vim.fn.mkdir(vim.g.package_path, 'p')
   if
     not git.execute({
       'clone',
@@ -91,11 +93,9 @@ local function enable_modules(module_names)
     defaults = { lazy = true },
     root = vim.g.plugin_path,
     lockfile = vim.g.plugin_lock,
-    git = {
-      url_format = use_ssh and 'git@github.com:%s.git' or 'https://github.com/%s.git',
-    },
     ui = {
       border = border,
+      size = { width = 0.7, height = 0.74 },
       icons = {
         cmd = vim.trim(icons.ui.Command),
         config = vim.trim(icons.ui.Cog),
@@ -123,30 +123,10 @@ local function enable_modules(module_names)
     checker = { enabled = false },
     change_detection = { notify = false },
     install = { colorscheme = { 'catppuccin' } },
-    performance = {
-      cache = {
-        enabled = true,
-        path = vim.fn.stdpath 'cache' .. '/lazy/cache',
-        disable_events = { 'UIEnter', 'BufReadPre' },
-      },
-      reset_packpath = true,
-      rtp = {
-        disabled_plugins = {
-          'gzip',
-          'matchit',
-          'tarPlugin',
-          'tohtml',
-          'tutor',
-          'zipPlugin',
-          'health',
-          'netrwPlugin',
-        },
-      },
-    },
   }
   local modules = {}
   for _, module_name in ipairs(module_names) do
-    vim.list_extend(modules, require('plugins.modules.' .. module_name))
+    vim.list_extend(modules, require('modules.' .. module_name))
   end
   require('lazy').setup(modules, config)
 end

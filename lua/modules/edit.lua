@@ -8,7 +8,7 @@ return {
       { 'S', mode = 'x' },
       { '<C-g>s', mode = 'i' },
     },
-    config = function() require 'plugins.configs.nvim-surround' end,
+    config = function() require 'configs.nvim-surround' end,
   },
 
   {
@@ -17,7 +17,7 @@ return {
       { 'gc', mode = { 'n', 'x' }, desc = 'comment: toggle lines' },
       { 'gb', mode = { 'n', 'x' }, desc = 'comment: toggle block' },
     },
-    config = function() require 'plugins.configs.Comment' end,
+    config = function() require 'configs.Comment' end,
   },
 
   {
@@ -28,6 +28,6 @@ return {
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    config = function() require 'plugins.configs.nvim-autopairs' end,
+    config = function() require 'configs.nvim-autopairs' end,
   },
 }
