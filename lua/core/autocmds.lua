@@ -35,12 +35,26 @@ local autocmds = {
     },
   },
 
-  -- Automatically change local current directory
   {
-    { 'BufReadPost', 'BufWinEnter', 'FileChangedShellPost' },
+    { 'BufReadPost' },
+    {
+      pattern = '*',
+      group = 'LastPosJmp',
+      desc = 'Last position jump.',
+      callback = function(info)
+        local ft = vim.bo[info.buf].ft
+        -- don't apply to git messages
+        if ft ~= 'gitcommit' and ft ~= 'gitrebase' then vim.cmd 'silent! normal! g`"' end
+      end,
+    },
+  },
+
+  {
+    { 'BufReadPost', 'BufWinEnter', 'WinEnter', 'FileChangedShellPost' },
     {
       pattern = '*',
       group = 'AutoCwd',
+      desc = 'Automatically change local current directory.',
       callback = function(info)
         if info.file == '' or not vim.bo[info.buf].ma then return end
         local proj_dir = require('utils').fs.proj_dir(info.file)
@@ -51,30 +65,6 @@ local autocmds = {
           local stat = vim.uv.fs_stat(dirname)
           if stat and stat.type == 'directory' then vim.cmd.lcd(dirname) end
         end
-      end,
-    },
-  },
-
-  -- Last place jump
-  {
-    'BufRead',
-    {
-      callback = function(opts)
-        vim.api.nvim_create_autocmd('BufWinEnter', {
-          once = true,
-          buffer = opts.buf,
-          callback = function()
-            local ft = vim.bo[opts.buf].filetype
-            local last_known_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
-            if
-              not (ft:match 'commit' and ft:match 'rebase')
-              and last_known_line > 1
-              and last_known_line <= vim.api.nvim_buf_line_count(opts.buf)
-            then
-              vim.api.nvim_feedkeys([[g`"]], 'nx', false)
-            end
-          end,
-        })
       end,
     },
   },
