@@ -40,28 +40,27 @@ local function setup_keymaps(_, bufnr)
       end
     end
   end
-  local map = utils.keymap.set
   -- stylua: ignore start
-  map('nv', '<A-f>',     vim.lsp.buf.format,        { buffer = bufnr, desc = 'lsp: Format' })
-  map('n', 'ga',         vim.lsp.buf.code_action,   { buffer = bufnr, desc = 'lsp: Go to code actions' })
-  map('n', 'gr',         vim.lsp.buf.rename,        { buffer = bufnr, desc = 'lsp: Rename' })
-  map('n', 'gR',         vim.lsp.buf.references,    { buffer = bufnr, desc = 'lsp: Go to references' })
-  map('n', 'gEf',        vim.diagnostic.open_float, { buffer = bufnr, desc = 'lsp: Open diagnostic in floating window' })
-  map('n', 'gEl',        vim.diagnostic.setloclist, { buffer = bufnr, desc = 'lsp: Go to location list' })
-  map('n', 'gEq',        vim.diagnostic.setqflist,  { buffer = bufnr, desc = 'lsp: Go to quickfix list' })
-  map('n', '[e',         vim.diagnostic.goto_prev,  { buffer = bufnr, desc = 'lsp: Next diagnostic mark' })
-  map('n', ']e',         vim.diagnostic.goto_next,  { buffer = bufnr, desc = 'lsp: Previous diagnostic mark' })
-  map('n', '[E', goto_diagnostic('prev', 'ERROR'),  { buffer = bufnr, desc = 'lsp: Next error' })
-  map('n', ']E', goto_diagnostic('next', 'ERROR'),  { buffer = bufnr, desc = 'lsp: Previous error' })
-  map('n', '[W', goto_diagnostic('prev', 'WARN'),   { buffer = bufnr, desc = 'lsp: Next warning' })
-  map('n', ']W', goto_diagnostic('next', 'WARN'),   { buffer = bufnr, desc = 'lsp: Previous warning' })
-  map('n', '[I', goto_diagnostic('prev', 'INFO'),   { buffer = bufnr, desc = 'lsp: Next information' })
-  map('n', ']I', goto_diagnostic('next', 'INFO'),   { buffer = bufnr, desc = 'lsp: Previous information' })
-  map('n', '[H', goto_diagnostic('prev', 'HINT'),   { buffer = bufnr, desc = 'lsp: Next hint' })
-  map('n', ']H', goto_diagnostic('next', 'HINT'),   { buffer = bufnr, desc = 'lsp: Previous hint' })
-  map('n', 'gd', if_supports('textDocument/definition', 'definition', 'gd'),          { buffer = bufnr, expr = true, desc = 'lsp: Go to definition' })
-  map('n', 'gD', if_supports('textDocument/typeDefinition', 'type_definition', 'gD'), { buffer = bufnr, expr = true, desc = 'lsp: Go to type definition' })
-  map('n', 'K',  if_supports('textDocument/hover', 'hover', 'K'),                     { buffer = bufnr, expr = true, desc = 'lsp: Open hover window' })
+  vim.keymap.set('n', 'ga',  vim.lsp.buf.code_action,   { buffer = bufnr })
+  vim.keymap.set('n', 'gr',  vim.lsp.buf.rename,        { buffer = bufnr })
+  vim.keymap.set('n', 'gR',  vim.lsp.buf.references,    { buffer = bufnr })
+  vim.keymap.set('n', 'ge',  vim.diagnostic.open_float, { buffer = bufnr })
+  vim.keymap.set('n', 'gEl', vim.diagnostic.setloclist, { buffer = bufnr })
+  vim.keymap.set('n', 'gEq', vim.diagnostic.setqflist,  { buffer = bufnr })
+  vim.keymap.set('n', '[e',  vim.diagnostic.goto_prev,  { buffer = bufnr })
+  vim.keymap.set('n', ']e',  vim.diagnostic.goto_next,  { buffer = bufnr })
+  vim.keymap.set('n', 'gF',  vim.lsp.buf.format,        { buffer = bufnr })
+  vim.keymap.set('n', '[E', goto_diagnostic('prev', 'ERROR'),  { buffer = bufnr })
+  vim.keymap.set('n', ']E', goto_diagnostic('next', 'ERROR'),  { buffer = bufnr })
+  vim.keymap.set('n', '[W', goto_diagnostic('prev', 'WARN'),   { buffer = bufnr })
+  vim.keymap.set('n', ']W', goto_diagnostic('next', 'WARN'),   { buffer = bufnr })
+  vim.keymap.set('n', '[I', goto_diagnostic('prev', 'INFO'),   { buffer = bufnr })
+  vim.keymap.set('n', ']I', goto_diagnostic('next', 'INFO'),   { buffer = bufnr })
+  vim.keymap.set('n', '[H', goto_diagnostic('prev', 'HINT'),   { buffer = bufnr })
+  vim.keymap.set('n', ']H', goto_diagnostic('next', 'HINT'),   { buffer = bufnr })
+  vim.keymap.set('n', 'gd', if_supports('textDocument/definition', 'definition', 'gd'),          { buffer = bufnr, expr = true })
+  vim.keymap.set('n', 'gD', if_supports('textDocument/typeDefinition', 'type_definition', 'gD'), { buffer = bufnr, expr = true })
+  vim.keymap.set('n', 'K',  if_supports('textDocument/hover', 'hover', 'K'),                     { buffer = bufnr, expr = true })
   -- stylua: ignore end
 end
 
@@ -294,7 +293,7 @@ local subcommands = {
           local subdirs = {}
           for name, type in vim.fs.dir(basedir) do
             if type == 'directory' and name ~= '.' and name ~= '..' then
-              table.insert(subdirs, vim.fn.fnamemodify(vim.fn.resolve(basedir .. '/' .. name), ':p:~:.'))
+              table.insert(subdirs, vim.fn.fnamemodify(vim.fn.resolve(vim.fs.joinpath(basedir, name)), ':p:~:.'))
             end
           end
           if incomplete then return vim.tbl_filter(function(s) return s:find(incomplete, 1, true) end, subdirs) end
@@ -720,7 +719,7 @@ local function command_meta(subcommand_info_list, fn_scope, fn_name_alt)
     if not fn_name then return end
     local fn = subcommand_info_list[fn_name] and subcommand_info_list[fn_name].fn_override or fn_scope[fn_name]
     if not fn then return end
-    local arg_handler = subcommand_info_list[fn_name].arg_handler or function(args) return args end
+    local arg_handler = subcommand_info_list[fn_name].arg_handler or function(...) return ... end
     fn(arg_handler(cmdline_args, tbl))
   end
 end
@@ -767,6 +766,8 @@ end
 ---@param subcommand_info_list table<string, subcommand_info_t> subcommands information
 ---@param fn_scope table scope of corresponding functions for subcommands
 local function setup_commands(_, bufnr, meta, subcommand_info_list, fn_scope)
+  -- metacommand -> MetaCommand abbreviation
+  utils.keymap.command_abbrev(meta:lower(), meta)
   -- Format: MetaCommand sub_command opts ...
   vim.api.nvim_buf_create_user_command(bufnr, meta, command_meta(subcommand_info_list, fn_scope), {
     bang = true,
@@ -779,7 +780,7 @@ local function setup_commands(_, bufnr, meta, subcommand_info_list, fn_scope)
     vim.api.nvim_buf_create_user_command(
       bufnr,
       meta .. utils.string.snake_to_camel(subcommand),
-      command_meta(subcommand_info_list, fn_scope, subcommand, subcommand),
+      command_meta(subcommand_info_list, fn_scope, subcommand),
       {
         bang = true,
         range = true,
@@ -812,13 +813,6 @@ local function setup_diagnostics_on_mode_change(_, bufnr)
   })
 end
 
----Automatically enable / disable diagnostics on mode change
----@param _ table LS client, ignored
----@param bufnr number buffer handler
-local function setup_inlay_hints(_, bufnr)
-  if _.server_capabilities.inlayHintProvider ~= nil then vim.lsp.inlay_hint(bufnr, true) end
-end
-
 ---Set up keymaps and commands
 ---@param client table LS client, ignored
 ---@param bufnr number buffer handler
@@ -829,7 +823,6 @@ local function on_attach(client, bufnr)
     setup_commands(client, bufnr, 'Lsp', subcommands.lsp.buf, vim.lsp.buf)
     setup_commands(client, bufnr, 'Diagnostic', subcommands.diagnostic, vim.diagnostic)
     setup_diagnostics_on_mode_change(client, bufnr)
-    setup_inlay_hints(client, bufnr)
   end
 end
 
