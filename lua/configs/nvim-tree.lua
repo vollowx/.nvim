@@ -1,3 +1,4 @@
+local border = require('core.settings').border
 local icons = require('utils.static').icons
 
 require('nvim-tree').setup {
@@ -16,6 +17,7 @@ require('nvim-tree').setup {
     float = {
       enable = true,
       open_win_config = {
+        border = border,
         col = 2,
       },
     },

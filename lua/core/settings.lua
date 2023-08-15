@@ -1,7 +1,4 @@
 return {
-  -- Core
-  use_ssh = false,
-
   -- Language Specified
   langs = {
     sh = {

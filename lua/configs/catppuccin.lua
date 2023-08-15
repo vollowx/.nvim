@@ -34,9 +34,9 @@ require('catppuccin').setup {
         IndentBlanklineContextChar = { fg = cp.surface1 },
 
         -- For telescope.nvim
-        TelescopePromptNormal = { bg = cp.crust },
-        TelescopePromptBorder = { fg = cp.crust, bg = cp.crust },
-        TelescopePromptPrefix = { bg = cp.crust },
+        TelescopePromptNormal = { bg = transparent and cp.none or cp.crust },
+        TelescopePromptBorder = { fg = transparent and cp.blue or cp.crust, bg = transparent and cp.none or cp.crust },
+        TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
 
         -- For glance.nvim
         GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },
@@ -54,8 +54,8 @@ require('catppuccin').setup {
         ['@error.cpp'] = { fg = cp.none, style = {} },
 
         -- For status line
-        StatusLineHeader = { fg = cp.lavender, bg = cp.surface0 },
-        StatusLineHeaderModified = { fg = cp.peach, bg = cp.surface0 },
+        StatusLineHeader = { fg = cp.lavender, bg = transparent and cp.none or cp.surface0 },
+        StatusLineHeaderModified = { fg = cp.peach, bg = transparent and cp.none or cp.surface0 },
         StatusLineStrong = { fg = cp.text, bg = cp.mantle, style = { 'bold' } },
         StatusLineWeak = { fg = cp.subtext0, bg = cp.mantle },
         StatusLineFaded = { fg = cp.subtext0, bg = cp.mantle },
