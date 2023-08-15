@@ -49,11 +49,6 @@ require('catppuccin').setup {
         GlanceListMatch = { fg = cp.lavender, style = { 'bold' } },
         GlanceFoldIcon = { fg = cp.green },
 
-        -- For treesitter
-        ['@keyword.return'] = { fg = cp.pink, style = {} },
-        ['@error.c'] = { fg = cp.none, style = {} },
-        ['@error.cpp'] = { fg = cp.none, style = {} },
-
         -- For status line
         StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
         StatusLineDiagnosticWarn = { fg = cp.yellow, bg = cp.mantle },
