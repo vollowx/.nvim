@@ -6,7 +6,6 @@ return {
     lazy = false,
   },
 
-  -- Unchangeable UI components
   {
     'Bekaboo/deadcolumn.nvim',
     lazy = false,
@@ -23,7 +22,7 @@ return {
   },
   {
     'Bekaboo/dropbar.nvim',
-    event = { 'CursorHold', 'CursorHoldI' }, -- For stable UI layout
+    event = { 'CursorHold', 'CursorHoldI' },
     config = function() require 'configs.dropbar' end,
   },
 
@@ -61,6 +60,7 @@ return {
     config = function() require 'configs.colorizer' end,
   },
 
+  -- You're not able to see this actually, but it controls the UI
   {
     'ojroques/nvim-bufdel',
     cmd = {
