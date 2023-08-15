@@ -7,10 +7,6 @@ return {
   },
 
   {
-    'Bekaboo/deadcolumn.nvim',
-    lazy = false,
-  },
-  {
     'stevearc/dressing.nvim',
     event = { 'CursorHold', 'CursorHoldI' },
     config = function() require 'configs.dressing' end,
