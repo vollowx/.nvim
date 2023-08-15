@@ -28,6 +28,12 @@ return {
   },
 
   {
+    'declancm/cinnamon.nvim',
+    event = { 'CursorHold', 'CursorHoldI' },
+    config = function() require 'configs.cinnamon' end,
+  },
+
+  {
     'nvim-tree/nvim-tree.lua',
     cmd = {
       'NvimTreeOpen',
