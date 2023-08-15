@@ -3,9 +3,9 @@ local g = vim.g
 local opt = vim.opt
 
 -- stylua: ignore start
-opt.colorcolumn    = '120'
 opt.cursorline     = true
 opt.cursorlineopt  = 'number'
+opt.colorcolumn    = '120'
 opt.foldlevelstart = 99
 opt.guifont        = 'Liga SFMono Nerd Font:h12'
 opt.laststatus     = 3
@@ -13,7 +13,6 @@ opt.showmode       = false
 opt.mouse          = 'a'
 opt.mousemoveevent = true
 opt.number         = true
-opt.pumblend       = 0
 opt.pumheight      = 16
 opt.relativenumber = true
 opt.ruler          = true
@@ -21,31 +20,32 @@ opt.scrolloff      = 4
 opt.sidescrolloff  = 8
 opt.signcolumn     = 'yes:1'
 opt.splitbelow     = true
-opt.splitkeep      = 'screen'
 opt.splitright     = true
 opt.swapfile       = false
 opt.termguicolors  = true
 opt.undofile       = true
 opt.updatetime     = 10
-opt.winblend       = 0
 opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
 opt.completeopt    = 'menu,menuone,noselect'
 opt.conceallevel   = 2
+opt.autowriteall   = true
 -- stylua: ignore end
 
+-- Transparent
+opt.pumblend = 0
+opt.winblend = 0
+
 -- Cursor shape
-opt.gcr:append 'n-v:block-Cursor/lCursor'
-opt.gcr:append 'i-c-ci-ve:blinkoff500-blinkon500-block-TermCursor/lCursor'
-opt.gcr:append 'r-cr:hor20,o:hor50'
+opt.gcr:append 'n-v:block-Cursor/lCursor,i-c-ci-ve:blinkoff500-blinkon500-block-TermCursor,r-cr:hor20,o:hor50-Cursor/lCursor'
 
 -- Use patience algorithm for diffing
 opt.diffopt:append 'algorithm:patience'
 
 opt.backup = true
-opt.backupdir = { fn.stdpath 'data' .. '/backup//' }
+opt.backupdir:remove '.'
 
 -- Disable intro texts
 opt.shortmess:append 'I'
