@@ -31,7 +31,7 @@ local function override_lsp_picker(name, lsp_method)
     end
     local client = vim.tbl_filter(
       function(client) return client.supports_method(lsp_method) end,
-      vim.lsp.get_active_clients {
+      vim.lsp.get_clients {
         bufnr = buf,
       }
     )[1]

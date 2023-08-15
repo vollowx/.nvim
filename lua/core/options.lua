@@ -5,6 +5,7 @@ local opt = vim.opt
 -- stylua: ignore start
 opt.colorcolumn    = '120'
 opt.cursorline     = true
+opt.cursorlineopt  = 'number'
 opt.eb             = false
 opt.foldlevelstart = 99
 opt.guifont        = 'Liga SFMono Nerd Font:h12'
@@ -80,7 +81,7 @@ opt.hlsearch    = true
 opt.ignorecase  = true
 opt.smartcase   = true
 
-opt.spell         = false
+opt.spell         = true
 opt.spellcapcheck = ''
 opt.spelllang     = 'en,cjk'
 opt.spelloptions  = 'camel'

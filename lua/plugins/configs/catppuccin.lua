@@ -8,7 +8,6 @@ require('catppuccin').setup {
     native_lsp = { enabled = true },
     cmp = true,
     dropbar = { enabled = true, color_mode = false },
-    fidget = true,
     gitsigns = true,
     indent_blankline = { enabled = true, colored_indent_levels = false },
     markdown = true,
@@ -32,10 +31,6 @@ require('catppuccin').setup {
 
         -- For indent-blankline
         IndentBlanklineContextChar = { fg = cp.surface1 },
-
-        -- For fidget
-        FidgetTask = { bg = cp.none, fg = cp.surface2 },
-        FidgetTitle = { fg = cp.blue, style = { 'bold' } },
 
         -- For glance.nvim
         GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },

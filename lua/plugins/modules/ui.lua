@@ -13,17 +13,17 @@ return {
   },
   {
     'stevearc/dressing.nvim',
-    event = 'VeryLazy',
+    event = { 'CursorHold', 'CursorHoldI' },
     config = function() require 'plugins.configs.dressing' end,
   },
   {
     'rcarriga/nvim-notify',
-    event = 'VeryLazy',
+    event = { 'CursorHold', 'CursorHoldI' },
     config = function() require 'plugins.configs.notify' end,
   },
   {
     'Bekaboo/dropbar.nvim',
-    event = 'VeryLazy', -- For stable UI layout
+    event = { 'CursorHold', 'CursorHoldI' }, -- For stable UI layout
     config = function() require 'plugins.configs.dropbar' end,
   },
 

@@ -5,7 +5,7 @@ local utils = require 'utils'
 ---@param method string the method to check for
 ---@param bufnr number buffer handler
 local function supports_method(method, bufnr)
-  local clients = vim.lsp.get_active_clients { bufnr = bufnr }
+  local clients = vim.lsp.get_clients { bufnr = bufnr }
   for _, client in ipairs(clients) do
     if client.supports_method(method) then return true end
   end
@@ -347,9 +347,6 @@ local subcommands = {
       },
       incoming_calls = {},
       outgoing_calls = {},
-      server_ready = {
-        fn_override = function(...) vim.notify(vim.inspect(vim.lsp.buf.server_ready(...))) end,
-      },
       signature_help = {},
     },
   },

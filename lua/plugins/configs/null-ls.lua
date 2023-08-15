@@ -6,7 +6,7 @@ local null_ls_sources = require 'null-ls.sources'
 ---@param method string method
 local function null_ls_supports(ft, method)
   return not vim.tbl_isempty(null_ls_sources.get_available(ft, method))
-    and not vim.tbl_isempty(vim.lsp.get_active_clients { name = 'null-ls' })
+    and not vim.tbl_isempty(vim.lsp.get_clients { name = 'null-ls' })
 end
 
 ---Disable other LSP's formatting capabilities if null-ls supports it
@@ -14,7 +14,7 @@ end
 local function null_ls_disable_other_formatters(tbl)
   local ft = vim.bo[tbl.buf].ft
   local client = vim.lsp.get_client_by_id(tbl.data.client_id)
-  if client.name == 'null-ls' then return end
+  if not client or client.name == 'null-ls' then return end
   if null_ls_supports(ft, 'NULL_LS_FORMATTING') then client.server_capabilities.documentFormattingProvider = false end
   if null_ls_supports(ft, 'NULL_LS_RANGE_FORMATTING') then
     client.server_capabilities.documentRangeFormattingProvider = false
@@ -27,7 +27,7 @@ end
 local function null_ls_on_attach(_, bufnr)
   -- Disable other LSP's formatting capabilities if null-ls supports it
   local ft = vim.bo[bufnr].ft
-  local active_clients = vim.lsp.get_active_clients { bufnr = bufnr }
+  local active_clients = vim.lsp.get_clients { bufnr = bufnr }
   if null_ls_supports(ft, 'NULL_LS_FORMATTING') then
     for _, active_client in ipairs(active_clients) do
       if active_client.name ~= 'null-ls' then active_client.server_capabilities.documentFormattingProvider = false end
