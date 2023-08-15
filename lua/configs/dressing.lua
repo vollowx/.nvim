@@ -1,4 +1,5 @@
 local border = require('core.settings').border
+
 require('dressing').setup {
   input = {
     border = border,
