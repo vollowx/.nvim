@@ -8,6 +8,5 @@ return {
   {
     'dhruvasagar/vim-table-mode',
     ft = 'markdown',
-    config = function() require 'plugins.configs.vim-table-mode' end,
   },
 }

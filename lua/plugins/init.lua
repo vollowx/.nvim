@@ -156,13 +156,13 @@ if vim.g.vscode then
   enable_modules {
     'base',
     'treesitter',
-    'editor',
+    'edit',
   }
 else
   enable_modules {
     'base',
     'completion',
-    'editor',
+    'edit',
     'lsp',
     'markup',
     'tools',

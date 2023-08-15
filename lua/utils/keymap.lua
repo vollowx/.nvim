@@ -1,5 +1,122 @@
 local M = {}
 
+---Set abbreviation that only expand when the trigger is at the start of the
+---command line or after a pipe "|"
+---(i.e. only when the trigger is at the position of a command)
+---@param trig string
+---@param command string
+---@param opts table?
+function M.command_abbrev(trig, command, opts)
+  vim.keymap.set('ca', trig, function()
+    local cmdline_before = vim.fn.getcmdline():sub(1, vim.fn.getcmdpos() - 1)
+    local trig_escaped = vim.pesc(trig)
+    -- stylua: ignore start
+    return vim.fn.getcmdtype() == ':'
+        and (cmdline_before:find('^%s*' .. trig_escaped .. '$')
+          or cmdline_before:find('|%s*' .. trig_escaped .. '$'))
+        and command
+      or trig
+    -- stylua: ignore end
+  end, vim.tbl_deep_extend('keep', { expr = true }, opts or {}))
+end
+
+---@class keymap_def_t
+---@field lhs string
+---@field lhsraw string
+---@field rhs string?
+---@field callback function?
+---@field expr boolean?
+---@field desc string?
+---@field noremap boolean?
+---@field script boolean?
+---@field silent boolean?
+---@field nowait boolean?
+---@field buffer boolean?
+---@field replace_keycodes boolean?
+
+---Get keymap definition
+---@param mode string
+---@param lhs string
+---@return keymap_def_t
+function M.get(mode, lhs)
+  local lhs_keycode = vim.keycode(lhs)
+  for _, map in ipairs(vim.api.nvim_buf_get_keymap(0, mode)) do
+    if vim.keycode(map.lhs) == lhs_keycode then
+      return {
+        lhs = map.lhs,
+        rhs = map.rhs,
+        expr = map.expr == 1,
+        callback = map.callback,
+        desc = map.desc,
+        noremap = map.noremap == 1,
+        script = map.script == 1,
+        silent = map.silent == 1,
+        nowait = map.nowait == 1,
+        buffer = true,
+        replace_keycodes = map.replace_keycodes == 1,
+      }
+    end
+  end
+  for _, map in ipairs(vim.api.nvim_get_keymap(mode)) do
+    if vim.keycode(map.lhs) == lhs_keycode then
+      return {
+        lhs = map.lhs,
+        rhs = map.rhs or '',
+        expr = map.expr == 1,
+        callback = map.callback,
+        desc = map.desc,
+        noremap = map.noremap == 1,
+        script = map.script == 1,
+        silent = map.silent == 1,
+        nowait = map.nowait == 1,
+        buffer = false,
+        replace_keycodes = map.replace_keycodes == 1,
+      }
+    end
+  end
+  return {
+    lhs = lhs,
+    rhs = lhs,
+    expr = false,
+    noremap = true,
+    script = false,
+    silent = true,
+    nowait = false,
+    buffer = false,
+    replace_keycodes = true,
+  }
+end
+
+---@param def keymap_def_t
+---@return function
+function M.fallback_fn(def)
+  local modes = def.noremap and 'in' or 'im'
+  ---@param keys string
+  ---@return nil
+  local function feed(keys) vim.api.nvim_feedkeys(vim.keycode(keys), modes, false) end
+  if not def.expr then return def.callback or function() feed(def.rhs) end end
+  if def.callback then
+    return function() feed(def.callback()) end
+  else
+    return function() feed(vim.api.nvim_eval(def.rhs)) end
+  end
+end
+
+---Amend keymap
+---Caveat: currently cannot amend keymap with <Cmd>...<CR> rhs
+---@param modes string[]|string
+---@param lhs string
+---@param rhs function(fallback: function)
+---@param opts table?
+---@return nil
+function M.amend(modes, lhs, rhs, opts)
+  modes = type(modes) ~= 'table' and { modes } or modes --[=[@as string[]]=]
+  for _, mode in ipairs(modes) do
+    local fallback = M.fallback_fn(M.get(mode, lhs))
+    vim.keymap.set(mode, lhs, function() rhs(fallback) end, opts)
+  end
+end
+
 ---Set keymap
 ---@param modes string
 ---@param l string
