@@ -19,3 +19,4 @@ nvim
 - [ ] `vim-easy-align`
 - [ ] `vimtex`
 - [ ] `nvim-ufo
+- [ ] `cinnamon.nvim`
