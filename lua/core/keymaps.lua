@@ -15,10 +15,6 @@ vim.keymap.set({ 'n', 'x' }, '<C-l>', '<C-w>l', { desc = 'window: Go right' })
 vim.keymap.set({ 'n', 'x', 'o' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
 vim.keymap.set({ 'n', 'x', 'o' }, 'k', 'v:count ? "k" : "gk"', { expr = true })
 
--- Up/down line move
-vim.keymap.set('n', '<A-j>', '<Cmd>m +1<CR>', { desc = 'edit: Move line down' })
-vim.keymap.set('n', '<A-k>', '<Cmd>m -2<CR>', { desc = 'edit: Move line up' })
-
 -- Indent
 vim.keymap.set({ 'x', 'o' }, '>', '>gv', { desc = 'edit: Increase indent' })
 vim.keymap.set({ 'x', 'o' }, '<', '<gv', { desc = 'edit: Decrease indent' })
