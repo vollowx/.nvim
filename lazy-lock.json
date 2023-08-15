@@ -31,6 +31,7 @@
   "nvim-surround": { "branch": "main", "commit": "0d6882635817a2677749a330127d12ac30a4f3c8" },
   "nvim-tree.lua": { "branch": "master", "commit": "18c7a3119839adc4599d838726deae662859c8b2" },
   "nvim-treesitter": { "branch": "master", "commit": "93ee00cd9daf8d2e3fbaa2a18b8b9adcb4471b16" },
+  "nvim-treesitter-context": { "branch": "master", "commit": "d8fd71428e02190d8f75ff915b6cca9e3063992c" },
   "nvim-treesitter-endwise": { "branch": "master", "commit": "9298b3ac8fd6d0d8f9e321194c6d3fd37e417cf9" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "9e519b6146512c8e2e702faf8ac48420f4f5deec" },
   "nvim-ts-autotag": { "branch": "main", "commit": "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
