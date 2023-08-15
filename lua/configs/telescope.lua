@@ -108,7 +108,7 @@ telescope.setup {
 
       n = {
         ['q'] = actions.close,
-        ['<esc>'] = actions.close,
+        ['<Esc>'] = actions.close,
         ['<C-n>'] = actions.move_selection_next,
         ['<C-p>'] = actions.move_selection_previous,
         ['<M-c>'] = actions.close,
