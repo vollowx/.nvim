@@ -26,8 +26,8 @@ require('catppuccin').setup {
           bg = transparent and cp.none or cp.mantle,
         },
         FloatTitle = {
-          fg = transparent and cp.red or cp.base,
-          bg = transparent and cp.none or cp.red,
+          fg = transparent and cp.blue or cp.mantle,
+          bg = transparent and cp.none or cp.mantle,
         },
 
         -- For indent-blankline
