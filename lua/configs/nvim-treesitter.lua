@@ -85,7 +85,6 @@ ts_configs.setup {
   },
   context_commentstring = {
     enable = true,
-    enable_autocmd = false,
   },
   endwise = {
     enable = true,
