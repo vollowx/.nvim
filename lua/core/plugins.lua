@@ -123,6 +123,20 @@ local function enable_modules(module_names)
     checker = { enabled = false },
     change_detection = { notify = false },
     install = { colorscheme = { 'catppuccin' } },
+    performance = {
+      rtp = {
+        disabled_plugins = {
+          'gzip',
+          'matchit',
+          'tarPlugin',
+          'tohtml',
+          'tutor',
+          'zipPlugin',
+          'health',
+          'netrwPlugin',
+        },
+      },
+    },
   }
   local modules = {}
   for _, module_name in ipairs(module_names) do
