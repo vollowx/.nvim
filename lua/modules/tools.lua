@@ -81,7 +81,7 @@ return {
       { '<Leader>gr', '<Cmd>Gitsigns reset_buffer<CR>', desc = 'git: Reset buffer' },
       { '<Leader>gu', '<Cmd>Gitsigns undo_stage_hunk<CR>', desc = 'git: Undo stage hunk' },
       { '<Leader>gd', '<Cmd>Gitsigns diffthis<CR>', desc = 'git: View diff' },
-      { 'ah', ':<C-u>Gitsigns select_hunk<CR>', desc = 'git: Select hunk' },
+      { 'ah', ':<C-u>Gitsigns select_hunk<CR>', mode = 'v', desc = 'git: Select hunk' },
     },
   },
 

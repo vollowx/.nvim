@@ -1,29 +1,38 @@
-local map = require('utils').keymap.set
-
-map('nx', '<Space>', '<Ignore>')
+vim.keymap.set({ 'n', 'x' }, '<Space>', '<Ignore>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-map('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'search: No highlight' })
-map('n', '<C-s>', '<Cmd>write<CR>', { desc = 'edit: Write to file' })
+vim.keymap.set('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'search: Clear highlights' })
+vim.keymap.set('n', '<C-s>', '<Cmd>write<CR>', { desc = 'edit: Write to file' })
 
 -- Multi-window operations
-map('nx', '<C-h>', '<C-w>h', { desc = 'window: Go left' })
-map('nx', '<C-j>', '<C-w>j', { desc = 'window: Go down' })
-map('nx', '<C-k>', '<C-w>k', { desc = 'window: Go up' })
-map('nx', '<C-l>', '<C-w>l', { desc = 'window: Go right' })
+vim.keymap.set({ 'n', 'x' }, '<C-h>', '<C-w>h', { desc = 'window: Go left' })
+vim.keymap.set({ 'n', 'x' }, '<C-j>', '<C-w>j', { desc = 'window: Go down' })
+vim.keymap.set({ 'n', 'x' }, '<C-k>', '<C-w>k', { desc = 'window: Go up' })
+vim.keymap.set({ 'n', 'x' }, '<C-l>', '<C-w>l', { desc = 'window: Go right' })
 
 -- Up/down motions
-map('nx', 'j', 'v:count ? "j" : "gj"', { expr = true })
-map('nx', 'k', 'v:count ? "k" : "gk"', { expr = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 'k', 'v:count ? "k" : "gk"', { expr = true })
+
+-- Up/down line move
+vim.keymap.set('n', '<A-j>', '<Cmd>m +1<CR>', { desc = 'edit: Move line down' })
+vim.keymap.set('n', '<A-k>', '<Cmd>m -2<CR>', { desc = 'edit: Move line up' })
+
+-- Indent
+vim.keymap.set({ 'x', 'o' }, '>', '>gv', { desc = 'edit: Increase indent' })
+vim.keymap.set({ 'x', 'o' }, '<', '<gv', { desc = 'edit: Decrease indent' })
 
 -- Buffer navigation
-map('n', '<A-q>', '<Cmd>bdelete!<CR>', { desc = 'buffer: Delete buffer' })
-map('n', '<A-j>', '<Cmd>bnext<CR>', { desc = 'buffer: Next buffer' })
-map('n', '<A-k>', '<Cmd>bprevious<CR>', { desc = 'buffer: Previous buffer' })
+vim.keymap.set('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>')
+vim.keymap.set('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>')
+
+-- Correct misspelled word / mark as correct
+vim.keymap.set('i', '<C-S-L>', '<Esc>[szg`]a')
+vim.keymap.set('i', '<C-l>', '<C-G>u<Esc>[s1z=`]a<C-G>u')
 
 -- Close all floating windows
-map('n', 'q', function()
+vim.keymap.set('n', 'q', function()
   local count = 0
   local current_win = vim.api.nvim_get_current_win()
   -- close current win only if it's a floating window
@@ -44,7 +53,7 @@ map('n', 'q', function()
   end
 end, { desc = 'window: Close floating windows' })
 
-map(
+vim.keymap.set(
   't',
   '<C-x>',
   vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true),
