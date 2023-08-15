@@ -9,6 +9,7 @@ require('catppuccin').setup {
     cmp = true,
     dropbar = { enabled = true, color_mode = false },
     gitsigns = true,
+    illuminate = true,
     indent_blankline = { enabled = true, colored_indent_levels = false },
     markdown = true,
     notify = true,

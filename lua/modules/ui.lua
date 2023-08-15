@@ -56,6 +56,12 @@ return {
     config = function() require 'configs.colorizer' end,
   },
 
+  {
+    'RRethy/vim-illuminate',
+    event = 'User File',
+    config = function() require 'configs.illuminate' end,
+  },
+
   -- You're not able to see this actually, but it controls the UI
   {
     'ojroques/nvim-bufdel',
