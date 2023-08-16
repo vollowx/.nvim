@@ -32,6 +32,28 @@ return {
   },
 
   {
+    'nvim-tree/nvim-tree.lua',
+    cmd = {
+      'NvimTreeOpen',
+      'NvimTreeClose',
+      'NvimTreeToggle',
+      'NvimTreeFocus',
+      'NvimTreeRefresh',
+      'NvimTreeFindFile',
+      'NvimTreeFindFileToggle',
+      'NvimTreeClipboard',
+      'NvimTreeResize',
+      'NvimTreeCollapse',
+      'NvimTreeCollapseKeepBuffers',
+      'NvimTreeGenerateOnAttach',
+    },
+    config = function() require 'configs.nvim-tree' end,
+    keys = {
+      { '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'ui: Toggle file tree' },
+    },
+  },
+
+  {
     'akinsho/toggleterm.nvim',
     cmd = {
       'Lazygit',
@@ -59,9 +81,13 @@ return {
 
   {
     'folke/todo-comments.nvim',
+    cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
     event = 'User File',
     dependencies = 'plenary.nvim',
     config = function() require 'configs.todo-comments' end,
+    keys = {
+      { '<Leader>ft', '<Cmd>TodoTelescope<CR>', desc = 'find: Todos' },
+    },
   },
 
   {

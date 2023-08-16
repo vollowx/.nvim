@@ -135,7 +135,7 @@ function M.file_worktree(file, worktrees)
         'ls-files',
         '--error-unmatch',
         file,
-      }, false)
+      }, { stderr = false })
     then
       return worktree
     end

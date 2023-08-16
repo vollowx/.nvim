@@ -23,28 +23,6 @@ return {
   },
 
   {
-    'nvim-tree/nvim-tree.lua',
-    cmd = {
-      'NvimTreeOpen',
-      'NvimTreeClose',
-      'NvimTreeToggle',
-      'NvimTreeFocus',
-      'NvimTreeRefresh',
-      'NvimTreeFindFile',
-      'NvimTreeFindFileToggle',
-      'NvimTreeClipboard',
-      'NvimTreeResize',
-      'NvimTreeCollapse',
-      'NvimTreeCollapseKeepBuffers',
-      'NvimTreeGenerateOnAttach',
-    },
-    config = function() require 'configs.nvim-tree' end,
-    keys = {
-      { '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'ui: Toggle file tree' },
-    },
-  },
-
-  {
     'lukas-reineke/indent-blankline.nvim',
     event = 'User File',
     config = function() require 'configs.indent-blankline' end,
