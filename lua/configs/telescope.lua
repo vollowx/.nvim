@@ -96,29 +96,6 @@ telescope.setup {
     },
     sorting_strategy = 'ascending',
     file_ignore_patterns = { '.git/', '%.pdf', '%.o', '%.zip' },
-    mappings = {
-      i = {
-        ['<M-c>'] = actions.close,
-        ['<M-s>'] = actions.select_horizontal,
-        ['<M-v>'] = actions.select_vertical,
-        ['<M-t>'] = actions.select_tab,
-        ['<M-q>'] = actions.smart_add_to_qflist + actions.open_qflist,
-        ['<M-l>'] = actions.smart_add_to_loclist + actions.open_loclist,
-      },
-
-      n = {
-        ['q'] = actions.close,
-        ['<Esc>'] = actions.close,
-        ['<C-n>'] = actions.move_selection_next,
-        ['<C-p>'] = actions.move_selection_previous,
-        ['<M-c>'] = actions.close,
-        ['<M-s>'] = actions.select_horizontal,
-        ['<M-v>'] = actions.select_vertical,
-        ['<M-t>'] = actions.select_tab,
-        ['<M-q>'] = actions.smart_add_to_qflist + actions.open_qflist,
-        ['<M-l>'] = actions.smart_add_to_loclist + actions.open_loclist,
-      },
-    },
   },
   pickers = {
     colorscheme = { enable_preview = true },
