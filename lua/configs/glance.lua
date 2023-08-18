@@ -6,9 +6,7 @@ local horiz = vim.opt.fillchars:get().horiz
 glance.setup {
   height = 20,
   zindex = 50,
-  theme = {
-    mode = 'darken',
-  },
+  theme = { enable = false },
   folds = {
     fold_closed = icons.AngleRight,
     fold_open = icons.AngleDown,
