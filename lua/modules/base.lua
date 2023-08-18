@@ -1,10 +1,5 @@
 return {
-  {
-    'nvim-lua/plenary.nvim',
-  },
+  { 'nvim-lua/plenary.nvim' },
 
-  {
-    'kyazdani42/nvim-web-devicons',
-    config = function() require 'configs.nvim-web-devicons' end,
-  },
+  { 'vollowx/nvim-web-devicons' },
 }
