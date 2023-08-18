@@ -40,11 +40,11 @@ require('catppuccin').setup {
         TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
 
         -- For glance.nvim
-        GlanceWinBarFilename = { fg = cp.subtext1, bg = cp.mantle, style = { 'bold' } },
-        GlanceWinBarFilepath = { fg = cp.subtext0, bg = cp.mantle, style = { 'italic' } },
-        GlancePreviewNormal = { bg = cp.mantle },
-        GlanceWinBarTitle = { fg = cp.lavender, bg = cp.crust, style = { 'bold' } },
-        GlanceListNormal = { bg = cp.crust },
+        GlanceWinBarFilename = { fg = cp.subtext1, bg = transparent and cp.none or cp.mantle, style = { 'bold' } },
+        GlanceWinBarFilepath = { fg = cp.subtext0, bg = transparent and cp.none or cp.mantle, style = { 'italic' } },
+        GlancePreviewNormal = { bg = transparent and cp.none or cp.mantle },
+        GlanceWinBarTitle = { fg = cp.lavender, bg = transparent and cp.none or cp.crust, style = { 'bold' } },
+        GlanceListNormal = { bg = transparent and cp.none or cp.crust },
         GlanceListFilepath = { link = 'Comment' },
         GlanceListFilename = { fg = cp.blue },
         GlanceListCount = { fg = cp.peach },
