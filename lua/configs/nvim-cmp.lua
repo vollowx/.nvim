@@ -9,10 +9,10 @@ cmp.setup {
     format = function(entry, cmp_item)
       ---@type table<string, string> override icons with `entry.source.name`
       local icon_override = {
-        cmdline = icons.Command,
-        calc = icons.Calculator,
+        cmdline = icons.ui.Command,
+        calc = icons.kinds.Calculator,
       }
-      cmp_item.kind = (icon_override[entry.source.name] or icons[cmp_item.kind]) .. ' ' .. cmp_item.kind
+      cmp_item.kind = (icon_override[entry.source.name] or icons.kinds[cmp_item.kind]) .. ' ' .. cmp_item.kind
       return cmp_item
     end,
   },

@@ -77,8 +77,8 @@ local layout_dropdown = {
 
 telescope.setup {
   defaults = {
-    prompt_prefix = static.icons.Magnify,
-    selection_caret = static.icons.ArrowRight,
+    prompt_prefix = static.icons.ui.Magnify,
+    selection_caret = static.icons.ui.ArrowRight,
     borderchars = static.borders[border],
     results_title = false,
     layout_strategy = 'flex',

@@ -65,12 +65,12 @@ ls.setup {
   ext_opts = {
     [ls_types.choiceNode] = {
       active = {
-        virt_text = { { icons.Enum, 'Ochre' } },
+        virt_text = { { icons.kinds.Enum, 'Ochre' } },
       },
     },
     [ls_types.insertNode] = {
       active = {
-        virt_text = { { icons.Snippet, 'Tea' } },
+        virt_text = { { icons.kinds.Snippet, 'Tea' } },
       },
     },
   },

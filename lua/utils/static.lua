@@ -62,26 +62,6 @@ M.borders = {
 }
 -- stylua: ignore end
 
-local icons_mt = {}
-
-function icons_mt:__index(key)
-  return self.debug[key] or self.diagnostics[key] or self.kinds[key] or self.ui[key] or icons_mt[key]
-end
-
----Flatten the layered icons table into a single type-icon table.
----@return table<string, string>
-function icons_mt:flatten()
-  local result = {}
-  for _, icons in pairs(self) do
-    for type, icon in pairs(icons) do
-      result[type] = icon
-    end
-  end
-  return result
-end
-
--- stylua: ignore start
-M.icons = setmetatable(require('core.settings').icons, icons_mt)
--- stylua: ignore end
+M.icons = require('core.settings').icons
 
 return M

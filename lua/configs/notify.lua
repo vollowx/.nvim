@@ -7,11 +7,11 @@ notify.setup {
   minimum_width = 50,
   level = 'INFO',
   icons = {
-    ERROR = icons.DiagnosticsSignError,
-    WARN = icons.DiagnosticsSignWarning,
-    INFO = icons.DiagnosticsSignInformation,
-    DEBUG = icons.Bug,
-    TRACE = icons.Pencil,
+    ERROR = icons.diagnostics.Error,
+    WARN = icons.diagnostics.Warning,
+    INFO = icons.diagnostics.Information,
+    DEBUG = icons.ui.Bug,
+    TRACE = icons.ui.Pencil,
   },
 }
 

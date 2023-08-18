@@ -181,7 +181,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
     report_time = vim.uv.hrtime()
     if data.result.value.kind == 'end' then
       local _report_time = report_time
-      lsp_prog_data.result.value.message = vim.trim(utils.static.icons.diagnostics.DiagnosticSignOk)
+      lsp_prog_data.result.value.message = vim.trim(utils.static.icons.diagnostics.Ok)
       -- Clear client message after a short time if received an 'end' message
       vim.defer_fn(function()
         -- No new report since the timer was set

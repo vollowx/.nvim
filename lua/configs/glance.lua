@@ -8,8 +8,8 @@ glance.setup {
   zindex = 50,
   theme = { enable = false },
   folds = {
-    fold_closed = icons.AngleRight,
-    fold_open = icons.AngleDown,
+    fold_closed = icons.ui.AngleRight,
+    fold_open = icons.ui.AngleDown,
   },
   border = {
     enable = require('core.settings').transparent,
@@ -22,10 +22,10 @@ glance.setup {
         vim.notify(
           'This method is not supported by any of the servers registered for the current buffer',
           vim.log.levels.WARN,
-          { title = 'Glance' }
+          { title = 'glance.nvim' }
         )
       elseif #results == 1 and method == 'references' then
-        vim.notify('The identifier under cursor is the only one found', vim.log.levels.INFO, { title = 'Glance' })
+        vim.notify('The identifier under cursor is the only one found', vim.log.levels.INFO, { title = 'glance.nvim' })
       else
         open(results)
       end

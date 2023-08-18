@@ -122,11 +122,11 @@ return {
       StackFrameCurrent = ' ',
     },
     diagnostics = {
-      DiagnosticSignError = '󰅚 ',
-      DiagnosticSignHint = '󰌶 ',
-      DiagnosticSignInfo = '󰋽 ',
-      DiagnosticSignOk = ' ',
-      DiagnosticSignWarn = '󰀪 ',
+      Error = '󰅚 ',
+      Hint = '󰌶 ',
+      Info = '󰋽 ',
+      Ok = ' ',
+      Warn = '󰀪 ',
     },
     kinds = {
       Array = '󰅪 ',
