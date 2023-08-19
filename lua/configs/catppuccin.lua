@@ -32,6 +32,12 @@ require('catppuccin').setup {
           bg = transparent and cp.none or cp.mantle,
         },
 
+        -- For native lsp configs
+        DiagnosticVirtualTextError = { bg = cp.none },
+        DiagnosticVirtualTextWarn = { bg = cp.none },
+        DiagnosticVirtualTextInfo = { bg = cp.none },
+        DiagnosticVirtualTextHint = { bg = cp.none },
+
         -- For indent-blankline
         IndentBlanklineContextChar = { fg = cp.surface1 },
 
