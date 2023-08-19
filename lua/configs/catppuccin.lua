@@ -22,6 +22,7 @@ require('catppuccin').setup {
       return {
         -- For base configs
         None = { bg = cp.none },
+        WinSeparator = { fg = cp.surface0 },
         FloatBorder = {
           fg = transparent and cp.blue or cp.mantle,
           bg = transparent and cp.none or cp.mantle,
