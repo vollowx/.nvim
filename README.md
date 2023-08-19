@@ -9,7 +9,7 @@ git clone git@github.com:vollowx/.nvim.git ~/.config/nvim
 nvim
 ```
 
-## Todoes
+## Todos
 
 - [x] Inlay hints
 - [x] `dressing.nvim`
@@ -18,5 +18,5 @@ nvim
 - [ ] [lsp_line.nvim](https://git.sr.ht/~whynothugo/lsp_lines.nvim)
 - [ ] `vim-easy-align`
 - [ ] `vimtex`
-- [ ] `nvim-ufo
+- [ ] `nvim-ufo`
 - [ ] `cinnamon.nvim`
