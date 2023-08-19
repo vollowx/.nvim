@@ -1,6 +1,6 @@
 # .nvim
 
-> Dotfiles for NeoVim.
+> Dotfiles for Neovim.
 
 ## Installation
 
