@@ -124,7 +124,9 @@ M.syntax = {
     un.idnt(1),
   }),
   us.sanr({ trig = '^(%s*)elif' }, {
-    un.idnt(function(_, snip) return uf.get_indent_depth(snip.captures[1]) - 1 end),
+    un.idnt(
+      function(_, snip) return uf.get_indent_depth(snip.captures[1]) - 1 end
+    ),
     t { 'elseif ' },
     i(1, 'condition'),
     t { ' then', '' },
@@ -318,7 +320,10 @@ M.nvim = {
       ]],
       {
         plugin_name = i(1),
-        plugin_base_name = f(function(text, _, _) return text[1][1]:gsub('%..*', '') end, { 1 }),
+        plugin_base_name = f(
+          function(text, _, _) return text[1][1]:gsub('%..*', '') end,
+          { 1 }
+        ),
         author = i(2),
         cont = i(3),
         fin = i(0),
@@ -401,7 +406,10 @@ M.nvim = {
     },
     un.fmtad('<spc>.. <q>, <v>: <q> .. vim.inspect(<v>)', {
       spc = f(
-        function(_, snip, _) return snip.captures[1] == '' and snip.captures[2] or snip.captures[1] .. ' ' end,
+        function(_, snip, _)
+          return snip.captures[1] == '' and snip.captures[2]
+            or snip.captures[1] .. ' '
+        end,
         {},
         {}
       ),

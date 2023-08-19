@@ -15,7 +15,9 @@ local function null_ls_disable_other_formatters(tbl)
   local ft = vim.bo[tbl.buf].ft
   local client = vim.lsp.get_client_by_id(tbl.data.client_id)
   if not client or client.name == 'null-ls' then return end
-  if null_ls_supports(ft, 'NULL_LS_FORMATTING') then client.server_capabilities.documentFormattingProvider = false end
+  if null_ls_supports(ft, 'NULL_LS_FORMATTING') then
+    client.server_capabilities.documentFormattingProvider = false
+  end
   if null_ls_supports(ft, 'NULL_LS_RANGE_FORMATTING') then
     client.server_capabilities.documentRangeFormattingProvider = false
   end
@@ -30,13 +32,16 @@ local function null_ls_on_attach(_, bufnr)
   local active_clients = vim.lsp.get_clients { bufnr = bufnr }
   if null_ls_supports(ft, 'NULL_LS_FORMATTING') then
     for _, active_client in ipairs(active_clients) do
-      if active_client.name ~= 'null-ls' then active_client.server_capabilities.documentFormattingProvider = false end
+      if active_client.name ~= 'null-ls' then
+        active_client.server_capabilities.documentFormattingProvider = false
+      end
     end
   end
   if null_ls_supports(ft, 'NULL_LS_RANGE_FORMATTING') then
     for _, active_client in ipairs(active_clients) do
       if active_client.name ~= 'null-ls' then
-        active_client.server_capabilities.documentRangeFormattingProvider = false
+        active_client.server_capabilities.documentRangeFormattingProvider =
+          false
       end
     end
   end
@@ -55,7 +60,8 @@ end
 ---@param type string source type
 ---@param name string source name
 local function null_ls_config_source(type, name)
-  local ok, config = pcall(require, 'configs.null-ls-configs.' .. type .. '.' .. name)
+  local ok, config =
+    pcall(require, 'configs.null-ls-configs.' .. type .. '.' .. name)
   if not ok then return null_ls.builtins[type][name] end
   return config.config(null_ls.builtins[type][name])
 end
@@ -84,7 +90,8 @@ end
 null_ls.setup {
   sources = null_ls_get_sources(),
   on_attach = function(client, bufnr)
-    local lsp_default_config = require 'configs.lsp-server-configs.shared.default'
+    local lsp_default_config =
+      require 'configs.lsp-server-configs.shared.default'
     lsp_default_config.on_attach(client, bufnr)
     null_ls_on_attach(client, bufnr)
   end,

@@ -4,7 +4,7 @@ local opt = vim.opt
 -- stylua: ignore start
 opt.cursorline     = true
 opt.cursorlineopt  = 'number'
-opt.colorcolumn    = '120'
+opt.colorcolumn    = '80'
 opt.foldlevelstart = 99
 opt.laststatus     = 3
 opt.showmode       = false
@@ -27,8 +27,9 @@ opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
-opt.completeopt    = 'menu,menuone,noselect'
+opt.completeopt    = 'menuone'
 opt.conceallevel   = 2
+opt.autowrite      = true
 opt.autowriteall   = true
 -- stylua: ignore end
 

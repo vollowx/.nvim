@@ -43,8 +43,12 @@ M.markers = {
     },
     {
       trig = '*',
-      condition = conds.in_normalzone * conds.before_pattern '%*' * conds.after_pattern '%*',
-      show_condition = conds.in_normalzone * conds.before_pattern '%*' * conds.after_pattern '%*',
+      condition = conds.in_normalzone
+        * conds.before_pattern '%*'
+        * conds.after_pattern '%*',
+      show_condition = conds.in_normalzone
+        * conds.before_pattern '%*'
+        * conds.after_pattern '%*',
     },
   }, { t '*', i(0), t '*' }),
 }

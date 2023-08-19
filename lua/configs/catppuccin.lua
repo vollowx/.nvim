@@ -36,14 +36,29 @@ require('catppuccin').setup {
 
         -- For telescope.nvim
         TelescopePromptNormal = { bg = transparent and cp.none or cp.crust },
-        TelescopePromptBorder = { fg = transparent and cp.blue or cp.crust, bg = transparent and cp.none or cp.crust },
+        TelescopePromptBorder = {
+          fg = transparent and cp.blue or cp.crust,
+          bg = transparent and cp.none or cp.crust,
+        },
         TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
 
         -- For glance.nvim
-        GlanceWinBarFilename = { fg = cp.subtext1, bg = transparent and cp.none or cp.mantle, style = { 'bold' } },
-        GlanceWinBarFilepath = { fg = cp.subtext0, bg = transparent and cp.none or cp.mantle, style = { 'italic' } },
+        GlanceWinBarFilename = {
+          fg = cp.subtext1,
+          bg = transparent and cp.none or cp.mantle,
+          style = { 'bold' },
+        },
+        GlanceWinBarFilepath = {
+          fg = cp.subtext0,
+          bg = transparent and cp.none or cp.mantle,
+          style = { 'italic' },
+        },
         GlancePreviewNormal = { bg = transparent and cp.none or cp.mantle },
-        GlanceWinBarTitle = { fg = cp.lavender, bg = transparent and cp.none or cp.crust, style = { 'bold' } },
+        GlanceWinBarTitle = {
+          fg = cp.lavender,
+          bg = transparent and cp.none or cp.crust,
+          style = { 'bold' },
+        },
         GlanceListNormal = { bg = transparent and cp.none or cp.crust },
         GlanceListFilepath = { link = 'Comment' },
         GlanceListFilename = { fg = cp.blue },
@@ -61,8 +76,14 @@ require('catppuccin').setup {
         StatusLineGitAdded = { fg = cp.green, bg = cp.mantle },
         StatusLineGitChanged = { fg = cp.blue, bg = cp.mantle },
         StatusLineGitRemoved = { fg = cp.red, bg = cp.mantle },
-        StatusLineHeader = { fg = cp.lavender, bg = transparent and cp.none or cp.surface0 },
-        StatusLineHeaderModified = { fg = cp.pink, bg = transparent and cp.none or cp.surface0 },
+        StatusLineHeader = {
+          fg = cp.lavender,
+          bg = transparent and cp.none or cp.surface0,
+        },
+        StatusLineHeaderModified = {
+          fg = cp.pink,
+          bg = transparent and cp.none or cp.surface0,
+        },
         StatusLineStrong = { fg = cp.text, bg = cp.mantle, style = { 'bold' } },
       }
     end,

@@ -22,7 +22,11 @@ return {
     dependencies = { 'plenary.nvim' },
     config = function() require 'configs.null-ls' end,
     keys = {
-      { '<Leader>ni', '<Cmd>NullLsInfo<CR>', desc = 'null-ls: Server information' },
+      {
+        '<Leader>ni',
+        '<Cmd>NullLsInfo<CR>',
+        desc = 'null-ls: Server information',
+      },
     },
   },
 

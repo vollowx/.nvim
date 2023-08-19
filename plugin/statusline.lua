@@ -83,19 +83,26 @@ end
 ---@return string
 function statusline.branch()
   ---@diagnostic disable-next-line: undefined-field
-  local branch = vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head or utils.git.branch()
+  local branch = vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head
+    or utils.git.branch()
   return branch == '' and '' or utils.stl.hl('#', 'StatusLineFaded') .. branch
 end
 
 ---Get current filetype
 ---@return string
-function statusline.ft() return vim.bo.ft == '' and '' or vim.bo.ft:gsub('^%l', string.upper) end
+function statusline.ft()
+  return vim.bo.ft == '' and '' or vim.bo.ft:gsub('^%l', string.upper)
+end
 
 ---@type table<string, fun(): string>
 ---@diagnostic disable: undefined-field
 statusline.flags = {
-  md_captitle = function() return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or '' end,
-  lsp_autofmt = function() return vim.b.lsp_autofmt_enabled and 'lsp-auto-format' or '' end,
+  md_captitle = function()
+    return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or ''
+  end,
+  lsp_autofmt = function()
+    return vim.b.lsp_autofmt_enabled and 'lsp-auto-format' or ''
+  end,
 }
 ---@diagnostic enable: undefined-field
 
@@ -113,7 +120,8 @@ function statusline.info()
   add_section(statusline.gitdiff())
   add_section(statusline.flags.md_captitle())
   add_section(statusline.flags.lsp_autofmt())
-  return vim.tbl_isempty(info) and '' or string.format('(%s) ', table.concat(info, ', '))
+  return vim.tbl_isempty(info) and ''
+    or string.format('(%s) ', table.concat(info, ', '))
 end
 
 ---Get string representation of diagnostics for current buffer
@@ -127,7 +135,8 @@ function statusline.diag()
     counts[diagnostic.severity] = counts[diagnostic.severity] + 1
   end
   for _, diagnostic in ipairs(diagnostics_workspace) do
-    counts_workspace[diagnostic.severity] = counts_workspace[diagnostic.severity] + 1
+    counts_workspace[diagnostic.severity] = counts_workspace[diagnostic.severity]
+      + 1
   end
   ---@param severity string
   ---@return string
@@ -136,13 +145,20 @@ function statusline.diag()
     local count = counts[severity_num]
     local count_workspace = counts_workspace[severity_num]
     if count + count_workspace == 0 then return '' end
-    return utils.stl.hl(get_sign_text('DiagnosticSign' .. severity), 'StatusLineDiagnostic' .. severity)
-      .. utils.stl.hl(string.format('%d/%d', count, count_workspace), 'StatusLineFaded')
+    return utils.stl.hl(
+      get_sign_text('DiagnosticSign' .. severity),
+      'StatusLineDiagnostic' .. severity
+    ) .. utils.stl.hl(
+      string.format('%d/%d', count, count_workspace),
+      'StatusLineFaded'
+    )
   end
   local result = ''
   for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
     local diag_str = get_diagnostics_str(severity)
-    if diag_str ~= '' then result = result .. (result == '' and '' or ' ') .. diag_str end
+    if diag_str ~= '' then
+      result = result .. (result == '' and '' or ' ') .. diag_str
+    end
   end
   return result == '' and '' or result .. ' '
 end
@@ -173,7 +189,8 @@ vim.api.nvim_create_autocmd('LspProgress', {
       lsp_prog_data
       and lsp_prog_data.client_id == data.client_id
       and lsp_prog_data.result.value.title == data.result.value.title
-      and (data.result.value.percentage or 100) < (lsp_prog_data.result.value.percentage or 0)
+      and (data.result.value.percentage or 100)
+        < (lsp_prog_data.result.value.percentage or 0)
     then
       return
     end
@@ -181,7 +198,8 @@ vim.api.nvim_create_autocmd('LspProgress', {
     report_time = vim.uv.hrtime()
     if data.result.value.kind == 'end' then
       local _report_time = report_time
-      lsp_prog_data.result.value.message = vim.trim(utils.static.icons.diagnostics.Ok)
+      lsp_prog_data.result.value.message =
+        vim.trim(utils.static.icons.diagnostics.Ok)
       -- Clear client message after a short time if received an 'end' message
       vim.defer_fn(function()
         -- No new report since the timer was set

@@ -61,14 +61,15 @@ local function lspconfig_diagnostics()
     })
   end
 
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    virtual_text = {
-      prefix = vim.trim(static.icons.ui.Diamond),
-    },
-    -- Provided by lsp_lines.nvim
-    -- virtual_text = false,
-  })
+  vim.lsp.handlers['textDocument/publishDiagnostics'] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = true,
+      virtual_text = {
+        prefix = vim.trim(static.icons.ui.Diamond),
+      },
+      -- Provided by lsp_lines.nvim
+      -- virtual_text = false,
+    })
 
   -- Disable LSP diagnostics in diff mode
   vim.api.nvim_create_autocmd('OptionSet', {
@@ -78,7 +79,10 @@ local function lspconfig_diagnostics()
       if vim.v.option_new == '1' then
         vim.diagnostic.disable(info.buf)
         vim.b._lsp_diagnostics_temp_disabled = true
-      elseif vim.fn.match(vim.fn.mode(), '[iRsS\x13].*') == -1 and vim.b._lsp_diagnostics_temp_disabled then
+      elseif
+        vim.fn.match(vim.fn.mode(), '[iRsS\x13].*') == -1
+        and vim.b._lsp_diagnostics_temp_disabled
+      then
         vim.diagnostic.enable(info.buf)
         vim.b._lsp_diagnostics_temp_disabled = nil
       end
@@ -115,7 +119,10 @@ local function lspconfig_goto_handers()
   for method, handler in pairs(handlers) do
     vim.lsp.handlers[method] = function(err, result, ctx, cfg)
       if not result or type(result) == 'table' and vim.tbl_isempty(result) then
-        vim.notify('[LSP] no ' .. method:match '/(%w*)$' .. ' found', vim.log.levels.WARN)
+        vim.notify(
+          '[LSP] no ' .. method:match '/(%w*)$' .. ' found',
+          vim.log.levels.WARN
+        )
       end
       handler(err, result, ctx, cfg)
     end

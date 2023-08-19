@@ -1,5 +1,6 @@
 local icons = require('utils.static').icons
-local default_config = require 'plugins.configs.lsp-server-configs.shared.default'
+local default_config =
+  require 'plugins.configs.lsp-server-configs.shared.default'
 
 local border = require('core.settings').border
 

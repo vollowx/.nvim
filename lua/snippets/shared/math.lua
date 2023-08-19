@@ -222,7 +222,11 @@ return {
     { trig = 'sqrt' },
     { trig = '^{2}rt' },
   }, {
-    f(function(_, snip) return snip.trigger == '^{2}rt' and ' ' or '' end, {}, {}),
+    f(
+      function(_, snip) return snip.trigger == '^{2}rt' and ' ' or '' end,
+      {},
+      {}
+    ),
     c(1, {
       sn(nil, {
         t '\\sqrt{',
@@ -294,12 +298,15 @@ return {
   -- matrix/vector
   us.sam(
     { trig = 'rv', dscr = 'row vector', priority = 999 },
-    un.fmtad('\\begin{bmatrix} <el><_>{0<mod>} & <el><_>{1<mod>} & \\ldots & <el><_>{<end_idx><mod>} \\end{bmatrix}', {
-      _ = i(3, '_'),
-      el = i(1, 'a'),
-      end_idx = i(2, 'N-1'),
-      mod = i(4),
-    })
+    un.fmtad(
+      '\\begin{bmatrix} <el><_>{0<mod>} & <el><_>{1<mod>} & \\ldots & <el><_>{<end_idx><mod>} \\end{bmatrix}',
+      {
+        _ = i(3, '_'),
+        el = i(1, 'a'),
+        end_idx = i(2, 'N-1'),
+        mod = i(4),
+      }
+    )
   ),
   us.sam(
     { trig = 'cv', dscr = 'column vector' },
@@ -787,10 +794,16 @@ return {
       { cond_x = i(2, 'X=x'), cond_y = i(1, 'Y=y') }
     )
   ),
-  us.sam({
-    trig = 'nord',
-    dscr = 'Normal Distribution',
-  }, un.fmtad('\\mathcal{N} \\left(<mean>, <var>\\right)', { mean = i(1, '\\mu'), var = i(2, '\\sigma^2') })),
+  us.sam(
+    {
+      trig = 'nord',
+      dscr = 'Normal Distribution',
+    },
+    un.fmtad(
+      '\\mathcal{N} \\left(<mean>, <var>\\right)',
+      { mean = i(1, '\\mu'), var = i(2, '\\sigma^2') }
+    )
+  ),
 
   -- Math env
   us.sa({
@@ -821,7 +834,9 @@ return {
   us.sar(
     {
       trig = '^(.*)\\\\',
-      condition = conds.in_mathzone * conds.prev_line_matches '^%s*%$%$%s*$' * conds.next_line_matches '^%s*%$%$%s*$',
+      condition = conds.in_mathzone
+        * conds.prev_line_matches '^%s*%$%$%s*$'
+        * conds.next_line_matches '^%s*%$%$%s*$',
       -- stylua: ignore start
       show_condition = conds.in_mathzone
         * conds.prev_line_matches('^%s*%$%$%s*$')
@@ -839,7 +854,13 @@ return {
         {
           idnt = un.idnt(1),
           env = t 'aligned',
-          text = f(function(_, parent) return vim.trim(parent.snippet.captures[1]):gsub('&?=', '&=') end, {}, {}),
+          text = f(
+            function(_, parent)
+              return vim.trim(parent.snippet.captures[1]):gsub('&?=', '&=')
+            end,
+            {},
+            {}
+          ),
           i = r(1, 'additional'),
         }
       ),
@@ -853,7 +874,13 @@ return {
         {
           idnt = un.idnt(1),
           env = t 'align*',
-          text = f(function(_, parent) return vim.trim(parent.snippet.captures[1]):gsub('&?=', '&=') end, {}, {}),
+          text = f(
+            function(_, parent)
+              return vim.trim(parent.snippet.captures[1]):gsub('&?=', '&=')
+            end,
+            {},
+            {}
+          ),
           i = r(1, 'additional'),
         }
       ),
@@ -867,7 +894,13 @@ return {
         {
           idnt = un.idnt(1),
           env = t 'align',
-          text = f(function(_, parent) return vim.trim(parent.snippet.captures[1]):gsub('&?=', '&=') end, {}, {}),
+          text = f(
+            function(_, parent)
+              return vim.trim(parent.snippet.captures[1]):gsub('&?=', '&=')
+            end,
+            {},
+            {}
+          ),
           i = r(1, 'additional'),
         }
       ),

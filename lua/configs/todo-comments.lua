@@ -9,9 +9,20 @@ require('todo-comments').setup {
     },
     TODO = { icon = icons.ui.Check, color = 'info' },
     HACK = { icon = icons.ui.Ghost, color = 'warning' },
-    WARN = { icon = icons.diagnostics.Warn, color = 'warning', alt = { 'WARNING', 'XXX' } },
-    PERF = { icon = icons.ui.ClockFast, alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
+    WARN = {
+      icon = icons.diagnostics.Warn,
+      color = 'warning',
+      alt = { 'WARNING', 'XXX' },
+    },
+    PERF = {
+      icon = icons.ui.ClockFast,
+      alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' },
+    },
     NOTE = { icon = icons.ui.Note, color = 'hint', alt = { 'INFO' } },
-    TEST = { icon = icons.ui.Flag, color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+    TEST = {
+      icon = icons.ui.Flag,
+      color = 'test',
+      alt = { 'TESTING', 'PASSED', 'FAILED' },
+    },
   },
 }

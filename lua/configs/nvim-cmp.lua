@@ -1,7 +1,9 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local icons = require('utils.static').icons
-local t = function(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 cmp.setup {
   formatting = {
@@ -12,7 +14,11 @@ cmp.setup {
         cmdline = icons.ui.Command,
         calc = icons.kinds.Calculator,
       }
-      cmp_item.kind = (icon_override[entry.source.name] or icons.kinds[cmp_item.kind]) .. ' ' .. cmp_item.kind
+      cmp_item.kind = (
+        icon_override[entry.source.name] or icons.kinds[cmp_item.kind]
+      )
+        .. ' '
+        .. cmp_item.kind
       return cmp_item
     end,
   },

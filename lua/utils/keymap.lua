@@ -93,7 +93,9 @@ function M.fallback_fn(def)
   local modes = def.noremap and 'in' or 'im'
   ---@param keys string
   ---@return nil
-  local function feed(keys) vim.api.nvim_feedkeys(vim.keycode(keys), modes, false) end
+  local function feed(keys)
+    vim.api.nvim_feedkeys(vim.keycode(keys), modes, false)
+  end
   if not def.expr then return def.callback or function() feed(def.rhs) end end
   if def.callback then
     return function() feed(def.callback()) end

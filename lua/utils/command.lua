@@ -6,13 +6,21 @@ local M = {}
 ---@return string|nil # The result of a successfully executed command or nil
 function M.cmd(cmd, show_error)
   if type(cmd) == 'string' then cmd = { cmd } end
-  if vim.fn.has 'win32' == 1 then cmd = vim.list_extend({ 'cmd.exe', '/C' }, cmd) end
+  if vim.fn.has 'win32' == 1 then
+    cmd = vim.list_extend({ 'cmd.exe', '/C' }, cmd)
+  end
   local result = vim.fn.system(cmd)
   local success = vim.api.nvim_get_vvar 'shell_error' == 0
   if not success and (show_error == nil or show_error) then
-    vim.api.nvim_err_writeln(('Error running command %s\nError message:\n%s'):format(table.concat(cmd, ' '), result))
+    vim.api.nvim_err_writeln(
+      ('Error running command %s\nError message:\n%s'):format(
+        table.concat(cmd, ' '),
+        result
+      )
+    )
   end
-  return success and result:gsub('[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]', '') or nil
+  return success and result:gsub('[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]', '')
+    or nil
 end
 
 ---Recursively build a nested table from a list of keys and a value
@@ -20,7 +28,9 @@ end
 ---@param val any
 ---@return table
 function M.build_nested(key_parts, val)
-  return key_parts[1] and { [key_parts[1]] = M.build_nested({ unpack(key_parts, 2) }, val) } or val
+  return key_parts[1]
+      and { [key_parts[1]] = M.build_nested({ unpack(key_parts, 2) }, val) }
+    or val
 end
 
 ---@class parsed_arg_t table
@@ -35,7 +45,9 @@ function M.parse_cmdline_args(fargs)
     local key, val = arg:match '^%-%-(%S+)=(.*)$'
     if not key then key = arg:match '^%-%-(%S+)$' end
     local val_expanded = vim.fn.expand(val)
-    if type(val) == 'string' and vim.uv.fs_stat(val_expanded) then val = val_expanded end
+    if type(val) == 'string' and vim.uv.fs_stat(val_expanded) then
+      val = val_expanded
+    end
     if key and val then -- '--key=value'
       local eval_valid, eval_result = pcall(vim.fn.eval, val)
       parsed[key] = not eval_valid and val or eval_result
@@ -49,7 +61,8 @@ function M.parse_cmdline_args(fargs)
   for key, val in pairs(parsed) do
     if type(key) == 'string' then
       local key_parts = vim.split(key, '%.')
-      parsed = vim.tbl_deep_extend('force', parsed, M.build_nested(key_parts, val))
+      parsed =
+        vim.tbl_deep_extend('force', parsed, M.build_nested(key_parts, val))
       if #key_parts > 1 then
         parsed[key] = nil -- Remove the original dot-separated key
       end
@@ -94,12 +107,17 @@ function M.complete_opts(opts)
     if optkey and eq == '=' then
       local candidate_vals = vim.tbl_map(
         tostring,
-        type(opts[optkey]) == 'function' and opts[optkey](arglead, cmdline, cursorpos) or opts[optkey]
+        type(opts[optkey]) == 'function'
+            and opts[optkey](arglead, cmdline, cursorpos)
+          or opts[optkey]
       )
       return candidate_vals
           and vim.tbl_map(
             function(val) return '--' .. optkey .. '=' .. val end,
-            vim.tbl_filter(function(val) return val:find(optval, 1, true) == 1 end, candidate_vals)
+            vim.tbl_filter(
+              function(val) return val:find(optval, 1, true) == 1 end,
+              candidate_vals
+            )
           )
         or {}
     end
@@ -116,7 +134,10 @@ end
 ---@return fun(arglead: string, cmdline: string, cursorpos: integer): string[]
 function M.complete_params(params)
   return function(arglead, _, _)
-    return vim.tbl_filter(function(arg) return arg:find(arglead, 1, true) == 1 end, params or {})
+    return vim.tbl_filter(
+      function(arg) return arg:find(arglead, 1, true) == 1 end,
+      params or {}
+    )
   end
 end
 

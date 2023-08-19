@@ -124,7 +124,8 @@ end
 ---@return string hex color
 local function get_hl(hlgroup_name, field, fallback)
   fallback = fallback or vim.opt.bg == 'dark' and '#000000' or '#FFFFFF'
-  local has_hlgroup, hlgroup = pcall(vim.api.nvim_get_hl, 0, { name = hlgroup_name })
+  local has_hlgroup, hlgroup =
+    pcall(vim.api.nvim_get_hl, 0, { name = hlgroup_name })
   if has_hlgroup and hlgroup[field] then return dec2hex(hlgroup[field]) end
   return fallback
 end
@@ -141,7 +142,9 @@ local function cc_resolve(cc)
     if vim.startswith(cc_str, '+') or vim.startswith(cc_str, '-') then
       cc_number = vim.bo.tw > 0 and vim.bo.tw + cc_number or nil
     end
-    if cc_number and cc_number > 0 and (not cc_min or cc_number < cc_min) then cc_min = cc_number end
+    if cc_number and cc_number > 0 and (not cc_min or cc_number < cc_min) then
+      cc_min = cc_number
+    end
   end
   return cc_min
 end
@@ -150,10 +153,9 @@ end
 ---@param winid integer window handler
 local function cc_conceal(winid)
   winid = winid or 0
-  local new_winhl = (vim.wo[winid].winhl:gsub('ColorColumn:[^,]*', '') .. ',ColorColumn:')
-    :gsub(',*$', '')
-    :gsub('^,*', '')
-    :gsub(',+', ',')
+  local new_winhl = (
+    vim.wo[winid].winhl:gsub('ColorColumn:[^,]*', '') .. ',ColorColumn:'
+  ):gsub(',*$', ''):gsub('^,*', ''):gsub(',+', ',')
   if new_winhl ~= vim.wo[winid].winhl then vim.wo[winid].winhl = new_winhl end
 end
 
@@ -161,10 +163,10 @@ end
 ---@param winid integer window handler
 local function cc_show(winid)
   winid = winid or 0
-  local new_winhl = (vim.wo[winid].winhl:gsub('ColorColumn:[^,]*', '') .. ',ColorColumn:_ColorColumn')
-    :gsub(',*$', '')
-    :gsub('^,*', '')
-    :gsub(',+', ',')
+  local new_winhl = (
+    vim.wo[winid].winhl:gsub('ColorColumn:[^,]*', '')
+    .. ',ColorColumn:_ColorColumn'
+  ):gsub(',*$', ''):gsub('^,*', ''):gsub(',+', ',')
   if new_winhl ~= vim.wo[winid].winhl then vim.wo[winid].winhl = new_winhl end
 end
 
@@ -207,7 +209,11 @@ local function cc_autocmd()
       local colorcolumn_bg = get_hl('ColorColumn', 'bg')
       if length < cc then
         vim.api.nvim_set_hl(0, '_ColorColumn', {
-          bg = blend(colorcolumn_bg, normal_bg, (length - thresh) / (cc - thresh)),
+          bg = blend(
+            colorcolumn_bg,
+            normal_bg,
+            (length - thresh) / (cc - thresh)
+          ),
         })
       else -- Show error color when length >= cc
         local warning_color = get_hl('Error', 'fg', '#FF0000')

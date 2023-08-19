@@ -25,7 +25,11 @@ glance.setup {
           { title = 'glance.nvim' }
         )
       elseif #results == 1 and method == 'references' then
-        vim.notify('The identifier under cursor is the only one found', vim.log.levels.INFO, { title = 'glance.nvim' })
+        vim.notify(
+          'The identifier under cursor is the only one found',
+          vim.log.levels.INFO,
+          { title = 'glance.nvim' }
+        )
       else
         open(results)
       end

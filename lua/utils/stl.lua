@@ -18,6 +18,8 @@ end
 ---@param str string
 ---@param callback string
 ---@return string
-function M.make_clickable(str, callback) return string.format('%%@%s@%s%%X', callback, str) end
+function M.make_clickable(str, callback)
+  return string.format('%%@%s@%s%%X', callback, str)
+end
 
 return M

@@ -14,7 +14,9 @@ local utils = require 'utils'
 local M = setmetatable({
   _ = {},
 }, {
-  __index = function(self, k) return self._[k] and lsconds.make_condition(self._[k]) or lsconds[k] end,
+  __index = function(self, k)
+    return self._[k] and lsconds.make_condition(self._[k]) or lsconds[k]
+  end,
   __newindex = function(self, k, v) self._[k] = v end,
 })
 
@@ -37,14 +39,19 @@ function M.ts_active() return utils.treesitter.ts_active() end
 ---@param type string
 ---@return snip_cond_t
 function M.in_tsnode(type)
-  return lsconds.make_condition(function() return utils.treesitter.in_tsnode(type) end)
+  return lsconds.make_condition(
+    function() return utils.treesitter.in_tsnode(type) end
+  )
 end
 
 ---Returns whether the cursor is in a normal zone
 ---@return boolean
 function M.in_normalzone()
-  if vim.bo.ft == 'markdown' or vim.bo.ft == 'tex' then return utils.ft[vim.bo.ft].in_normalzone() end
-  return not M.ts_active() or not M.in_tsnode 'comment'() and not M.in_tsnode 'string'()
+  if vim.bo.ft == 'markdown' or vim.bo.ft == 'tex' then
+    return utils.ft[vim.bo.ft].in_normalzone()
+  end
+  return not M.ts_active()
+    or not M.in_tsnode 'comment'() and not M.in_tsnode 'string'()
 end
 
 ---Returns whether the cursor is before a pattern
@@ -53,7 +60,10 @@ end
 function M.before_pattern(pattern)
   return lsconds.make_condition(
     function()
-      return vim.api.nvim_get_current_line():sub(vim.api.nvim_win_get_cursor(0)[2] + 1):match('^' .. pattern) ~= nil
+      return vim.api
+        .nvim_get_current_line()
+        :sub(vim.api.nvim_win_get_cursor(0)[2] + 1)
+        :match('^' .. pattern) ~= nil
     end
   )
 end
@@ -87,7 +97,9 @@ end
 
 ---Returns whether the cursor is at the end of a line
 ---@return boolean
-function M.at_line_end() return vim.api.nvim_win_get_cursor(0)[2] == #vim.api.nvim_get_current_line() end
+function M.at_line_end()
+  return vim.api.nvim_win_get_cursor(0)[2] == #vim.api.nvim_get_current_line()
+end
 
 ---Returns whether the previous line matches a pattern
 ---@param pattern string lua pattern
@@ -96,7 +108,9 @@ function M.prev_line_matches(pattern)
   return lsconds.make_condition(function()
     local lnum = vim.fn.line '.'
     if lnum <= 1 then return false end
-    return vim.api.nvim_buf_get_lines(0, lnum - 2, lnum - 1, true)[1]:match(pattern) ~= nil
+    return vim.api
+      .nvim_buf_get_lines(0, lnum - 2, lnum - 1, true)[1]
+      :match(pattern) ~= nil
   end)
 end
 
@@ -107,7 +121,8 @@ function M.next_line_matches(pattern)
   return lsconds.make_condition(function()
     local lnum = vim.fn.line '.'
     if lnum >= vim.fn.line '$' then return false end
-    return vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:match(pattern) ~= nil
+    return vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:match(pattern)
+      ~= nil
   end)
 end
 

@@ -15,7 +15,8 @@ local function get_indent_str(depth)
 
   local sw = vim.fn.shiftwidth()
   return vim.bo.expandtab and string.rep(' ', sw * depth)
-    or string.rep('\t', math.floor(sw * depth / vim.bo.ts)) .. string.rep(' ', sw * depth % vim.bo.ts)
+    or string.rep('\t', math.floor(sw * depth / vim.bo.ts))
+      .. string.rep(' ', sw * depth % vim.bo.ts)
 end
 
 ---Returns a function node that returns a string for indentation at the given
@@ -66,7 +67,9 @@ end
 local function simple_suffix_dynamic_node(jump_index, opening, closing)
   return d(jump_index or 1, function(_, snip)
     local symbol = snip.captures[1]
-    if symbol == nil or not symbol:match '%S' then return sn(nil, { t(opening), i(1), t(closing) }) end
+    if symbol == nil or not symbol:match '%S' then
+      return sn(nil, { t(opening), i(1), t(closing) })
+    end
     return sn(nil, { t(opening), t(symbol), t(closing) })
   end)
 end

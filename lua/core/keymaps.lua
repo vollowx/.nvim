@@ -2,7 +2,12 @@ vim.keymap.set({ 'n', 'x' }, '<Space>', '<Ignore>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'search: Clear highlights' })
+vim.keymap.set(
+  'n',
+  '<Esc>',
+  '<Cmd>noh<CR>',
+  { desc = 'search: Clear highlights' }
+)
 vim.keymap.set('n', '<C-s>', '<Cmd>write<CR>', { desc = 'edit: Write to file' })
 
 -- Multi-window operations
@@ -20,8 +25,18 @@ vim.keymap.set({ 'x', 'o' }, '>', '>gv', { desc = 'edit: Increase indent' })
 vim.keymap.set({ 'x', 'o' }, '<', '<gv', { desc = 'edit: Decrease indent' })
 
 -- Buffer navigation
-vim.keymap.set('n', '<A-j>', '<Cmd>exec v:count1 . "bn"<CR>')
-vim.keymap.set('n', '<A-k>', '<Cmd>exec v:count1 . "bp"<CR>')
+vim.keymap.set(
+  'n',
+  '<A-j>',
+  '<Cmd>exec v:count1 . "bn"<CR>',
+  { desc = 'buffer: Next' }
+)
+vim.keymap.set(
+  'n',
+  '<A-k>',
+  '<Cmd>exec v:count1 . "bp"<CR>',
+  { desc = 'buffer: Previous' }
+)
 
 -- Correct misspelled word / mark as correct
 vim.keymap.set('i', '<C-S-L>', '<Esc>[szg`]a')
@@ -45,7 +60,11 @@ vim.keymap.set('n', 'q', function()
     end
   end
   if count == 0 then -- Fallback
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('q', true, true, true), 'n', false)
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes('q', true, true, true),
+      'n',
+      false
+    )
   end
 end, { desc = 'window: Close floating windows' })
 

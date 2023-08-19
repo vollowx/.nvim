@@ -26,7 +26,10 @@ function bufopt_t:new(name, default)
   local new_opt = setmetatable({
     name = name,
     default = default,
-    augroup = vim.api.nvim_create_augroup('BufOpt' .. utils.string.snake_to_camel(name), {}),
+    augroup = vim.api.nvim_create_augroup(
+      'BufOpt' .. utils.string.snake_to_camel(name),
+      {}
+    ),
     initialized = initialized,
   }, { __index = self })
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {

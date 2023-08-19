@@ -7,7 +7,13 @@ local M = {}
 ---@return nil
 function M.error(cmd, msg, lev)
   lev = lev or vim.log.levels.WARN
-  vim.notify('[git] failed to execute git command: ' .. table.concat(cmd, ' ') .. '\n' .. msg, lev)
+  vim.notify(
+    '[git] failed to execute git command: '
+      .. table.concat(cmd, ' ')
+      .. '\n'
+      .. msg,
+    lev
+  )
 end
 
 ---Execute git command in given directory synchronously
@@ -97,7 +103,8 @@ function M.diffstat(path)
       local stat = { added = 0, removed = 0, changed = 0 }
       for _, line in ipairs(vim.split(err.stdout, '\n')) do
         if line:find '^@@ ' then
-          local num_lines_old, num_lines_new = line:match '^@@ %-%d+,?(%d*) %+%d+,?(%d*)'
+          local num_lines_old, num_lines_new =
+            line:match '^@@ %-%d+,?(%d*) %+%d+,?(%d*)'
           num_lines_old = tonumber(num_lines_old) or 1
           num_lines_new = tonumber(num_lines_new) or 1
           local num_lines_changed = math.min(num_lines_old, num_lines_new)

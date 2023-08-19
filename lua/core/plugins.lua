@@ -25,11 +25,17 @@ local function create_autocmd_applypatch()
       local patches_path = vim.fs.joinpath(confpath, 'patches')
       for patch in vim.fs.dir(patches_path) do
         local patch_path = vim.fs.joinpath(patches_path, patch)
-        local plugin_path = vim.fs.joinpath(vim.g.package_path, (patch:gsub('%.patch$', '')))
+        local plugin_path =
+          vim.fs.joinpath(vim.g.package_path, (patch:gsub('%.patch$', '')))
         if vim.uv.fs_stat(plugin_path) then
           if
             info.match:match 'Pre$'
-            and git.dir_execute(plugin_path, { 'diff', '--stat' }, vim.log.levels.WARN).output ~= ''
+            and git.dir_execute(
+                plugin_path,
+                { 'diff', '--stat' },
+                vim.log.levels.WARN
+              ).output
+              ~= ''
           then
             vim.notify('[plugins] reverting patch' .. patch_path)
             git.dir_execute(plugin_path, {
@@ -66,7 +72,10 @@ local function bootstrap()
 
   local lock = read_file(vim.g.package_lock)
   local lock_data = lock and vim.json.decode(lock) or nil
-  local commit = lock_data and lock_data['lazy.nvim'] and lock_data['lazy.nvim'].commit or nil
+  local commit = lock_data
+      and lock_data['lazy.nvim']
+      and lock_data['lazy.nvim'].commit
+    or nil
   local url = 'https://github.com/folke/lazy.nvim.git'
   vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
   vim.fn.mkdir(vim.g.package_path, 'p')
@@ -80,7 +89,9 @@ local function bootstrap()
   then
     return false
   end
-  if commit then git.dir_execute(lazy_path, { 'checkout', commit }, vim.log.levels.INFO) end
+  if commit then
+    git.dir_execute(lazy_path, { 'checkout', commit }, vim.log.levels.INFO)
+  end
   vim.notify('[plugins] lazy.nvim cloned to ' .. lazy_path, vim.log.levels.INFO)
   return true
 end

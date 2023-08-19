@@ -13,7 +13,10 @@ local function load_snippets(ft)
 end
 
 local function lazy_load_snippets()
-  local snippets_path = vim.split(fn.globpath(fn.stdpath 'config' .. '/lua/snippets', '*.lua'), '\n')
+  local snippets_path = vim.split(
+    fn.globpath(fn.stdpath 'config' .. '/lua/snippets', '*.lua'),
+    '\n'
+  )
   vim.api.nvim_create_augroup('LuaSnipLazyLoadSnippets', { clear = true })
   for _, path in ipairs(snippets_path) do
     local ft = fn.fnamemodify(path, ':t:r')
@@ -40,17 +43,26 @@ local function set_keymap()
       return '<Tab>'
     end
   end, { noremap = false, expr = true })
-  vim.keymap.set({ 'n', 's' }, '<S-Tab>', function() ls.jump(-1) end, { noremap = false })
+  vim.keymap.set(
+    { 'n', 's' },
+    '<S-Tab>',
+    function() ls.jump(-1) end,
+    { noremap = false }
+  )
   vim.keymap.set(
     's',
     '<C-n>',
-    function() return ls.choice_active() and '<Plug>luasnip-next-choice' or '<C-n>' end,
+    function()
+      return ls.choice_active() and '<Plug>luasnip-next-choice' or '<C-n>'
+    end,
     { silent = true, expr = true }
   )
   vim.keymap.set(
     's',
     '<C-p>',
-    function() return ls.choice_active() and '<Plug>luasnip-prev-choice' or '<C-p>' end,
+    function()
+      return ls.choice_active() and '<Plug>luasnip-prev-choice' or '<C-p>'
+    end,
     { silent = true, expr = true }
   )
 end

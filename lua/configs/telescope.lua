@@ -60,8 +60,15 @@ override_lsp_picker('lsp_dynamic_workspace_symbols', 'workspace/symbol')
 vim.api.nvim_create_autocmd('WinLeave', {
   group = vim.api.nvim_create_augroup('TelescopeConfig', {}),
   callback = function(info)
-    if vim.bo[info.buf].ft == 'TelescopePrompt' and vim.startswith(vim.fn.mode(), 'i') then
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'in', false)
+    if
+      vim.bo[info.buf].ft == 'TelescopePrompt'
+      and vim.startswith(vim.fn.mode(), 'i')
+    then
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes('<Esc>', true, false, true),
+        'in',
+        false
+      )
     end
   end,
 })

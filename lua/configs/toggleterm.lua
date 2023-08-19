@@ -65,7 +65,10 @@ local lazygits = setmetatable({}, {
 ---@param dir string?
 local function lazygit_toggle(dir)
   dir = vim.fs.normalize(dir or vim.fn.getcwd())
-  local git_repo = vim.system({ 'git', '-C', dir, 'rev-parse', '--show-toplevel' }):wait().stdout:gsub('\n.*', '')
+  local git_repo = vim
+    .system({ 'git', '-C', dir, 'rev-parse', '--show-toplevel' })
+    :wait().stdout
+    :gsub('\n.*', '')
   if lazygits[git_repo] then
     lazygits[git_repo]:toggle()
     if lazygits[git_repo]:is_open() then last_visited_git_repo = git_repo end
@@ -76,10 +79,16 @@ local function lazygit_toggle(dir)
   end
 end
 
-vim.api.nvim_create_user_command('Lazygit', function(info) lazygit_toggle(info.fargs[1]) end, {
-  nargs = '?',
-  complete = function(arglead)
-    local existing_paths = vim.tbl_keys(lazygits)
-    return vim.tbl_isempty(existing_paths) and vim.fn.getcompletion(arglead, 'dir') or existing_paths
-  end,
-})
+vim.api.nvim_create_user_command(
+  'Lazygit',
+  function(info) lazygit_toggle(info.fargs[1]) end,
+  {
+    nargs = '?',
+    complete = function(arglead)
+      local existing_paths = vim.tbl_keys(lazygits)
+      return vim.tbl_isempty(existing_paths)
+          and vim.fn.getcompletion(arglead, 'dir')
+        or existing_paths
+    end,
+  }
+)
