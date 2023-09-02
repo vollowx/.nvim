@@ -40,7 +40,7 @@ local function override_lsp_picker(name, lsp_method)
     end
     local client_ok = client.request_sync(lsp_method, {
       textDocument = vim.lsp.util.make_text_document_params(buf),
-    }, 32, buf)
+    }, 512, buf)
     if client_ok then
       buf_client_ready[buf] = true
       orig_picker(...)
@@ -116,6 +116,7 @@ telescope.setup {
       '-g=!*.bz2',
       '-g=!*.db',
       '-g=!*.directory',
+      '-g=!*.dll',
       '-g=!*.doc',
       '-g=!*.docx',
       '-g=!*.drawio',
@@ -165,10 +166,11 @@ telescope.setup {
       '-g=!.mozilla/',
       '-g=!.npm/',
       '-g=!.nvm/',
-      '-g=!.steam/',
+      '-g=!.steam*/',
       '-g=!.thunderbird/',
       '-g=!.tmp/',
       '-g=!__pycache__/',
+      '-g=!dosdevices/',
       '-g=!events.out.tfevents.*',
       '-g=!node_modules/',
       '-g=!vendor/',
@@ -185,11 +187,12 @@ telescope.setup {
       find_command = {
         'fd',
         '-p',
-        '-tf',
-        '-tl',
         '-H',
         '-L',
+        '-tf',
+        '-tl',
         '-d10',
+        '--mount',
         '-c=never',
         '-E=*$*',
         '-E=*%*',
@@ -197,6 +200,7 @@ telescope.setup {
         '-E=*.bz2',
         '-E=*.db',
         '-E=*.directory',
+        '-E=*.dll',
         '-E=*.doc',
         '-E=*.docx',
         '-E=*.drawio',
@@ -230,7 +234,7 @@ telescope.setup {
         '-E=*.xlsx',
         '-E=*.zip',
         '-E=*Cache*/',
-        '-E=*\\~',
+        '-E=*~',
         '-E=*cache*/',
         '-E=.*Cache*/',
         '-E=.*cache*/',
@@ -246,10 +250,11 @@ telescope.setup {
         '-E=.mozilla/',
         '-E=.npm/',
         '-E=.nvm/',
-        '-E=.steam/',
+        '-E=.steam*/',
         '-E=.thunderbird/',
         '-E=.tmp/',
         '-E=__pycache__/',
+        '-E=dosdevices/',
         '-E=events.out.tfevents.*',
         '-E=node_modules/',
         '-E=vendor/',
