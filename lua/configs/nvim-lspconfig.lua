@@ -52,7 +52,7 @@ local function lspconfig_diagnostics()
   for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
     local sign_name = 'DiagnosticSign' .. severity
     vim.fn.sign_define(sign_name, {
-      text = icons[sign_name],
+      text = icons.diagnostics[severity],
       texthl = sign_name,
       numhl = sign_name,
       culhl = sign_name .. 'Cul',
