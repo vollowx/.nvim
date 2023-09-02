@@ -26,6 +26,8 @@ cmp.setup {
     completion = {
       border = 'solid',
       col_offset = -1,
+      max_width = 40,
+      max_height = 16,
     },
     documentation = {
       border = 'solid',
@@ -33,14 +35,9 @@ cmp.setup {
       max_height = 20,
     },
   },
-  matching = {
-    disallow_partial_fuzzy_matching = false,
-  },
   performance = {
-    async_budget = 1,
     max_view_entries = 120,
   },
-  experimental = { ghost_text = { hl_group = 'Whitespace' } },
   snippet = {
     expand = function(args) require('luasnip').lsp_expand(args.body) end,
   },
@@ -129,7 +126,6 @@ cmp.setup {
     { name = 'luasnip' },
     { name = 'path' },
     { name = 'treesitter' },
-    { name = 'spell' },
     { name = 'buffer' },
     { name = 'calc' },
   },
