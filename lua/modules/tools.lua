@@ -8,11 +8,7 @@ return {
     },
     config = function() require 'configs.telescope' end,
     keys = {
-      {
-        '<C-p>',
-        '<Cmd>Telescope keymaps<CR>',
-        desc = 'ui: Open command panel',
-      },
+      { '<Leader>f', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
       { '<Leader>F', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
       { '<Leader>ff', '<Cmd>Telescope find_files<CR>', desc = 'find: Files' },
       {
@@ -20,8 +16,29 @@ return {
         '<Cmd>Telescope oldfiles<CR>',
         desc = 'find: Recent files',
       },
-      { '<Leader>fw', '<Cmd>Telescope live_grep<CR>', desc = 'find: Words' },
+      { '<Leader>fw', '<Cmd>Telescope grep_string<CR>', desc = 'find: Words' },
       { '<Leader>fb', '<Cmd>Telescope buffers<CR>', desc = 'find: Buffers' },
+      {
+        '<Leader>fk',
+        '<Cmd>Telescope keymaps<CR>',
+        desc = 'find: Key-mappings',
+      },
+      {
+        '<Leader>fh',
+        '<Cmd>Telescope help_tags<CR>',
+        desc = 'find: Help pages',
+      },
+      {
+        '<Leader>fc',
+        '<Cmd>Telescope colorscheme<CR>',
+        desc = 'find: Color-Schemes',
+      },
+      {
+        '<Leader>fg',
+        '<Cmd>Telescope git_status<CR>',
+        desc = 'find: Git status',
+      },
+
       {
         '<Leader>fe',
         '<Cmd>Telescope diagnostics<CR>',
@@ -38,21 +55,11 @@ return {
         desc = 'find: LSP definitions',
       },
       {
-        '<Leader>fg',
-        '<Cmd>Telescope git_status<CR>',
-        desc = 'find: Git status',
+        '<Leader>fs',
+        '<Cmd>Telescope lsp_document_symbols<CR>',
+        desc = 'find: LSP document symbols',
       },
-      {
-        '<Leader>fh',
-        '<Cmd>Telescope help_tags<CR>',
-        desc = 'find: Help pages',
-      },
-      { '<Leader>fm', '<Cmd>Telescope marks<CR>', desc = 'find: Marks' },
-      {
-        '<Leader>fc',
-        '<Cmd>Telescope colorscheme<CR>',
-        desc = 'find: Color-Schemes',
-      },
+
       { '<Leader>fu', '<Cmd>Telescope undo<CR>', desc = 'find: Undoes' },
       {
         '<Leader>fn',
