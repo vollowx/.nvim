@@ -38,9 +38,6 @@ require('catppuccin').setup {
         DiagnosticVirtualTextInfo = { bg = cp.none },
         DiagnosticVirtualTextHint = { bg = cp.none },
 
-        -- For indent-blankline
-        IndentBlanklineContextChar = { fg = cp.surface1 },
-
         -- For telescope.nvim
         TelescopePromptNormal = { bg = transparent and cp.none or cp.crust },
         TelescopePromptBorder = {
