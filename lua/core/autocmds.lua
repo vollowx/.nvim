@@ -54,20 +54,26 @@ local autocmds = {
   },
 
   {
-    { 'BufReadPost', 'BufWinEnter', 'WinEnter', 'FileChangedShellPost' },
+    { 'BufReadPost', 'BufWinEnter', 'FileChangedShellPost' },
     {
       pattern = '*',
       group = 'AutoCwd',
       desc = 'Automatically change local current directory.',
       callback = function(info)
         if info.file == '' or not vim.bo[info.buf].ma then return end
+        local current_dir = vim.fn.getcwd()
         local proj_dir = require('utils').fs.proj_dir(info.file)
+        -- Prevent unnecessary directory change, which triggers
+        -- DirChanged autocmds that may update winbar unexpectedly
+        if current_dir == proj_dir then return end
         if proj_dir then
           vim.cmd.lcd(proj_dir)
-        else
-          local dirname = vim.fs.dirname(info.file)
-          local stat = vim.uv.fs_stat(dirname)
-          if stat and stat.type == 'directory' then vim.cmd.lcd(dirname) end
+          return
+        end
+        local dirname = vim.fs.dirname(info.file)
+        local stat = vim.uv.fs_stat(dirname)
+        if stat and stat.type == 'directory' and proj_dir ~= current_dir then
+          vim.cmd.lcd(dirname)
         end
       end,
     },
