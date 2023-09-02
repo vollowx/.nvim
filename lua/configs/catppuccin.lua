@@ -2,8 +2,12 @@ local transparent = require('core.settings').transparent
 
 require('catppuccin').setup {
   transparent_background = transparent,
-  term_colors = true,
   integrations = {
+    alpha = false,
+    dashboard = false,
+    flash = false,
+    neogit = false,
+
     treesitter = true,
     native_lsp = { enabled = true },
     cmp = true,
