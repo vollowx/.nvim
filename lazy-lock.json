@@ -13,7 +13,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "dressing.nvim": { "branch": "master", "commit": "c7b035de7f91bb6b62b4308f105c56d1a968b8c5" },
-  "dropbar.nvim": { "branch": "master", "commit": "a1b655d0682be6f715355712f7e1216e45495daa" },
+  "dropbar.nvim": { "branch": "master", "commit": "5c0a57f7b147a59caf2eee28df3481963027b6a0" },
   "git-conflict.nvim": { "branch": "main", "commit": "f20f197df50a0779ba55e933ef0995698ad32039" },
   "gitsigns.nvim": { "branch": "main", "commit": "d927caa075df63bf301d92f874efb72fd22fd3b4" },
   "glance.nvim": { "branch": "master", "commit": "8ed5cf3b3b1231ea696d88c9efd977027429d869" },

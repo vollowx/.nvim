@@ -1,6 +1,5 @@
 local telescope = require 'telescope'
 local builtin = require 'telescope.builtin'
-local actions = require 'telescope.actions'
 local static = require 'utils.static'
 
 local border = require('core.settings').border
@@ -77,8 +76,8 @@ vim.api.nvim_create_autocmd('WinLeave', {
 local layout_dropdown = {
   previewer = false,
   layout_config = {
-    width = 0.5,
-    height = 0.5,
+    width = 0.65,
+    height = 0.65,
   },
 }
 
@@ -90,8 +89,8 @@ telescope.setup {
     results_title = false,
     layout_strategy = 'flex',
     layout_config = {
-      width = 0.87,
-      height = 0.80,
+      width = 0.8,
+      height = 0.8,
       horizontal = {
         prompt_position = 'top',
         preview_width = 0.55,
@@ -258,13 +257,11 @@ telescope.setup {
       },
     },
     keymaps = layout_dropdown,
-    lsp_references = {
-      include_current_line = true,
-      jump_type = 'never',
-    },
-    lsp_definitions = {
-      jump_type = 'never',
-    },
+    grep_string = { additional_args = { '--hidden' } },
+    live_grep = { additional_args = { '--hidden' } },
+    lsp_references = { include_current_line = true, jump_type = 'never' },
+    lsp_definitions = { jump_type = 'never' },
+    lsp_type_definitions = { jump_type = 'never' },
     vim_options = layout_dropdown,
     registers = layout_dropdown,
     reloader = layout_dropdown,
