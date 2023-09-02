@@ -26,10 +26,11 @@ cmp.setup {
     completion = {
       border = 'solid',
       col_offset = -1,
-      scrollbar = false,
     },
     documentation = {
       border = 'solid',
+      max_width = 80,
+      max_height = 20,
     },
   },
   matching = {
