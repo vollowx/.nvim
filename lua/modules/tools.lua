@@ -16,7 +16,7 @@ return {
         '<Cmd>Telescope oldfiles<CR>',
         desc = 'find: Recent files',
       },
-      { '<Leader>fw', '<Cmd>Telescope grep_string<CR>', desc = 'find: Words' },
+      { '<Leader>fw', '<Cmd>Telescope live_grep<CR>', desc = 'find: Words' },
       { '<Leader>fb', '<Cmd>Telescope buffers<CR>', desc = 'find: Buffers' },
       {
         '<Leader>fk',
