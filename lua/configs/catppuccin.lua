@@ -7,7 +7,6 @@ require('catppuccin').setup {
     dashboard = false,
     flash = false,
     neogit = false,
-    nvimtree = false,
 
     treesitter = true,
     native_lsp = { enabled = true },
@@ -18,7 +17,7 @@ require('catppuccin').setup {
     indent_blankline = { enabled = true },
     markdown = true,
     notify = true,
-    neotree = true,
+    nvimtree = true,
     semantic_tokens = true,
     telescope = { enabled = true, style = 'nvchad' },
   },

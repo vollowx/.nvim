@@ -75,12 +75,24 @@ return {
   },
 
   {
-    'nvim-neo-tree/neo-tree.nvim',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    cmd = { 'Neotree' },
-    config = function() require 'configs.neo-tree' end,
+    'nvim-tree/nvim-tree.lua',
+    cmd = {
+      'NvimTreeOpen',
+      'NvimTreeClose',
+      'NvimTreeToggle',
+      'NvimTreeFocus',
+      'NvimTreeRefresh',
+      'NvimTreeFindFile',
+      'NvimTreeFindFileToggle',
+      'NvimTreeClipboard',
+      'NvimTreeResize',
+      'NvimTreeCollapse',
+      'NvimTreeCollapseKeepBuffers',
+      'NvimTreeGenerateOnAttach',
+    },
+    config = function() require 'configs.nvim-tree' end,
     keys = {
-      { '<C-n>', '<Cmd>Neotree toggle dir=./<CR>', desc = 'ui: Toggle file tree' },
+      { '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'ui: Toggle file tree' },
     },
   },
 
