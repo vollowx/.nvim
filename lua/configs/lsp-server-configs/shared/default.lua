@@ -886,6 +886,7 @@ end
 local function on_attach(client, bufnr)
   if not vim.b[bufnr].lsp_attached then
     vim.b[bufnr].lsp_attached = true
+    vim.lsp.inlay_hint(bufnr, true)
     setup_keymaps(client, bufnr)
     setup_commands(client, bufnr, 'Lsp', subcommands.lsp.buf, vim.lsp.buf)
     setup_commands(
