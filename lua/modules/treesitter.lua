@@ -20,7 +20,7 @@ return {
     event = 'User File',
     config = function() require 'configs.nvim-treesitter' end,
     dependencies = {
-      'nvim-treesitter-context',
+      -- 'nvim-treesitter-context',
       'nvim-treesitter-textobjects',
       'nvim-ts-context-commentstring',
       'nvim-treesitter-endwise',
@@ -29,11 +29,11 @@ return {
     },
   },
 
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    dependencies = 'nvim-treesitter',
-    config = function() require 'configs.ts-context' end,
-  },
+  -- {
+  --   'nvim-treesitter/nvim-treesitter-context',
+  --   dependencies = 'nvim-treesitter',
+  --   config = function() require 'configs.ts-context' end,
+  -- },
 
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
