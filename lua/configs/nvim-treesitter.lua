@@ -23,7 +23,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 ts_configs.setup {
   ensure_installed = require('utils.static').langs:list 'ts',
   sync_install = true,
-  ignore_install = {},
   highlight = {
     enable = not vim.g.vscode,
     additional_vim_regex_highlighting = false,
@@ -83,12 +82,8 @@ ts_configs.setup {
       },
     },
   },
-  context_commentstring = {
-    enable = true,
-  },
-  endwise = {
-    enable = true,
-  },
+  context_commentstring = { enable = true },
+  endwise = { enable = true },
   autotag = {
     enable = true,
     enable_rename = true,
