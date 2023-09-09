@@ -54,29 +54,11 @@ override_lsp_picker('lsp_document_symbols', 'textDocument/documentSymbol')
 override_lsp_picker('lsp_workspace_symbols', 'workspace/symbol')
 override_lsp_picker('lsp_dynamic_workspace_symbols', 'workspace/symbol')
 
--- Workaround for nvim-telescope/telescope.nvim #2501
--- to prevent opening files in insert mode
-vim.api.nvim_create_autocmd('WinLeave', {
-  group = vim.api.nvim_create_augroup('TelescopeConfig', {}),
-  callback = function(info)
-    if
-      vim.bo[info.buf].ft == 'TelescopePrompt'
-      and vim.startswith(vim.fn.mode(), 'i')
-    then
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes('<Esc>', true, false, true),
-        'in',
-        false
-      )
-    end
-  end,
-})
-
 -- Dropdown layout for telescope
 local layout_dropdown = {
   previewer = false,
   layout_config = {
-    width = 0.65,
+    width = 0.6,
     height = 0.65,
   },
 }
@@ -100,6 +82,7 @@ telescope.setup {
         mirror = true,
       },
     },
+    sorting_strategy = 'ascending',
     vimgrep_arguments = {
       'rg',
       '--hidden',
@@ -176,7 +159,6 @@ telescope.setup {
       '-g=!vendor/',
       '-g=!venv/',
     },
-    sorting_strategy = 'ascending',
   },
   pickers = {
     colorscheme = { enable_preview = true },
@@ -262,7 +244,6 @@ telescope.setup {
       },
     },
     keymaps = layout_dropdown,
-    grep_string = { additional_args = { '--hidden' } },
     live_grep = { additional_args = { '--hidden' } },
     lsp_references = { include_current_line = true, jump_type = 'never' },
     lsp_definitions = { jump_type = 'never' },
@@ -291,4 +272,3 @@ telescope.setup {
 }
 
 telescope.load_extension 'undo'
-telescope.load_extension 'notify'

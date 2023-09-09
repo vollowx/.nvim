@@ -1,5 +1,3 @@
-local release_event = require('utils').event.release
-
 local set_autocmds = function(autocmds)
   for _, autocmd in ipairs(autocmds) do
     if autocmd[2].group and vim.fn.exists('#' .. autocmd[2].group) == 0 then
@@ -79,12 +77,12 @@ local autocmds = {
     },
   },
 
-  -- Restore dark/light background and colorscheme from ShaDa
   {
     { 'BufReadPre', 'UIEnter' },
     {
       group = 'RestoreBackground',
       once = true,
+      desc = 'Restore dark/light background and colorscheme from ShaDa.',
       callback = function()
         if vim.g.theme_restored then return end
         vim.g.theme_restored = true
@@ -92,22 +90,20 @@ local autocmds = {
           vim.go.background = vim.g.BACKGROUND
         end
         if not vim.g.colors_name or vim.g.COLORSNAME ~= vim.g.colors_name then
-          vim.cmd(
-            'silent! colorscheme ' .. (vim.g.COLORSNAME or 'catppuccin-mocha')
-          )
+          vim.cmd('silent! colorscheme ' .. (vim.g.COLORSNAME or 'catppuccin'))
         end
         return true
       end,
     },
   },
 
-  -- Change background on receiving signal SIGUSER1
   {
     { 'Signal' },
     {
       nested = true,
       pattern = 'SIGUSR1',
       group = 'SwitchBackground',
+      desc = 'Change background on receiving signal SIGUSER1.',
       callback = function()
         local hrtime = vim.uv.hrtime()
         -- Check the last time when a signal is received/sent to avoid
@@ -126,7 +122,7 @@ local autocmds = {
         -- Must save the background and colorscheme name read from ShaDa
         -- because setting background or colorscheme will overwrite them
         local background = vim.g.BACKGROUND or 'dark'
-        local colors_name = vim.g.COLORSNAME or 'catppuccin-mocha'
+        local colors_name = vim.g.COLORSNAME or 'catppuccin'
         if vim.go.background ~= background then
           vim.go.background = background
         end
@@ -140,6 +136,7 @@ local autocmds = {
     { 'Colorscheme' },
     {
       group = 'SwitchBackground',
+      desc = 'Spawn setbg/setcolors on colorscheme change.',
       callback = function()
         vim.g.BACKGROUND = vim.go.background
         vim.g.COLORSNAME = vim.g.colors_name
@@ -204,86 +201,84 @@ local autocmds = {
     },
   },
 
-  -- Update folds on BufEnter
   {
-    { 'BufWinEnter', 'BufEnter' },
+    { 'BufWinEnter' },
     {
       group = 'UpdateFolds',
+      desc = 'Update folds on BufEnter.',
       callback = function(info)
         if not vim.b[info.buf].foldupdated then
           vim.b[info.buf].foldupdated = true
-          vim.cmd.normal 'zx'
+          vim.cmd.normal { 'zx', bang = true }
         end
       end,
     },
   },
+  {
+    { 'BufUnload' },
+    {
+      group = 'UpdateFolds',
+      callback = function(info) vim.b[info.buf].foldupdated = nil end,
+    },
+  },
 
-  -- Disable winbar in diff mode
   {
     { 'OptionSet' },
     {
       pattern = 'diff',
       group = 'DisableWinBarInDiffMode',
+      desc = 'Disable winbar in diff mode.',
       callback = function()
         if vim.v.option_new == '1' then
           vim.w._winbar = vim.wo.winbar
           vim.wo.winbar = nil
+          if vim.wo.culopt:find 'both' or vim.wo.culopt:find 'line' then
+            vim.w._culopt = vim.wo.culopt
+            vim.wo.culopt = 'number'
+          end
         else
-          vim.wo.winbar = vim.w._winbar
+          if vim.w._winbar then
+            vim.wo.winbar = vim.w._winbar
+            vim.w._winbar = nil
+          end
+          if vim.w._culopt then
+            vim.wo.culopt = vim.w._culopt
+            vim.w._culopt = nil
+          end
         end
       end,
     },
   },
 
-  -- Update timestamp automatically
   {
     { 'BufWritePre' },
     {
       group = 'UpdateTimestamp',
+      desc = 'Update timestamp automatically.',
       callback = function(info)
-        if not vim.bo[info.buf].ma or not vim.bo[info.buf].mod then return end
-        -- Example: "Fri 07 Jul 2023 12:04:05 AM CDT"
-        local timestamp_pattern =
-          '%u%U%U%s+%d%d%s+%u%U%U%s+%d%d%d%d%s+%d%d:%d%d:%d%d%s+%u%u%s+%u+'
+        if not vim.bo[info.buf].ma or not vim.bo[info.buf].mod then
+ return end
         local lines = vim.api.nvim_buf_get_lines(info.buf, 0, 8, false)
         local update = false
         for idx, line in ipairs(lines) do
-          local new_str, pos = line:gsub(timestamp_pattern, os.date())
+          -- Example: "Fri 07 Jul 2023 12:04:05 AM CDT"
+          local new_str, pos = line:gsub(
+            '%u%U%U%s+%d%d%s+%u%U%U%s+%d%d%d%d%s+%d%d:%d%d:%d%d%s+%u%u%s+%u+',
+            os.date '%a %d %b %Y %I:%M:%S %p %Z'
+          )
           if pos > 0 then
             update = true
             lines[idx] = new_str
           end
         end
         if update then
-          vim.api.nvim_buf_set_lines(info.buf, 0, 8, false, lines)
-        end
-      end,
-    },
-  },
-
-  -- File detection (File and GitFile) for lazy.nvim
-  {
-    { 'BufReadPost', 'BufNewFile', 'BufWritePost' },
-    {
-      group = 'FileEvents',
-      callback = function(args)
-        if
-          not (
-            vim.fn.expand '%' == ''
-            or vim.api.nvim_get_option_value('buftype', { buf = args.buf })
-              == 'nofile'
-          )
-        then
-          release_event 'File'
-          if
-            require('utils').git.file_worktree()
-            or require('utils').command.cmd(
-              { 'git', '-C', vim.fn.expand '%:p:h', 'rev-parse' },
-              false
-            )
-          then
-            release_event 'GitFile'
-            vim.api.nvim_del_augroup_by_name 'FileEvents'
+          -- Only join further change with the previous undo block
+          -- when the current undo block is a leaf node (no further change),
+          -- see `:h undojoin` and `:h E790`
+          local undotree = vim.fn.undotree(info.buf)
+          if undotree.seq_cur == undotree.seq_last then
+            vim.cmd.undojoin()
+            vim.api.nvim_buf_set_lines(info.buf, 0, 8, false, lines)
           end
         end
       end,

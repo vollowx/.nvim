@@ -17,7 +17,7 @@ return {
       'TSEditQuery',
       'TSEditQueryUserAfter',
     },
-    event = 'User File',
+    event = 'BufReadPost',
     config = function() require 'configs.nvim-treesitter' end,
     dependencies = {
       -- 'nvim-treesitter-context',

@@ -16,7 +16,6 @@ require('catppuccin').setup {
     illuminate = true,
     indent_blankline = { enabled = true },
     markdown = true,
-    notify = true,
     nvimtree = true,
     semantic_tokens = true,
     telescope = { enabled = true, style = 'nvchad' },

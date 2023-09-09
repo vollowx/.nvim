@@ -140,7 +140,7 @@ return {
   {
     'folke/todo-comments.nvim',
     cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
-    event = 'User File',
+    event = { 'CursorHold', 'CursorHoldI' },
     dependencies = 'plenary.nvim',
     config = function() require 'configs.todo-comments' end,
     keys = {
@@ -150,7 +150,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = 'User GitFile',
+    event = { 'CursorHold', 'CursorHoldI' },
     dependencies = 'plenary.nvim',
     config = function() require 'configs.gitsigns' end,
     keys = {
@@ -204,11 +204,5 @@ return {
         desc = 'git: Select hunk',
       },
     },
-  },
-
-  {
-    'akinsho/git-conflict.nvim',
-    event = 'User GitFile',
-    config = function() require 'configs.git-conflict' end,
   },
 }

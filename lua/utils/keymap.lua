@@ -5,12 +5,14 @@ local M = {}
 ---(i.e. only when the trigger is at the position of a command)
 ---@param trig string
 ---@param command string
+
 ---@param opts table?
 function M.command_abbrev(trig, command, opts)
   vim.keymap.set('ca', trig, function()
     local cmdline_before = vim.fn.getcmdline():sub(1, vim.fn.getcmdpos() - 1)
     local trig_escaped = vim.pesc(trig)
     -- stylua: ignore start
+
     return vim.fn.getcmdtype() == ':'
         and (cmdline_before:find('^%s*' .. trig_escaped .. '$')
           or cmdline_before:find('|%s*' .. trig_escaped .. '$'))
@@ -21,7 +23,9 @@ function M.command_abbrev(trig, command, opts)
 end
 
 ---@class keymap_def_t
+
 ---@field lhs string
+
 ---@field lhsraw string
 ---@field rhs string?
 ---@field callback function?
@@ -30,6 +34,7 @@ end
 ---@field noremap boolean?
 ---@field script boolean?
 ---@field silent boolean?
+
 ---@field nowait boolean?
 ---@field buffer boolean?
 ---@field replace_keycodes boolean?
@@ -45,11 +50,14 @@ function M.get(mode, lhs)
       return {
         lhs = map.lhs,
         rhs = map.rhs,
+
         expr = map.expr == 1,
+
         callback = map.callback,
         desc = map.desc,
         noremap = map.noremap == 1,
         script = map.script == 1,
+
         silent = map.silent == 1,
         nowait = map.nowait == 1,
         buffer = true,
@@ -57,6 +65,7 @@ function M.get(mode, lhs)
       }
     end
   end
+
   for _, map in ipairs(vim.api.nvim_get_keymap(mode)) do
     if vim.keycode(map.lhs) == lhs_keycode then
       return {
@@ -75,6 +84,7 @@ function M.get(mode, lhs)
     end
   end
   return {
+
     lhs = lhs,
     rhs = lhs,
     expr = false,
@@ -106,6 +116,7 @@ end
 
 ---Amend keymap
 ---Caveat: currently cannot amend keymap with <Cmd>...<CR> rhs
+
 ---@param modes string[]|string
 ---@param lhs string
 ---@param rhs function(fallback: function)
@@ -115,7 +126,26 @@ function M.amend(modes, lhs, rhs, opts)
   modes = type(modes) ~= 'table' and { modes } or modes --[=[@as string[]]=]
   for _, mode in ipairs(modes) do
     local fallback = M.fallback_fn(M.get(mode, lhs))
+
     vim.keymap.set(mode, lhs, function() rhs(fallback) end, opts)
+  end
+end
+
+---Wrap a function so that it repeats the original function multiple times
+---according to v:count or v:count1
+---@generic T
+---@param fn fun(): T?
+
+---@param count? 0|1 count given for the last normal mode command, see `:h v:count` or `:h v:count1`, default to 1
+---@return fun(): T[]
+function M.count_wrap(fn, count)
+  return function()
+    if count == 0 and vim.v.count0 == 0 then return {} end
+    local result = {}
+    for _ = 1, vim.v.count1 do
+      vim.list_extend(result, { fn() })
+    end
+    return unpack(result)
   end
 end
 

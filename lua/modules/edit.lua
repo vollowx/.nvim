@@ -14,15 +14,10 @@ return {
   {
     'numToStr/Comment.nvim',
     keys = {
-      { 'gc', mode = { 'n', 'x' }, desc = 'comment: toggle lines' },
-      { 'gb', mode = { 'n', 'x' }, desc = 'comment: toggle block' },
+      { 'gc', mode = { 'n', 'x' }, desc = 'comment: Toggle lines' },
+      { 'gb', mode = { 'n', 'x' }, desc = 'comment: Toggle block' },
     },
     config = function() require 'configs.Comment' end,
-  },
-
-  {
-    'tpope/vim-sleuth',
-    event = 'User File',
   },
 
   {

@@ -12,36 +12,27 @@ return {
     config = function() require 'configs.dressing' end,
   },
   {
-    'rcarriga/nvim-notify',
-    event = { 'CursorHold', 'CursorHoldI' },
-    config = function() require 'configs.notify' end,
-  },
-  {
     'Bekaboo/dropbar.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = { 'BufReadPost', 'BufWritePost' },
     config = function() require 'configs.dropbar' end,
   },
 
   {
     'lukas-reineke/indent-blankline.nvim',
     branch = 'v3',
-    event = 'User File',
+    event = { 'CursorHold', 'CursorHoldI' },
     config = function() require 'configs.indent-blankline' end,
   },
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = 'User File',
+    event = { 'CursorHold', 'CursorHoldI' },
     config = function() require 'configs.colorizer' end,
   },
 
   {
     'ojroques/nvim-bufdel',
-    cmd = {
-      'BufDel',
-      'BufDelAll',
-      'BufDelOthers',
-    },
+    cmd = { 'BufDel', 'BufDelAll', 'BufDelOthers' },
     keys = {
       { '<A-q>', '<Cmd>BufDel<CR>', desc = 'buffer: Delete current' },
       { '<A-S-q>', '<Cmd>BufDel!<CR>', desc = 'buffer: Force delete current' },
