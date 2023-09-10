@@ -27,7 +27,7 @@ opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
-opt.completeopt    = 'menuone'
+opt.completeopt    = 'menu,menuone,noselect'
 opt.conceallevel   = 2
 opt.autowriteall   = true
 -- stylua: ignore end
