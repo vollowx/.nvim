@@ -42,11 +42,6 @@ return {
   },
 
   {
-    'rcarriga/cmp-dap',
-    dependencies = { 'nvim-dap', 'nvim-cmp' },
-  },
-
-  {
     'saadparwaiz1/cmp_luasnip',
     event = 'InsertEnter',
     dependencies = { 'nvim-cmp', 'LuaSnip' },
