@@ -1,9 +1,8 @@
 ---@param client lsp.Client LSP client attached
-
 ---@param bufnr integer buffer handler
 ---@return nil
 ---@diagnostic disable-next-line unused-local
-local function on_attach(client, bufnr) end
+local function on_attach(client, bufnr) vim.lsp.inlay_hint(bufnr, true) end
 
 -- Merge default capabilities with extra capabilities provided by cmp-nvim-lsp
 local capabilities =
