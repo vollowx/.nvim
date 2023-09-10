@@ -25,4 +25,10 @@ return {
     event = 'InsertEnter',
     config = function() require 'configs.nvim-autopairs' end,
   },
+
+  {
+    'zbirenbaum/copilot.lua',
+    event = { 'CursorHold', 'CursorHoldI' },
+    config = function() require 'configs.copilot' end,
+  },
 }
