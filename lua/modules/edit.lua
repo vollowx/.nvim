@@ -28,7 +28,7 @@ return {
 
   {
     'zbirenbaum/copilot.lua',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     config = function() require 'configs.copilot' end,
   },
 }

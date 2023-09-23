@@ -3,5 +3,5 @@ return {
 
   { 'vollowx/nvim-web-devicons' },
 
-  { 'wakatime/vim-wakatime', event = { 'CursorHold', 'CursorHoldI' } },
+  { 'wakatime/vim-wakatime', event = 'VeryLazy' },
 }

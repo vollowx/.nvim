@@ -8,7 +8,7 @@ return {
 
   {
     'stevearc/dressing.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     config = function() require 'configs.dressing' end,
   },
   {
@@ -20,13 +20,13 @@ return {
   {
     'lukas-reineke/indent-blankline.nvim',
     branch = 'v3',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     config = function() require 'configs.indent-blankline' end,
   },
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     config = function() require 'configs.colorizer' end,
   },
 
@@ -37,5 +37,11 @@ return {
       { '<A-q>', '<Cmd>BufDel<CR>', desc = 'buffer: Delete current' },
       { '<A-S-q>', '<Cmd>BufDel!<CR>', desc = 'buffer: Force delete current' },
     },
+  },
+
+  {
+    'yorickpeterse/nvim-pqf',
+    event = 'VeryLazy',
+    config = function() require 'configs.pqf' end,
   },
 }

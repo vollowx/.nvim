@@ -1,7 +1,7 @@
 return {
   {
     'neovim/nvim-lspconfig',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     cmd = { 'LspInfo', 'LspStart' },
     config = function() require 'configs.nvim-lspconfig' end,
     keys = {
@@ -14,7 +14,7 @@ return {
 
   {
     'jose-elias-alvarez/null-ls.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     cmd = {
       'NullLsLog',
       'NullLsInfo',

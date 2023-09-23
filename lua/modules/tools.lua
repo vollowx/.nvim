@@ -140,7 +140,7 @@ return {
   {
     'folke/todo-comments.nvim',
     cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     dependencies = 'plenary.nvim',
     config = function() require 'configs.todo-comments' end,
     keys = {
@@ -150,7 +150,7 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
+    event = 'VeryLazy',
     dependencies = 'plenary.nvim',
     config = function() require 'configs.gitsigns' end,
     keys = {

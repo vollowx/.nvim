@@ -1,5 +1,5 @@
-local g = vim.g
-local opt = vim.opt
+local g            = vim.g
+local opt          = vim.opt
 
 -- stylua: ignore start
 opt.cursorline     = true
@@ -9,7 +9,6 @@ opt.foldlevelstart = 99
 opt.laststatus     = 3
 opt.showmode       = false
 opt.mouse          = 'a'
-opt.mousemoveevent = true
 opt.number         = true
 opt.pumheight      = 16
 opt.relativenumber = true
@@ -22,7 +21,6 @@ opt.splitright     = true
 opt.swapfile       = false
 opt.termguicolors  = true
 opt.undofile       = true
-opt.updatetime     = 10
 opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
@@ -33,8 +31,8 @@ opt.autowriteall   = true
 -- stylua: ignore end
 
 -- Transparent
-opt.pumblend = 0
-opt.winblend = 0
+opt.pumblend       = 0
+opt.winblend       = 0
 
 -- Cursor shape
 opt.gcr:append 'n-v:block-Cursor/lCursor,i-c-ci-ve:blinkoff500-blinkon500-block-TermCursor,r-cr:hor20,o:hor50-Cursor/lCursor'
@@ -49,15 +47,15 @@ opt.backupdir:remove '.'
 opt.shortmess:append 'I'
 
 -- stylua: ignore start
-opt.list = true
-opt.listchars = {
+opt.list                 = true
+opt.listchars            = {
   tab      = '→ ',
   extends  = '…',
   precedes = '…',
   nbsp     = '␣',
   trail    = '·',
 }
-opt.fillchars = {
+opt.fillchars            = {
   fold      = '·',
   foldopen  = '󰅀',
   foldclose = '󰅂',
@@ -66,22 +64,22 @@ opt.fillchars = {
   eob       = ' ',
 }
 
-opt.tabstop     = 2
-opt.softtabstop = 2
-opt.shiftwidth  = 2
-opt.expandtab   = true
-opt.smartindent = true
-opt.autoindent  = true
+opt.tabstop              = 2
+opt.softtabstop          = 2
+opt.shiftwidth           = 2
+opt.expandtab            = true
+opt.smartindent          = true
+opt.autoindent           = true
 
-opt.hlsearch    = true
-opt.ignorecase  = true
-opt.smartcase   = true
+opt.hlsearch             = true
+opt.ignorecase           = true
+opt.smartcase            = true
 
-opt.spell         = false
-opt.spellcapcheck = ''
-opt.spelllang     = 'en,cjk'
-opt.spelloptions  = 'camel'
-opt.spellsuggest  = 'best,9'
+opt.spell                = false
+opt.spellcapcheck        = ''
+opt.spelllang            = 'en,cjk'
+opt.spelloptions         = 'camel'
+opt.spellsuggest         = 'best,9'
 
 -- disable plugins shipped with neovim
 g.loaded_gzip            = 1
