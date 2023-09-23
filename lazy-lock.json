@@ -20,7 +20,6 @@
   "indent-blankline.nvim": { "branch": "v3", "commit": "8a8de7f69a1e2eb548c3a48886d1aebde32c080e" },
   "lazy.nvim": { "branch": "main", "commit": "2a9354c7d2368d78cbd5575a51a2af5bd8a6ad01" },
   "markdown-preview.nvim": { "branch": "master", "commit": "02cc3874738bc0f86e4b91f09b8a0ac88aef8e96" },
-  "nvim-autopairs": { "branch": "master", "commit": "7b3eb9b5813a22188c4dbb248475fcbaf9f4d195" },
   "nvim-bufdel": { "branch": "main", "commit": "96c4f7ab053ddab0025bebe5f7c71e4795430e47" },
   "nvim-cmp": { "branch": "main", "commit": "5dce1b778b85c717f6614e3f4da45e9f19f54435" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "dde3084106a70b9a79d48f426f6d6fec6fd203f7" },
@@ -40,6 +39,7 @@
   "todo-comments.nvim": { "branch": "main", "commit": "3094ead8edfa9040de2421deddec55d3762f64d1" },
   "toggleterm.nvim": { "branch": "main", "commit": "0427b908ebefcb3701c7f2cfbdafa37d11afe71a" },
   "ts-node-action": { "branch": "master", "commit": "bb1377868a2cdb7cb12da4f09b7f57cbaa516961" },
+  "ultimate-autopair.nvim": { "branch": "v0.6", "commit": "0148d1a546b9b9593f2958c8f572013a5d7b1524" },
   "vim-table-mode": { "branch": "master", "commit": "9555a3e6e5bcf285ec181b7fc983eea90500feb4" },
   "vim-wakatime": { "branch": "master", "commit": "0d2efa2daff34b27b0d227d4c3b136811c93db93" }
 }
