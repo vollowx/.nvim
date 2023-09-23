@@ -16,41 +16,41 @@ end
 
 -- stylua: ignore start
 local modes = {
-  ['n']   = 'NO',
-  ['no']  = 'OP',
-  ['nov'] = 'OC',
-  ['noV'] = 'OL',
+  ['n']    = 'NO',
+  ['no']   = 'OP',
+  ['nov']  = 'OC',
+  ['noV']  = 'OL',
   ['no'] = 'OB',
   ['']   = 'VB',
-  ['niI'] = 'IN',
-  ['niR'] = 'RE',
-  ['niV'] = 'RV',
-  ['nt']  = 'NT',
-  ['ntT'] = 'TM',
-  ['v']   = 'VI',
-  ['vs']  = 'VI',
-  ['V']   = 'VL',
-  ['Vs']  = 'VL',
+  ['niI']  = 'IN',
+  ['niR']  = 'RE',
+  ['niV']  = 'RV',
+  ['nt']   = 'NT',
+  ['ntT']  = 'TM',
+  ['v']    = 'VI',
+  ['vs']   = 'VI',
+  ['V']    = 'VL',
+  ['Vs']   = 'VL',
   ['s']  = 'VB',
-  ['s']   = 'SE',
-  ['S']   = 'SL',
+  ['s']    = 'SE',
+  ['S']    = 'SL',
   ['']   = 'SB',
-  ['i']   = 'IN',
-  ['ic']  = 'IC',
-  ['ix']  = 'IX',
-  ['R']   = 'RE',
-  ['Rc']  = 'RC',
-  ['Rx']  = 'RX',
-  ['Rv']  = 'RV',
-  ['Rvc'] = 'RC',
-  ['Rvx'] = 'RX',
-  ['c']   = 'CO',
-  ['cv']  = 'CV',
-  ['r']   = 'PR',
-  ['rm']  = 'PM',
-  ['r?']  = 'P?',
-  ['!']   = 'SH',
-  ['t']   = 'TE',
+  ['i']    = 'IN',
+  ['ic']   = 'IC',
+  ['ix']   = 'IX',
+  ['R']    = 'RE',
+  ['Rc']   = 'RC',
+  ['Rx']   = 'RX',
+  ['Rv']   = 'RV',
+  ['Rvc']  = 'RC',
+  ['Rvx']  = 'RX',
+  ['c']    = 'CO',
+  ['cv']   = 'CV',
+  ['r']    = 'PR',
+  ['rm']   = 'PM',
+  ['r?']   = 'P?',
+  ['!']    = 'SH',
+  ['t']    = 'TE',
 }
 -- stylua: ignore end
 
@@ -84,7 +84,7 @@ end
 function statusline.branch()
   ---@diagnostic disable-next-line: undefined-field
   local branch = vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head
-      or utils.git.branch()
+    or utils.git.branch()
   return branch == '' and '' or utils.stl.hl('#', 'StatusLineFaded') .. branch
 end
 
@@ -100,6 +100,7 @@ statusline.flags = {
   md_captitle = function()
     return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or ''
   end,
+  autoformat = function() return vim.g.autoformat and 'auto-format' or '' end,
 }
 ---@diagnostic enable: undefined-field
 
@@ -116,8 +117,9 @@ function statusline.info()
   add_section(statusline.branch())
   add_section(statusline.gitdiff())
   add_section(statusline.flags.md_captitle())
+  add_section(statusline.flags.autoformat())
   return vim.tbl_isempty(info) and ''
-      or string.format('(%s) ', table.concat(info, ', '))
+    or string.format('(%s) ', table.concat(info, ', '))
 end
 
 ---Get string representation of diagnostics for current buffer
@@ -132,7 +134,7 @@ function statusline.diag()
   end
   for _, diagnostic in ipairs(diagnostics_workspace) do
     counts_workspace[diagnostic.severity] = counts_workspace[diagnostic.severity]
-        + 1
+      + 1
   end
   ---@param severity string
   ---@return string
@@ -182,10 +184,10 @@ vim.api.nvim_create_autocmd('LspProgress', {
     local data = info.data
     -- Filter out-of-order progress updates
     if
-        lsp_prog_data
-        and lsp_prog_data.client_id == data.client_id
-        and lsp_prog_data.result.value.title == data.result.value.title
-        and (data.result.value.percentage or 100)
+      lsp_prog_data
+      and lsp_prog_data.client_id == data.client_id
+      and lsp_prog_data.result.value.title == data.result.value.title
+      and (data.result.value.percentage or 100)
         < (lsp_prog_data.result.value.percentage or 0)
     then
       return
@@ -195,7 +197,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
     if data.result.value.kind == 'end' then
       local _report_time = report_time
       lsp_prog_data.result.value.message =
-          vim.trim(utils.static.icons.diagnostics.Ok)
+        vim.trim(utils.static.icons.diagnostics.Ok)
       -- Clear client message after a short time if received an 'end' message
       vim.defer_fn(function()
         -- No new report since the timer was set

@@ -13,21 +13,9 @@ return {
   },
 
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'stevearc/conform.nvim',
     event = 'VeryLazy',
-    cmd = {
-      'NullLsLog',
-      'NullLsInfo',
-    },
-    dependencies = { 'plenary.nvim' },
-    config = function() require 'configs.null-ls' end,
-    keys = {
-      {
-        '<Leader>ni',
-        '<Cmd>NullLsInfo<CR>',
-        desc = 'null-ls: Server information',
-      },
-    },
+    config = function() require 'configs.conform' end,
   },
 
   {

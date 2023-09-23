@@ -1,5 +1,5 @@
-local g            = vim.g
-local opt          = vim.opt
+local g = vim.g
+local opt = vim.opt
 
 -- stylua: ignore start
 opt.cursorline     = true
@@ -31,8 +31,8 @@ opt.autowriteall   = true
 -- stylua: ignore end
 
 -- Transparent
-opt.pumblend       = 0
-opt.winblend       = 0
+opt.pumblend = 0
+opt.winblend = 0
 
 -- Cursor shape
 opt.gcr:append 'n-v:block-Cursor/lCursor,i-c-ci-ve:blinkoff500-blinkon500-block-TermCursor,r-cr:hor20,o:hor50-Cursor/lCursor'
