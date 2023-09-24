@@ -20,39 +20,13 @@ return {
     event = 'BufReadPost',
     config = function() require 'configs.nvim-treesitter' end,
     dependencies = {
-      -- 'nvim-treesitter-context',
-      'nvim-treesitter-textobjects',
-      'nvim-ts-context-commentstring',
-      'nvim-treesitter-endwise',
-      'nvim-ts-autotag',
       'ts-node-action',
+      'nvim-ts-autotag',
+      'nvim-ts-context-commentstring',
+      -- 'nvim-treesitter-context',
+      'nvim-treesitter-endwise',
+      'nvim-treesitter-textobjects',
     },
-  },
-
-  -- {
-  --   'nvim-treesitter/nvim-treesitter-context',
-  --   dependencies = 'nvim-treesitter',
-  --   config = function() require 'configs.ts-context' end,
-  -- },
-
-  {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    dependencies = 'nvim-treesitter',
-  },
-
-  {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    dependencies = 'nvim-treesitter',
-  },
-
-  {
-    'RRethy/nvim-treesitter-endwise',
-    dependencies = 'nvim-treesitter',
-  },
-
-  {
-    'windwp/nvim-ts-autotag',
-    dependencies = 'nvim-treesitter',
   },
 
   {
@@ -66,6 +40,32 @@ return {
         desc = 'treesitter: Do node action',
       },
     },
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    dependencies = 'nvim-treesitter',
+  },
+
+  -- {
+  --   'nvim-treesitter/nvim-treesitter-context',
+  --   dependencies = 'nvim-treesitter',
+  --   config = function() require 'configs.ts-context' end,
+  -- },
+
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    dependencies = 'nvim-treesitter',
+  },
+
+  {
+    'RRethy/nvim-treesitter-endwise',
+    dependencies = 'nvim-treesitter',
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = 'nvim-treesitter',
   },
 
   {
