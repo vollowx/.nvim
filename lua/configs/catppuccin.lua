@@ -31,15 +31,9 @@ require('catppuccin').setup {
           bg = transparent and cp.none or cp.mantle,
         },
         FloatTitle = {
-          fg = transparent and cp.blue or cp.mantle,
-          bg = transparent and cp.none or cp.mantle,
+          fg = transparent and cp.blue or cp.base,
+          bg = transparent and cp.none or cp.red,
         },
-
-        -- For native lsp configs
-        DiagnosticVirtualTextError = { bg = cp.none },
-        DiagnosticVirtualTextWarn = { bg = cp.none },
-        DiagnosticVirtualTextInfo = { bg = cp.none },
-        DiagnosticVirtualTextHint = { bg = cp.none },
 
         -- For telescope.nvim
         TelescopePromptNormal = { bg = transparent and cp.none or cp.crust },
@@ -48,31 +42,6 @@ require('catppuccin').setup {
           bg = transparent and cp.none or cp.crust,
         },
         TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
-
-        -- For glance.nvim
-        GlanceWinBarFilename = {
-          fg = cp.subtext1,
-          bg = transparent and cp.none or cp.mantle,
-          style = { 'bold' },
-        },
-        GlanceWinBarFilepath = {
-          fg = cp.subtext0,
-          bg = transparent and cp.none or cp.mantle,
-          style = { 'italic' },
-        },
-        GlancePreviewNormal = { bg = transparent and cp.none or cp.mantle },
-        GlanceWinBarTitle = {
-          fg = cp.lavender,
-          bg = transparent and cp.none or cp.crust,
-          style = { 'bold' },
-        },
-        GlanceListNormal = { bg = transparent and cp.none or cp.crust },
-        GlanceListFilepath = { link = 'Comment' },
-        GlanceListFilename = { fg = cp.blue },
-        GlanceListCount = { fg = cp.peach },
-        GlanceListMatch = { fg = cp.teal, style = { 'bold' } },
-        GlanceFoldIcon = { fg = cp.overlay0 },
-        GlanceIndent = { fg = cp.overlay0 },
 
         -- For status line
         StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
