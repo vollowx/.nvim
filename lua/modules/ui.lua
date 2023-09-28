@@ -19,7 +19,6 @@ return {
 
   {
     'lukas-reineke/indent-blankline.nvim',
-    branch = 'v3',
     event = 'VeryLazy',
     config = function() require 'configs.indent-blankline' end,
   },
