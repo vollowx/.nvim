@@ -22,7 +22,7 @@ require('nvim-tree').setup {
   renderer = {
     highlight_git = true,
     icons = {
-      git_placement = 'after',
+      git_placement = 'signcolumn',
       symlink_arrow = ' ' .. icons.ui.ArrowRight,
       glyphs = {
         default = vim.trim(icons.kinds.File),

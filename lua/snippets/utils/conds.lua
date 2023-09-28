@@ -72,8 +72,8 @@ end
 ---@param pattern string lua pattern
 ---@return snip_cond_t
 function M.after_pattern(pattern)
-  ---@param matched_trigger string the fully matched trigger
   return lsconds.make_condition(
+    ---@param matched_trigger string the fully matched trigger
     function(_, matched_trigger)
       return vim.api
         .nvim_get_current_line()

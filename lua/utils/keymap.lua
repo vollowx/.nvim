@@ -5,7 +5,6 @@ local M = {}
 ---(i.e. only when the trigger is at the position of a command)
 ---@param trig string
 ---@param command string
-
 ---@param opts table?
 function M.command_abbrev(trig, command, opts)
   vim.keymap.set('ca', trig, function()
@@ -23,9 +22,7 @@ function M.command_abbrev(trig, command, opts)
 end
 
 ---@class keymap_def_t
-
 ---@field lhs string
-
 ---@field lhsraw string
 ---@field rhs string?
 ---@field callback function?
@@ -34,7 +31,6 @@ end
 ---@field noremap boolean?
 ---@field script boolean?
 ---@field silent boolean?
-
 ---@field nowait boolean?
 ---@field buffer boolean?
 ---@field replace_keycodes boolean?
@@ -135,7 +131,6 @@ end
 ---according to v:count or v:count1
 ---@generic T
 ---@param fn fun(): T?
-
 ---@param count? 0|1 count given for the last normal mode command, see `:h v:count` or `:h v:count1`, default to 1
 ---@return fun(): T[]
 function M.count_wrap(fn, count)

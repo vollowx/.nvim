@@ -43,4 +43,17 @@ return {
     event = 'VeryLazy',
     config = function() require 'configs.pqf' end,
   },
+
+  {
+    'utilyre/sentiment.nvim',
+    event = 'VeryLazy',
+    init = function() vim.g.loaded_matchparen = 1 end,
+    config = function() require 'configs.sentiment' end,
+  },
+
+  {
+    'Aasim-A/scrollEOF.nvim',
+    event = 'VeryLazy',
+    config = function() require 'configs.scrollEOF' end,
+  },
 }
