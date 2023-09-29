@@ -6,6 +6,7 @@ require('catppuccin').setup {
     alpha = false,
     dashboard = false,
     flash = false,
+    illuminate = false,
     neogit = false,
 
     treesitter = true,
@@ -13,7 +14,6 @@ require('catppuccin').setup {
     cmp = true,
     dropbar = { enabled = true, color_mode = true },
     gitsigns = true,
-    illuminate = true,
     indent_blankline = { enabled = true },
     markdown = true,
     nvimtree = true,
