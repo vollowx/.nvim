@@ -17,6 +17,7 @@ opt.scrolloff      = 4
 opt.sidescrolloff  = 8
 opt.signcolumn     = 'yes:1'
 opt.splitright     = true
+opt.splitbelow     = true
 opt.swapfile       = false
 opt.termguicolors  = true
 opt.undofile       = true

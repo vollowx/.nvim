@@ -43,6 +43,10 @@ require('catppuccin').setup {
         },
         TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
 
+        -- For indent-blankline.nvim
+        IblIndent = { fg = cp.surface0 },
+        IblScope = { fg = cp.surface2, style = { 'bold' } },
+
         -- For status line
         StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
         StatusLineDiagnosticWarn = { fg = cp.yellow, bg = cp.mantle },
