@@ -1,12 +1,5 @@
 return {
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    config = function() require 'configs.catppuccin' end,
-    lazy = false,
-  },
-
-  {
     'stevearc/dressing.nvim',
     event = 'VeryLazy',
     config = function() require 'configs.dressing' end,

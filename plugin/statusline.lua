@@ -72,14 +72,10 @@ end
 ---@return string
 function statusline.gitdiff()
   -- Integration with gitsigns.nvim
-
   ---@diagnostic disable-next-line: undefined-field
-
   local diff = vim.b.gitsigns_status_dict or utils.git.diffstat()
-
   local added = diff.added or 0
   local changed = diff.changed or 0
-
   local removed = diff.removed or 0
   if added == 0 and removed == 0 and changed == 0 then return '' end
   return string.format(
@@ -110,25 +106,12 @@ end
 ---@diagnostic disable: undefined-field
 
 statusline.flags = {
-
   md_captitle = function()
     return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or ''
   end,
-  lsp_autofmt = function()
-    return vim.b.lsp_autofmt_enabled
-        and not vim.tbl_isempty(vim.lsp.get_clients {
-
-          bufnr = 0,
-          method = 'textDocument/formatting',
-        })
-        and 'lsp-auto-format'
-      or ''
-  end,
 }
 ---@diagnostic enable: undefined-field
-
 ---Additional info for the current buffer enclosed in parentheses
-
 ---@return string
 function statusline.info()
   if vim.bo.bt ~= '' then return '' end
@@ -140,9 +123,7 @@ function statusline.info()
   add_section(statusline.ft())
   add_section(statusline.branch())
   add_section(statusline.gitdiff())
-
   add_section(statusline.flags.md_captitle())
-  add_section(statusline.flags.lsp_autofmt())
   return vim.tbl_isempty(info) and ''
     or string.format('(%s) ', table.concat(info, ', '))
 end
@@ -288,6 +269,8 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
   group = groupid,
   callback = function()
     vim.wo.statusline = table.concat {
+      components.padding,
+
       components.mode,
       components.fname,
 
@@ -298,6 +281,8 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
       components.lsp_progress,
       components.diag,
       components.pos,
+
+      components.padding,
     }
   end,
 })
@@ -305,10 +290,12 @@ vim.api.nvim_create_autocmd('WinLeave', {
   group = groupid,
   callback = function()
     vim.wo.statusline = table.concat {
+      components.padding,
       components.fname_nc,
       components.align,
       components.truncate,
       components.pos_nc,
+      components.padding,
     }
   end,
 })

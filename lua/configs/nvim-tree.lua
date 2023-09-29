@@ -10,28 +10,16 @@ require('nvim-tree').setup {
   filters = { git_ignored = false },
   view = {
     adaptive_size = true,
-    width = 32,
-  },
-  diagnostics = {
-    enable = true,
-    show_on_dirs = true,
-    icons = {
-      error = '▏',
-      hint = '▏',
-      info = '▏',
-      warning = '▏',
+    float = {
+      enable = true,
+      open_win_config = {
+        width = 32,
+        col = 2,
+      },
     },
   },
   renderer = {
     highlight_git = true,
-    indent_markers = {
-      enable = true,
-      icons = {
-        corner = '└',
-        edge = '│',
-        none = '',
-      },
-    },
     icons = {
       git_placement = 'after',
       symlink_arrow = ' ' .. icons.ui.ArrowRight,

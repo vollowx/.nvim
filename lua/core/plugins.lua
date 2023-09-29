@@ -128,5 +128,6 @@ else
     'tools',
     'treesitter',
     'ui',
+    'colorscheme',
   }
 end
