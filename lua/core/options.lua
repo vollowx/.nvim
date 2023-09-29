@@ -3,12 +3,12 @@ local opt = vim.opt
 
 -- stylua: ignore start
 opt.cursorline     = true
-opt.cursorlineopt  = 'number'
 opt.colorcolumn    = '80'
 opt.foldlevelstart = 99
 opt.laststatus     = 3
 opt.showmode       = false
 opt.mouse          = 'a'
+opt.mousemoveevent = true
 opt.number         = true
 opt.pumheight      = 16
 opt.relativenumber = true
@@ -16,11 +16,11 @@ opt.ruler          = true
 opt.scrolloff      = 4
 opt.sidescrolloff  = 8
 opt.signcolumn     = 'yes:1'
-opt.splitbelow     = true
 opt.splitright     = true
 opt.swapfile       = false
 opt.termguicolors  = true
 opt.undofile       = true
+opt.updatetime     = 10
 opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
@@ -28,6 +28,7 @@ opt.smoothscroll   = true
 opt.completeopt    = 'menu,menuone,noselect'
 opt.conceallevel   = 2
 opt.autowriteall   = true
+opt.virtualedit    = 'block'
 -- stylua: ignore end
 
 -- Transparent
@@ -98,16 +99,3 @@ g.loaded_rrhelper        = 1
 g.loaded_netrw           = 1
 g.loaded_netrwPlugin     = 1
 -- stylua: ignore end
-
-if g.neovide then
-  opt.guifont = 'Liga SFMono Nerd Font:h12'
-  g.neovide_cursor_vfx_mode = 'railgun'
-  g.neovide_no_idle = true
-  g.neovide_cursor_animation_length = 0.03
-  g.neovide_cursor_trail_length = 0.05
-  g.neovide_cursor_antialiasing = true
-  g.neovide_cursor_vfx_opacity = 200.0
-  g.neovide_cursor_vfx_particle_lifetime = 1.2
-  g.neovide_cursor_vfx_particle_speed = 20.0
-  g.neovide_cursor_vfx_particle_density = 5.0
-end

@@ -1,21 +1,12 @@
-local set_autocmds = function(autocmds)
-  for _, autocmd in ipairs(autocmds) do
-    if autocmd[2].group and vim.fn.exists('#' .. autocmd[2].group) == 0 then
-      vim.api.nvim_create_augroup(autocmd[2].group, { clear = true })
-    end
-    vim.api.nvim_create_autocmd(unpack(autocmd))
-  end
-end
-
 local autocmds = {
-  -- Highlight the selection on yank
   {
     { 'TextYankPost' },
     {
       pattern = '*',
       group = 'YankHighlight',
+      desc = 'Highlight the selection on yank.',
       callback = function()
-        vim.highlight.on_yank { higroup = 'Visual', timeout = 300 }
+        vim.highlight.on_yank { higroup = 'Visual', timeout = 200 }
       end,
     },
   },
@@ -23,10 +14,13 @@ local autocmds = {
   -- Append system clipboard to clipboard settings here because setting it on
   -- startup dramatically slows down startup time
   {
+
     { 'TextYankPost' },
     {
+
       group = 'YankToSystemClipboard',
       once = true,
+      desc = 'Yank into system clipboard.',
       callback = function()
         vim.opt.clipboard:append 'unnamedplus'
         vim.cmd('silent! let @+ = @' .. vim.v.register)
@@ -36,7 +30,32 @@ local autocmds = {
   },
 
   {
+    { 'BufLeave', 'WinLeave', 'FocusLost' },
+    {
+      pattern = '*',
+      group = 'Autosave',
+      desc = 'Autosave on focus change.',
+      command = 'silent! wall',
+      nested = true,
+    },
+  },
+
+  {
+    { 'WinClosed' },
+
+    {
+      pattern = '*',
+      nested = true,
+
+      group = 'WinCloseJmp',
+      desc = 'Jump to last accessed window on closing the current one.',
+      command = "if expand('<amatch>') == win_getid() | wincmd p | endif",
+    },
+  },
+
+  {
     { 'BufReadPost' },
+
     {
       pattern = '*',
       group = 'LastPosJmp',
@@ -60,122 +79,80 @@ local autocmds = {
       callback = function(info)
         if info.file == '' or not vim.bo[info.buf].ma then return end
         local current_dir = vim.fn.getcwd()
+
         local proj_dir = require('utils').fs.proj_dir(info.file)
         -- Prevent unnecessary directory change, which triggers
         -- DirChanged autocmds that may update winbar unexpectedly
         if current_dir == proj_dir then return end
+
         if proj_dir then
-          vim.cmd.lcd(proj_dir)
+          vim.schedule(function() vim.cmd.lcd(proj_dir) end)
           return
         end
         local dirname = vim.fs.dirname(info.file)
         local stat = vim.uv.fs_stat(dirname)
         if stat and stat.type == 'directory' and proj_dir ~= current_dir then
-          vim.cmd.lcd(dirname)
+          vim.schedule(function() vim.cmd.lcd(dirname) end)
         end
       end,
     },
   },
 
   {
-    { 'BufReadPre', 'UIEnter' },
+    { 'BufEnter' },
     {
-      group = 'RestoreBackground',
-      once = true,
-      desc = 'Restore dark/light background and colorscheme from ShaDa.',
-      callback = function()
-        if vim.g.theme_restored then return end
-        vim.g.theme_restored = true
-        if vim.g.BACKGROUND and vim.g.BACKGROUND ~= vim.go.background then
-          vim.go.background = vim.g.BACKGROUND
-        end
-        if not vim.g.colors_name or vim.g.COLORSNAME ~= vim.g.colors_name then
-          vim.cmd('silent! colorscheme ' .. (vim.g.COLORSNAME or 'catppuccin'))
-        end
-        return true
-      end,
-    },
-  },
 
-  {
-    { 'Signal' },
-    {
-      nested = true,
-      pattern = 'SIGUSR1',
-      group = 'SwitchBackground',
-      desc = 'Change background on receiving signal SIGUSER1.',
-      callback = function()
-        local hrtime = vim.uv.hrtime()
-        -- Check the last time when a signal is received/sent to avoid
-        -- the infinite loop of
-        -- -> receiving signal
-        -- -> setting bg
-        -- -> sending signals to other nvim instances
-        -- -> receiving signals from other nvim instances
-        -- -> setting bg
-        -- -> ...
-        if vim.g.sig_hrtime and hrtime - vim.g.sig_hrtime < 500000000 then
-          return
-        end
-        vim.g.sig_hrtime = hrtime
-        vim.cmd.rshada()
-        -- Must save the background and colorscheme name read from ShaDa
-        -- because setting background or colorscheme will overwrite them
-        local background = vim.g.BACKGROUND or 'dark'
-        local colors_name = vim.g.COLORSNAME or 'catppuccin'
-        if vim.go.background ~= background then
-          vim.go.background = background
-        end
-        if vim.g.colors_name ~= colors_name then
-          vim.cmd('silent! colorscheme ' .. colors_name)
-        end
-      end,
-    },
-  },
-  {
-    { 'Colorscheme' },
-    {
-      group = 'SwitchBackground',
-      desc = 'Spawn setbg/setcolors on colorscheme change.',
-      callback = function()
-        vim.g.BACKGROUND = vim.go.background
-        vim.g.COLORSNAME = vim.g.colors_name
-        vim.cmd.wshada()
-        local hrtime = vim.uv.hrtime()
-        if vim.g.sig_hrtime and hrtime - vim.g.sig_hrtime < 500000000 then
-          return
-        end
-        vim.g.sig_hrtime = hrtime
-        local pid = vim.fn.getpid()
-        if vim.fn.executable 'setbg' == 1 then
-          vim.uv.spawn('setbg', {
-            args = {
-              vim.go.background,
-              '--exclude-nvim-processes=' .. pid,
-            },
-            stdio = { nil, nil, nil },
-          })
-        end
-        if vim.fn.executable 'setcolors' == 1 then
-          vim.uv.spawn('setcolors', {
-            args = {
-              vim.g.colors_name,
-              '--exclude-nvim-processes=' .. pid,
-            },
-            stdio = { nil, nil, nil },
-          })
+      group = 'PromptBufKeymaps',
+      desc = 'Undo automatic <C-w> remap in prompt buffers.',
+      callback = function(info)
+        if vim.bo[info.buf].buftype == 'prompt' then
+          vim.keymap.set('i', '<C-w>', '<C-S-W>', { buffer = info.buf })
         end
       end,
     },
   },
 
-  -- Terminal options
   {
     { 'TermOpen' },
     {
       group = 'TermOptions',
+
+      desc = 'Terminal options.',
       callback = function(info)
-        if vim.bo[info.buf].buftype == 'terminal' then
+        local buf = info.buf
+
+        vim.keymap.set('n', 'o', '<Cmd>startinsert<CR>', { buffer = buf })
+
+        if vim.bo[buf].buftype == 'terminal' then
+          vim.keymap.set('t', '<Esc>', function()
+            return require('utils').term.shall_esc()
+                and (function()
+                  vim.b.t_esc = vim.uv.hrtime()
+                  return true
+                end)()
+                and '<Cmd>stopinsert<CR>'
+              or '<Esc>'
+          end, {
+            buffer = buf,
+            expr = true,
+            desc = 'Use <Esc> to exit terminal mode when running a shell.',
+          })
+          vim.keymap.set(
+            'n',
+            '<Esc>',
+            function()
+              return vim.b.t_esc
+                  and vim.uv.hrtime() - vim.b.t_esc <= vim.go.tm * 1e6
+                  and require('utils').term.shall_esc()
+                  and '<Cmd>startinsert<CR><Esc>'
+                or '<Esc>'
+            end,
+            {
+              buffer = buf,
+              expr = true,
+              desc = 'Use <Esc> in normal mode to send <Esc> to terminal when running a shell.',
+            }
+          )
           vim.cmd.setlocal 'nonu'
           vim.cmd.setlocal 'nornu'
           vim.cmd.setlocal 'statuscolumn='
@@ -185,12 +162,29 @@ local autocmds = {
       end,
     },
   },
+  {
+    { 'TermEnter' },
+    {
+      group = 'TermOptions',
+      desc = 'Disable mousemoveevent in terminal mode.',
+      command = 'let g:mousemev = &mousemev | set nomousemev',
+    },
+  },
 
-  -- Open quickfix window if there are results
+  {
+    { 'TermLeave' },
+    {
+      group = 'TermOptions',
+      desc = 'Restore mousemoveevent after leaving terminal mode.',
+      command = 'if exists("g:mousemev") | let &mousemev = g:mousemev | unlet g:mousemev | endif',
+    },
+  },
+
   {
     { 'QuickFixCmdPost' },
     {
       group = 'QuickFixAutoOpen',
+      desc = 'Open quickfix window if there are results.',
       callback = function(info)
         if vim.startswith(info.match, 'l') then
           vim.cmd 'lwindow'
@@ -202,9 +196,106 @@ local autocmds = {
   },
 
   {
+    { 'VimResized' },
+    {
+      group = 'EqualWinSize',
+      desc = 'Make window equal size on VimResized.',
+      command = 'wincmd =',
+    },
+  },
+
+  -- Show cursor line and cursor column only in current window
+  {
+    { 'WinEnter' },
+    {
+      once = true,
+      group = 'AutoHlCursorLine',
+      desc = 'Initialize cursorline winhl.',
+      callback = function()
+        local winlist = vim.api.nvim_list_wins()
+
+        for _, win in ipairs(winlist) do
+          vim.api.nvim_win_call(
+            win,
+            function()
+              vim.opt_local.winhl:append {
+                CursorLine = '',
+                CursorColumn = '',
+              }
+            end
+          )
+        end
+        return true
+      end,
+    },
+  },
+  {
+    { 'BufWinEnter', 'WinEnter', 'InsertLeave' },
+
+    {
+      group = 'AutoHlCursorLine',
+      callback = function()
+        vim.defer_fn(function()
+          if vim.fn.win_gettype() ~= '' then return end
+          local winhl = vim.opt_local.winhl:get()
+          -- Restore CursorLine and CursorColumn for current window
+          -- if not in inert/replace/select mode
+          if
+            (winhl['CursorLine'] or winhl['CursorColumn'])
+            and vim.fn.match(vim.fn.mode(), '[iRsS\x13].*') == -1
+          then
+            vim.opt_local.winhl:remove {
+              'CursorLine',
+              'CursorColumn',
+            }
+          end
+          -- Conceal cursor line and cursor column in the previous window
+          -- if current window is a normal window
+
+          local current_win = vim.api.nvim_get_current_win()
+          local prev_win = vim.fn.win_getid(vim.fn.winnr '#')
+          if
+            prev_win ~= 0
+            and prev_win ~= current_win
+            and vim.api.nvim_win_is_valid(prev_win)
+            and vim.fn.win_gettype(current_win) == ''
+          then
+            vim.api.nvim_win_call(
+              prev_win,
+              function()
+                vim.opt_local.winhl:append {
+
+                  CursorLine = '',
+                  CursorColumn = '',
+                }
+              end
+            )
+          end
+        end, 10)
+      end,
+    },
+  },
+
+  {
+    { 'InsertEnter' },
+    {
+      group = 'AutoHlCursorLine',
+      callback = function()
+        vim.opt_local.winhl:append {
+
+          CursorLine = '',
+          CursorColumn = '',
+        }
+      end,
+    },
+  },
+
+  {
+
     { 'BufWinEnter' },
     {
       group = 'UpdateFolds',
+
       desc = 'Update folds on BufEnter.',
       callback = function(info)
         if not vim.b[info.buf].foldupdated then
@@ -219,6 +310,19 @@ local autocmds = {
     {
       group = 'UpdateFolds',
       callback = function(info) vim.b[info.buf].foldupdated = nil end,
+    },
+  },
+
+  {
+    { 'OptionSet' },
+    {
+
+      pattern = 'textwidth',
+      group = 'TextwidthRelativeColorcolumn',
+      desc = 'Set colorcolumn according to textwidth.',
+      callback = function()
+        if vim.v.option_new ~= '0' then vim.opt_local.colorcolumn = '+1' end
+      end,
     },
   },
 
@@ -256,9 +360,9 @@ local autocmds = {
       group = 'UpdateTimestamp',
       desc = 'Update timestamp automatically.',
       callback = function(info)
-        if not vim.bo[info.buf].ma or not vim.bo[info.buf].mod then
- return end
+        if not vim.bo[info.buf].ma or not vim.bo[info.buf].mod then return end
         local lines = vim.api.nvim_buf_get_lines(info.buf, 0, 8, false)
+
         local update = false
         for idx, line in ipairs(lines) do
           -- Example: "Fri 07 Jul 2023 12:04:05 AM CDT"
@@ -284,6 +388,45 @@ local autocmds = {
       end,
     },
   },
+
+  {
+    { 'CursorMoved' },
+    {
+      desc = 'Record cursor position in visual mode if virtualedit is set.',
+      group = 'FixVirtualEditCursorPos',
+      callback = function()
+        if vim.wo.ve:find 'all' then vim.w.ve_cursor = vim.fn.getcurpos() end
+      end,
+    },
+  },
+  {
+    { 'ModeChanged' },
+    {
+
+      desc = 'Keep cursor position after entering normal mode from visual mode with virtual edit enabled.',
+      group = 'FixVirtualEditCursorPos',
+      pattern = '[vV\x16]*:n',
+      callback = function()
+        if vim.wo.ve:find 'all' and vim.w.ve_cursor then
+          vim.api.nvim_win_set_cursor(0, {
+            vim.w.ve_cursor[2],
+
+            vim.w.ve_cursor[3] + vim.w.ve_cursor[4] - 1,
+          })
+        end
+      end,
+    },
+  },
 }
 
-set_autocmds(autocmds)
+if not vim.g.loaded_autocmds then
+  for _, au in ipairs(autocmds) do
+    local audef = au[2]
+    if audef.group and vim.fn.exists('#' .. audef.group) == 0 then
+      vim.api.nvim_create_augroup(audef.group, {})
+    end
+
+    vim.api.nvim_create_autocmd(unpack(au))
+  end
+  vim.g.loaded_autocmds = true
+end

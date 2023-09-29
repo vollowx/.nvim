@@ -67,10 +67,3 @@ vim.keymap.set('n', 'q', function()
     )
   end
 end, { desc = 'window: Close floating windows' })
-
-vim.keymap.set(
-  't',
-  '<C-x>',
-  vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true),
-  { desc = 'terminal: Exit terminal mode' }
-)
