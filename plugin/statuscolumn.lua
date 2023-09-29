@@ -37,7 +37,6 @@ local function get_sign_def(sign_name, sign_group)
     sign_def.text = vim.trim(sign_def.text)
     if not sign_def.culhl then
       local texthl = sign_def.texthl
-
       local culhl = texthl .. 'Cul'
       if not merged_hlgroups[culhl] and vim.fn.hlexists(culhl) == 0 then
         local components = { 'CursorLineSign', texthl }
@@ -175,7 +174,6 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   end,
 })
 vim.api.nvim_create_autocmd('WinClosed', {
-
   group = groupid,
   desc = 'Clear line number highlight group cache when window is closed.',
   callback = function(info) win_linenr_hl[tonumber(info.match)] = nil end,

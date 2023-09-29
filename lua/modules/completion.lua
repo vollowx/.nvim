@@ -1,50 +1,50 @@
 return {
   {
     'hrsh7th/nvim-cmp',
-    config = function() require 'configs.nvim-cmp' end,
     dependencies = 'LuaSnip',
+    config = function() require 'configs.nvim-cmp' end,
   },
 
   {
     'hrsh7th/cmp-calc',
-    event = 'InsertEnter',
     dependencies = 'nvim-cmp',
+    event = 'InsertEnter',
   },
 
   {
     'hrsh7th/cmp-cmdline',
-    event = 'CmdlineEnter',
     dependencies = 'nvim-cmp',
+    event = 'CmdlineEnter',
   },
 
   {
     'hrsh7th/cmp-nvim-lsp',
-    event = 'InsertEnter',
     dependencies = { 'nvim-cmp', 'nvim-lspconfig' },
+    event = 'InsertEnter',
   },
 
   {
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    event = 'InsertEnter',
     dependencies = { 'nvim-cmp', 'nvim-lspconfig' },
+    event = 'InsertEnter',
   },
 
   {
     'hrsh7th/cmp-path',
-    event = { 'CmdlineEnter', 'InsertEnter' },
     dependencies = 'nvim-cmp',
+    event = { 'CmdlineEnter', 'InsertEnter' },
   },
 
   {
     'hrsh7th/cmp-buffer',
-    event = { 'CmdlineEnter', 'InsertEnter' },
     dependencies = 'nvim-cmp',
+    event = { 'CmdlineEnter', 'InsertEnter' },
   },
 
   {
     'saadparwaiz1/cmp_luasnip',
-    event = 'InsertEnter',
     dependencies = { 'nvim-cmp', 'LuaSnip' },
+    event = 'InsertEnter',
   },
 
   {

@@ -1,12 +1,12 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    cmd = 'Telescope',
     dependencies = {
       'plenary.nvim',
       'telescope-undo.nvim',
     },
     config = function() require 'configs.telescope' end,
+    cmd = 'Telescope',
     keys = {
       { '<Leader>f', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
       { '<Leader>F', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
@@ -76,12 +76,12 @@ return {
 
   {
     'nvim-tree/nvim-tree.lua',
+    config = function() require 'configs.nvim-tree' end,
     cmd = {
       'NvimTreeOpen',
       'NvimTreeClose',
       'NvimTreeToggle',
     },
-    config = function() require 'configs.nvim-tree' end,
     keys = {
       { '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'ui: Toggle file tree' },
     },
@@ -89,10 +89,10 @@ return {
 
   {
     'folke/todo-comments.nvim',
-    cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
-    event = 'VeryLazy',
     dependencies = 'plenary.nvim',
+    event = 'VeryLazy',
     config = function() require 'configs.todo-comments' end,
+    cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
     keys = {
       { '<Leader>ft', '<Cmd>TodoTelescope<CR>', desc = 'find: Todos' },
     },
@@ -100,8 +100,8 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
-    event = 'VeryLazy',
     dependencies = 'plenary.nvim',
+    event = 'VeryLazy',
     config = function() require 'configs.gitsigns' end,
     keys = {
       { ']g', '<Cmd>Gitsigns next_hunk<CR>', desc = 'git: Next hunk' },
@@ -176,4 +176,6 @@ return {
     event = 'VeryLazy',
     config = function() require 'configs.scrollEOF' end,
   },
+
+  { 'wakatime/vim-wakatime', event = 'VeryLazy' },
 }

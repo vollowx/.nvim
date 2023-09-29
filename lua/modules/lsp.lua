@@ -2,8 +2,8 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = 'VeryLazy',
-    cmd = { 'LspInfo', 'LspStart' },
     config = function() require 'configs.nvim-lspconfig' end,
+    cmd = { 'LspInfo', 'LspStart' },
     keys = {
       { '<Leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp: Server information' },
       { '<Leader>lr', '<Cmd>LspRestart<CR>', desc = 'lsp: Restart server' },
@@ -20,8 +20,8 @@ return {
 
   {
     'p00f/clangd_extensions.nvim',
-    ft = { 'c', 'cpp' },
     dependencies = 'nvim-lspconfig',
+    ft = { 'c', 'cpp' },
     config = function() require 'configs.clangd_extensions' end,
   },
 

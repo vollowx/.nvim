@@ -1,17 +1,24 @@
 return {
   {
     'stevearc/dressing.nvim',
-    event = 'VeryLazy',
     config = function() require 'configs.dressing' end,
-  },
-  {
-    'Bekaboo/dropbar.nvim',
-    event = { 'BufReadPost', 'BufWritePost' },
-    config = function() require 'configs.dropbar' end,
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require('lazy').load { plugins = { 'dressing.nvim' } }
+        return vim.ui.select(...)
+      end
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        require('lazy').load { plugins = { 'dressing.nvim' } }
+        return vim.ui.input(...)
+      end
+    end,
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'VeryLazy',
+    main = 'ibl',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function() require 'configs.indent-blankline' end,
   },
   {
@@ -22,7 +29,7 @@ return {
   {
     'utilyre/sentiment.nvim',
     event = 'VeryLazy',
-    init = function() vim.g.loaded_matchparen = 1 end,
     config = function() require 'configs.sentiment' end,
+    init = function() vim.g.loaded_matchparen = 1 end,
   },
 }

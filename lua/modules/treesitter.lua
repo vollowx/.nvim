@@ -2,30 +2,17 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    cmd = {
-      'TSInstall',
-      'TSInstallSync',
-      'TSInstallInfo',
-      'TSUninstall',
-      'TSUpdate',
-      'TSUpdateSync',
-      'TSBufEnable',
-      'TSBufToggle',
-      'TSEnable',
-      'TSToggle',
-      'TSModuleInfo',
-      'TSEditQuery',
-      'TSEditQueryUserAfter',
-    },
-    event = 'BufReadPost',
+    cmd = { 'TSUpdateSync' },
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function() require 'configs.nvim-treesitter' end,
     dependencies = {
       'ts-node-action',
       'nvim-ts-autotag',
       'nvim-ts-context-commentstring',
-      -- 'nvim-treesitter-context',
+      'nvim-treesitter-context',
       'nvim-treesitter-endwise',
       'nvim-treesitter-textobjects',
+      'rainbow-delimiters.nvim',
     },
   },
 
@@ -47,11 +34,11 @@ return {
     dependencies = 'nvim-treesitter',
   },
 
-  -- {
-  --   'nvim-treesitter/nvim-treesitter-context',
-  --   dependencies = 'nvim-treesitter',
-  --   config = function() require 'configs.ts-context' end,
-  -- },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    dependencies = 'nvim-treesitter',
+    config = function() require 'configs.ts-context' end,
+  },
 
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
@@ -69,8 +56,13 @@ return {
   },
 
   {
-    'Eandrju/cellular-automaton.nvim',
-    cmd = 'CellularAutomaton',
+    'HiPhish/rainbow-delimiters.nvim',
     dependencies = 'nvim-treesitter',
+  },
+
+  {
+    'Eandrju/cellular-automaton.nvim',
+    dependencies = 'nvim-treesitter',
+    cmd = 'CellularAutomaton',
   },
 }

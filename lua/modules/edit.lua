@@ -1,23 +1,11 @@
 return {
   {
-    'kylechui/nvim-surround',
-    keys = {
-      'ys',
-      'ds',
-      'cs',
-      { 'S', mode = 'x' },
-      { '<C-g>s', mode = 'i' },
-    },
-    config = function() require 'configs.nvim-surround' end,
-  },
-
-  {
     'numToStr/Comment.nvim',
+    config = function() require 'configs.Comment' end,
     keys = {
       { 'gc', mode = { 'n', 'x' }, desc = 'comment: Toggle lines' },
       { 'gb', mode = { 'n', 'x' }, desc = 'comment: Toggle block' },
     },
-    config = function() require 'configs.Comment' end,
   },
 
   {
