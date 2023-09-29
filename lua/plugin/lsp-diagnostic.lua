@@ -62,30 +62,9 @@ local function setup_keymaps()
   -- stylua: ignore end
 end
 
----Automatically enable / disable diagnostics on mode change
----@return nil
-local function setup_diagnostics_on_mode_change()
-  vim.api.nvim_create_autocmd('ModeChanged', {
-    desc = 'LSP diagnostics on mode change.',
-    group = vim.api.nvim_create_augroup('LspDiagnostic', { clear = true }),
-    callback = function(info)
-      if vim.fn.match(info.match, '.*:[iRsS\x13].*') ~= -1 then
-        vim.diagnostic.disable(info.buf)
-        vim.b._lsp_diagnostics_temp_disabled = true
-      elseif not vim.wo.diff and vim.b._lsp_diagnostics_temp_disabled then
-        vim.diagnostic.enable(info.buf)
-        vim.b._lsp_diagnostics_temp_disabled = nil
-      end
-    end,
-  })
-end
-
 ---Set up LSP and diagnostic
 ---@return nil
-local function setup()
-  setup_keymaps()
-  setup_diagnostics_on_mode_change()
-end
+local function setup() setup_keymaps() end
 
 return {
   setup = setup,

@@ -1,4 +1,3 @@
-local border = require('core.settings').border
 local icons = require('utils.static').icons
 
 require('nvim-tree').setup {
@@ -10,19 +9,31 @@ require('nvim-tree').setup {
   },
   filters = { git_ignored = false },
   view = {
-    preserve_window_proportions = true,
-    float = {
-      enable = true,
-      open_win_config = {
-        border = border,
-        col = 2,
-      },
+    adaptive_size = true,
+    width = 32,
+  },
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true,
+    icons = {
+      error = '▏',
+      hint = '▏',
+      info = '▏',
+      warning = '▏',
     },
   },
   renderer = {
     highlight_git = true,
+    indent_markers = {
+      enable = true,
+      icons = {
+        corner = '└',
+        edge = '│',
+        none = '',
+      },
+    },
     icons = {
-      git_placement = 'signcolumn',
+      git_placement = 'after',
       symlink_arrow = ' ' .. icons.ui.ArrowRight,
       glyphs = {
         default = vim.trim(icons.kinds.File),
