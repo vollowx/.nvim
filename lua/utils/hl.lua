@@ -43,10 +43,14 @@ function M.buf_add_hl(buffer, ns_id, hl_group, line, col_start, col_end)
   )
 end
 
+---@class lsp_range_t
+---@field start {line: integer, character: integer}
+---@field end {line: integer, character: integer}
+
 ---Highlight text in buffer, clear previous highlight if any exists
 ---@param buf integer
 ---@param hlgroup string
----@param range winbar_symbol_range_t?
+---@param range lsp_range_t?
 function M.range_single(buf, hlgroup, range)
   local ns = vim.api.nvim_create_namespace(hlgroup)
   vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)

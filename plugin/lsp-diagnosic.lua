@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd({ 'LspAttach', 'DiagnosticChanged' }, {
+vim.api.nvim_create_autocmd({ 'LspAttach' }, {
   once = true,
   desc = 'Apply lsp and diagnostic settings.',
   group = vim.api.nvim_create_augroup('LspDiagnosticSetup', {}),
