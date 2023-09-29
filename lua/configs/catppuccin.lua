@@ -14,7 +14,7 @@ require('catppuccin').setup {
     cmp = true,
     dropbar = { enabled = true, color_mode = true },
     gitsigns = true,
-    indent_blankline = { enabled = true },
+    indent_blankline = { enabled = true, scope_color = 'surface2' },
     markdown = true,
     nvimtree = true,
     semantic_tokens = true,
@@ -42,10 +42,6 @@ require('catppuccin').setup {
           bg = transparent and cp.none or cp.crust,
         },
         TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
-
-        -- For indent-blankline.nvim
-        IblIndent = { fg = cp.surface0 },
-        IblScope = { fg = cp.surface2, style = { 'bold' } },
 
         -- For status line
         StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
