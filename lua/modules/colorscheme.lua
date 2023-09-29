@@ -6,19 +6,19 @@ return {
     lazy = false,
   },
 
-  {
-    'folke/tokyonight.nvim',
-    event = 'VeryLazy',
-  },
-
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    event = 'VeryLazy',
-  },
-
-  {
-    'sainnhe/everforest',
-    event = 'VeryLazy',
-  },
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   event = 'VeryLazy',
+  -- },
+  --
+  -- {
+  --   'rose-pine/neovim',
+  --   name = 'rose-pine',
+  --   event = 'VeryLazy',
+  -- },
+  --
+  -- {
+  --   'sainnhe/everforest',
+  --   event = 'VeryLazy',
+  -- },
 }

@@ -1,4 +1,5 @@
 local icons = require('utils.static').icons
+local border = require('core.settings').border
 
 require('nvim-tree').setup {
   disable_netrw = true,
@@ -13,6 +14,7 @@ require('nvim-tree').setup {
     float = {
       enable = true,
       open_win_config = {
+        border = border,
         width = 32,
         col = 2,
       },
