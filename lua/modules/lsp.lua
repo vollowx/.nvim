@@ -26,6 +26,13 @@ return {
   },
 
   {
+    'pmizio/typescript-tools.nvim',
+    dependencies = 'nvim-lspconfig',
+    event = 'VeryLazy',
+    config = function() require 'configs.typescript-tools' end,
+  },
+
+  {
     'dnlhc/glance.nvim',
     event = 'LspAttach',
     config = function() require 'configs.glance' end,

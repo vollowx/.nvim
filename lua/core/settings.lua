@@ -40,7 +40,7 @@ return {
     javascript = {
       ts = 'javascript',
       ft = 'js',
-      lsp_server = 'tsserver',
+      -- lsp_server = 'tsserver',
       formatters = { 'prettier' },
     },
     json = {
@@ -52,7 +52,7 @@ return {
     typescript = {
       ts = 'typescript',
       ft = 'ts',
-      lsp_server = 'tsserver',
+      -- lsp_server = 'tsserver',
       formatters = { 'prettier' },
     },
     lua = {
