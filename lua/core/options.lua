@@ -4,6 +4,7 @@ local opt = vim.opt
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '80'
+opt.foldcolumn     = '1'
 opt.foldlevelstart = 99
 opt.laststatus     = 3
 opt.showmode       = false
