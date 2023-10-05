@@ -21,6 +21,9 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 })
 
 ts_configs.setup {
+  auto_install = true,
+  modules = {},
+  ignore_install = {},
   ensure_installed = require('utils.static').langs:list 'ts',
   sync_install = true,
   highlight = {
@@ -92,3 +95,9 @@ ts_configs.setup {
   context_commentstring = { enable = true },
   endwise = { enable = true },
 }
+require('nvim-treesitter.install').prefer_git = true
+local parsers = require('nvim-treesitter.parsers').get_parser_configs()
+for _, p in pairs(parsers) do
+  p.install_info.url =
+    p.install_info.url:gsub('https://githubfast.com/', 'git@github.com:')
+end

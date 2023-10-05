@@ -32,7 +32,7 @@ local function bootstrap()
       and lock_data['lazy.nvim']
       and lock_data['lazy.nvim'].commit
     or nil
-  local url = 'https://github.com/folke/lazy.nvim.git'
+  local url = 'git@github.com:folke/lazy.nvim.git'
   vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
   vim.fn.mkdir(vim.g.package_path, 'p')
   if
@@ -59,6 +59,7 @@ local function enable_modules(module_names)
     defaults = { lazy = true },
     root = vim.g.plugin_path,
     lockfile = vim.g.plugin_lock,
+    git = { url_format = 'git@github.com:%s.git' },
     ui = {
       border = border,
       size = { width = 0.7, height = 0.74 },
