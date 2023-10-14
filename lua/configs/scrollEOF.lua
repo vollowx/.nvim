@@ -1,1 +1,3 @@
-require('scrollEOF').setup {}
+require('scrollEOF').setup {
+  insert_mode = true,
+}

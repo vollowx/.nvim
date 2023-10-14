@@ -86,11 +86,7 @@ return {
     python = {
       ts = 'python',
       ft = 'python',
-      lsp_server = {
-        'pylsp',
-        'pyright',
-        'jedi_language_server',
-      },
+      lsp_server = 'pyright',
       dap = 'debugpy',
       formatters = { 'black' },
     },
