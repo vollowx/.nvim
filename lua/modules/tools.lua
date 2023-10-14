@@ -75,19 +75,6 @@ return {
   },
 
   {
-    'nvim-tree/nvim-tree.lua',
-    config = function() require 'configs.nvim-tree' end,
-    cmd = {
-      'NvimTreeOpen',
-      'NvimTreeClose',
-      'NvimTreeToggle',
-    },
-    keys = {
-      { '<C-n>', '<Cmd>NvimTreeToggle<CR>', desc = 'ui: Toggle file tree' },
-    },
-  },
-
-  {
     'folke/todo-comments.nvim',
     dependencies = 'plenary.nvim',
     event = 'VeryLazy',
@@ -152,6 +139,19 @@ return {
         ':<C-u>Gitsigns select_hunk<CR>',
         mode = 'v',
         desc = 'git: Select hunk',
+      },
+    },
+  },
+
+  {
+    'kevinhwang91/rnvimr',
+    config = function() require 'configs.rnvimr' end,
+    keys = {
+      {
+        '<M-e>',
+        function() require('configs.rnvimr').toggle() end,
+        desc = 'ui: Toggle file tree',
+        mode = { 'n', 't' },
       },
     },
   },
