@@ -4,8 +4,9 @@ local opt = vim.opt
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '80'
-opt.foldcolumn     = '1'
 opt.foldlevelstart = 99
+opt.guifont        = 'ComicShannsMono Nerd Font:h13'
+opt.helpheight     = 10
 opt.laststatus     = 3
 opt.showmode       = false
 opt.mouse          = 'a'
@@ -27,15 +28,11 @@ opt.wrap           = false
 opt.linebreak      = true
 opt.breakindent    = true
 opt.smoothscroll   = true
-opt.completeopt    = 'menu,menuone,noselect'
+opt.completeopt    = 'menuone'
 opt.conceallevel   = 2
 opt.autowriteall   = true
 opt.virtualedit    = 'block'
 -- stylua: ignore end
-
--- Transparent
-opt.pumblend = 0
-opt.winblend = 0
 
 -- Cursor shape
 opt.gcr:append 'n-v:block-Cursor/lCursor,i-c-ci-ve:blinkoff500-blinkon500-block-TermCursor,r-cr:hor20,o:hor50-Cursor/lCursor'
@@ -50,15 +47,15 @@ opt.backupdir:remove '.'
 opt.shortmess:append 'I'
 
 -- stylua: ignore start
-opt.list                 = true
-opt.listchars            = {
+opt.list      = true
+opt.listchars = {
   tab      = '→ ',
   extends  = '…',
   precedes = '…',
   nbsp     = '␣',
   trail    = '·',
 }
-opt.fillchars            = {
+opt.fillchars = {
   fold      = '·',
   foldopen  = '󰅀',
   foldclose = '󰅂',

@@ -22,16 +22,6 @@ return {
     config = function() require 'configs.indent-blankline' end,
   },
   {
-    'kevinhwang91/nvim-ufo',
-    dependencies = { 'kevinhwang91/promise-async', 'statuscol.nvim' },
-    event = 'VeryLazy',
-    config = function() require 'configs.ufo' end,
-  },
-  {
-    'luukvbaal/statuscol.nvim',
-    config = function() require 'configs.statuscol' end,
-  },
-  {
     'yorickpeterse/nvim-pqf',
     event = 'VeryLazy',
     config = function() require 'configs.pqf' end,
