@@ -109,6 +109,9 @@ statusline.flags = {
   md_captitle = function()
     return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or ''
   end,
+  autoformat = function()
+    return (vim.g.autoformat or vim.b.autoformat) and 'auto-format' or ''
+  end,
 }
 ---@diagnostic enable: undefined-field
 ---Additional info for the current buffer enclosed in parentheses
@@ -124,6 +127,7 @@ function statusline.info()
   add_section(statusline.branch())
   add_section(statusline.gitdiff())
   add_section(statusline.flags.md_captitle())
+  add_section(statusline.flags.autoformat())
   return vim.tbl_isempty(info) and ''
     or string.format('(%s) ', table.concat(info, ', '))
 end
