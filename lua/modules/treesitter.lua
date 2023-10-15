@@ -2,9 +2,9 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    config = function() require 'configs.nvim-treesitter' end,
     cmd = { 'TSUpdateSync' },
     event = { 'BufReadPost', 'BufNewFile' },
-    config = function() require 'configs.nvim-treesitter' end,
     dependencies = {
       'ts-node-action',
       'nvim-ts-autotag',

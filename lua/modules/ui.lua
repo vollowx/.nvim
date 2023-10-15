@@ -23,13 +23,13 @@ return {
   },
   {
     'yorickpeterse/nvim-pqf',
-    event = 'VeryLazy',
     config = function() require 'configs.pqf' end,
+    event = 'VeryLazy',
   },
   {
     'utilyre/sentiment.nvim',
-    event = 'VeryLazy',
     config = function() require 'configs.sentiment' end,
     init = function() vim.g.loaded_matchparen = 1 end,
+    event = 'VeryLazy',
   },
 }

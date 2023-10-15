@@ -1,8 +1,8 @@
 return {
   {
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
     config = function() require 'configs.nvim-lspconfig' end,
+    event = 'VeryLazy',
     cmd = { 'LspInfo', 'LspStart' },
     keys = {
       { '<Leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp: Server information' },
@@ -13,28 +13,22 @@ return {
   },
 
   {
-    'stevearc/conform.nvim',
-    event = 'VeryLazy',
-    config = function() require 'configs.conform' end,
-  },
-
-  {
     'p00f/clangd_extensions.nvim',
     dependencies = 'nvim-lspconfig',
-    ft = { 'c', 'cpp' },
     config = function() require 'configs.clangd_extensions' end,
+    ft = { 'c', 'cpp' },
   },
 
   {
     'pmizio/typescript-tools.nvim',
     dependencies = 'nvim-lspconfig',
-    event = 'VeryLazy',
     config = function() require 'configs.typescript-tools' end,
+    event = 'VeryLazy',
   },
 
   {
     'dnlhc/glance.nvim',
-    event = 'LspAttach',
     config = function() require 'configs.glance' end,
+    event = 'LspAttach',
   },
 }

@@ -75,10 +75,37 @@ return {
   },
 
   {
+    'stevearc/conform.nvim',
+    config = function() require 'configs.conform' end,
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      vim.g.autoformat = true
+      vim.api.nvim_create_user_command('AutoFormatDisable', function(args)
+        if args.bang then
+          vim.g.autoformat = false
+        else
+          vim.b.autoformat = false
+        end
+      end, {
+        desc = 'Disable autoformat-on-save',
+        bang = true,
+      })
+      vim.api.nvim_create_user_command('AutoFormatEnable', function()
+        vim.b.autoformat = true
+        vim.g.autoformat = true
+      end, {
+        desc = 'Re-enable autoformat-on-save',
+      })
+    end,
+    cmd = { 'ConformInfo' },
+    event = 'BufWritePre',
+  },
+
+  {
     'folke/todo-comments.nvim',
     dependencies = 'plenary.nvim',
-    event = 'VeryLazy',
     config = function() require 'configs.todo-comments' end,
+    event = 'VeryLazy',
     cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
     keys = {
       { '<Leader>ft', '<Cmd>TodoTelescope<CR>', desc = 'find: Todos' },
@@ -94,8 +121,8 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     dependencies = 'plenary.nvim',
-    event = 'VeryLazy',
     config = function() require 'configs.gitsigns' end,
+    event = 'VeryLazy',
     keys = {
       { ']g', '<Cmd>Gitsigns next_hunk<CR>', desc = 'git: Next hunk' },
       { '[g', '<Cmd>Gitsigns prev_hunk<CR>', desc = 'git: Previous hunk' },
@@ -164,8 +191,8 @@ return {
 
   {
     'NvChad/nvim-colorizer.lua',
-    event = 'VeryLazy',
     config = function() require 'configs.colorizer' end,
+    event = 'VeryLazy',
   },
 
   {
@@ -179,8 +206,8 @@ return {
 
   {
     'Aasim-A/scrollEOF.nvim',
-    event = 'VeryLazy',
     config = function() require 'configs.scrollEOF' end,
+    event = 'VeryLazy',
   },
 
   { 'wakatime/vim-wakatime', event = 'VeryLazy' },
