@@ -61,12 +61,11 @@ local function lspconfig_diagnostics()
 
   vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- Enable underline, use default values
       underline = true,
-      -- Enable virtual text, override spacing to 4
+      update_in_insert = true,
       virtual_text = {
         spacing = 4,
-        prefix = vim.trim(static.icons.ui.AngleLeft),
+        prefix = vim.trim(static.icons.ui.CircleSmall),
       },
     })
 

@@ -86,6 +86,12 @@ return {
   },
 
   {
+    'willothy/flatten.nvim',
+    event = 'BufReadPre',
+    config = function() require 'configs.flatten' end,
+  },
+
+  {
     'lewis6991/gitsigns.nvim',
     dependencies = 'plenary.nvim',
     event = 'VeryLazy',
