@@ -109,7 +109,6 @@ local function setup_lsp_overrides()
     close_events = {
       'CursorMoved',
       'CursorMovedI',
-      'ModeChanged',
       'WinScrolled',
     },
   }
@@ -133,14 +132,17 @@ local function setup_lsp_overrides()
   function vim.lsp.util.open_floating_preview(contents, syntax, opts)
     local source_ft = vim.bo[vim.api.nvim_get_current_buf()].ft
     opts = vim.tbl_deep_extend('force', opts, opts_override_floating_preview)
-    -- If source filetype if markdown or tex, use markdown syntax
-    -- and disable stylizing markdown to get math concealing provided
-    -- by vimtex in the floating window
-    if source_ft == 'markdown' or source_ft == 'tex' then
-      opts.stylize_markdown = false
-      syntax = 'markdown'
+    -- If source filetype if markdown, use custom mkd syntax instead of
+    -- markdown syntax to avoid using treesitter highlight and get math
+    -- concealing provided by vimtex in the floating window
+    if source_ft == 'markdown' then
+      syntax = 'mkd'
+      opts.wrap = false
     end
-    return _open_floating_preview(contents, syntax, opts)
+    local floating_bufnr, floating_winnr =
+      _open_floating_preview(contents, syntax, opts)
+    vim.wo[floating_winnr].concealcursor = 'nc'
+    return floating_bufnr, floating_winnr
   end
 end
 

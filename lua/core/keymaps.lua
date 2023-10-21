@@ -1,16 +1,6 @@
-local utils = require 'utils'
-
 vim.keymap.set({ 'n', 'x' }, '<Space>', '<Ignore>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
-vim.keymap.set(
-  'n',
-  '<Esc>',
-  '<Cmd>noh<CR>',
-  { desc = 'search: Clear highlights' }
-)
-vim.keymap.set('n', '<C-s>', '<Cmd>write<CR>', { desc = 'edit: Write to file' })
 
 -- Multi-window operations
 -- stylua: ignore start
@@ -68,8 +58,8 @@ vim.keymap.set({ 'x', 'n' }, '<C-w>-', 'v:count ? "<C-w>-" : "2<C-w>-"', { expr 
 -- stylua: ignore end
 
 -- Up/down motions
-vim.keymap.set({ 'n', 'x', 'o' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
-vim.keymap.set({ 'n', 'x', 'o' }, 'k', 'v:count ? "k" : "gk"', { expr = true })
+vim.keymap.set({ 'n', 'x' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
+vim.keymap.set({ 'n', 'x' }, 'k', 'v:count ? "k" : "gk"', { expr = true })
 
 -- Buffer navigation
 vim.keymap.set('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>')
@@ -77,15 +67,17 @@ vim.keymap.set('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>')
 
 -- Tabpages
 ---@param default function
+---@param count number?
 ---@return function
-local function tabswitch(default)
+local function tabswitch(default, count)
   return function()
+    count = count or vim.v.count
     local tabcount = vim.fn.tabpagenr '$'
-    if tabcount >= vim.v.count then
-      default(vim.v.count ~= 0 and vim.v.count or nil)
+    if tabcount >= count then
+      default(count ~= 0 and count or nil)
       return
     end
-    for _ = 1, vim.v.count - tabcount do
+    for _ = 1, count - tabcount do
       vim.cmd.tabnew()
     end
     vim.cmd.tabnext '$'
@@ -94,6 +86,16 @@ end
 vim.keymap.set('n', 'gt', tabswitch(vim.cmd.tabnext))
 vim.keymap.set('n', 'gT', tabswitch(vim.cmd.tabprev))
 vim.keymap.set('n', 'gy', tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
+
+vim.keymap.set('n', '<M-1>', tabswitch(vim.cmd.tabnext, 1))
+vim.keymap.set('n', '<M-2>', tabswitch(vim.cmd.tabnext, 2))
+vim.keymap.set('n', '<M-3>', tabswitch(vim.cmd.tabnext, 3))
+vim.keymap.set('n', '<M-4>', tabswitch(vim.cmd.tabnext, 4))
+vim.keymap.set('n', '<M-5>', tabswitch(vim.cmd.tabnext, 5))
+vim.keymap.set('n', '<M-6>', tabswitch(vim.cmd.tabnext, 6))
+vim.keymap.set('n', '<M-7>', tabswitch(vim.cmd.tabnext, 7))
+vim.keymap.set('n', '<M-8>', tabswitch(vim.cmd.tabnext, 8))
+vim.keymap.set('n', '<M-9>', tabswitch(vim.cmd.tabnext, 9))
 
 -- Correct misspelled word / mark as correct
 vim.keymap.set('i', '<C-S-L>', '<Esc>[szg`]a')
@@ -117,31 +119,12 @@ vim.keymap.set({ 'o', 'x' }, "a'", "2i'", { noremap = false })
 vim.keymap.set({ 'o', 'x' }, 'a`', '2i`', { noremap = false })
 
 -- Close all floating windows
-vim.keymap.set('n', 'q', function()
-  local count = 0
-  local current_win = vim.api.nvim_get_current_win()
-  -- close current win only if it's a floating window
-  if vim.api.nvim_win_get_config(current_win).relative ~= '' then
-    vim.api.nvim_win_close(current_win, true)
-    return
-  end
-  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if vim.api.nvim_win_is_valid(win) then
-      local config = vim.api.nvim_win_get_config(win)
-      -- close floating windows that can be focused
-      if config.relative ~= '' and config.focusable then
-        vim.api.nvim_win_close(win, false) -- do not force
-        count = count + 1
-      end
-    end
-  end
-  if count == 0 then -- Fallback
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('q', true, true, true),
-      'n',
-      false
-    )
-  end
-end)
+vim.keymap.set('n', 'q', '<Cmd>fclose<CR>')
 
-utils.keymap.command_abbrev(':', 'lua')
+-- Text object: current buffer
+-- stylua: ignore start
+vim.keymap.set('x', 'af', ':<C-u>silent! keepjumps normal! ggVG<CR>', { silent = true, noremap = false })
+vim.keymap.set('x', 'if', ':<C-u>silent! keepjumps normal! ggVG<CR>', { silent = true, noremap = false })
+vim.keymap.set('o', 'af', '<Cmd>silent! normal m`Vaf<CR><Cmd>silent! normal! ``<CR>', { silent = true, noremap = false })
+vim.keymap.set('o', 'if', '<Cmd>silent! normal m`Vif<CR><Cmd>silent! normal! ``<CR>', { silent = true, noremap = false })
+-- stylua: ignore end
