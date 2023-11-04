@@ -273,8 +273,6 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
   group = groupid,
   callback = function()
     vim.wo.statusline = table.concat {
-      components.padding,
-
       components.mode,
       components.fname,
 
@@ -285,8 +283,6 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
       components.lsp_progress,
       components.diag,
       components.pos,
-
-      components.padding,
     }
   end,
 })
@@ -294,12 +290,10 @@ vim.api.nvim_create_autocmd('WinLeave', {
   group = groupid,
   callback = function()
     vim.wo.statusline = table.concat {
-      components.padding,
       components.fname_nc,
       components.align,
       components.truncate,
       components.pos_nc,
-      components.padding,
     }
   end,
 })
