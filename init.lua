@@ -1,4 +1,4 @@
-require 'core.options'
-require 'core.keymaps'
-require 'core.autocmds'
-require 'core.plugins'
+require 'init.general'
+require 'init.keymaps'
+require 'init.autocmds'
+require 'init.plugins'

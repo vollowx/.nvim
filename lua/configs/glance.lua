@@ -11,7 +11,7 @@ glance.setup {
     fold_open = icons.ui.AngleDown,
   },
   border = {
-    enable = require('core.settings').transparent,
+    enable = require('init.settings').transparent,
     top_char = horiz,
     bottom_char = horiz,
   },

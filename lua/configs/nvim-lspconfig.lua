@@ -1,7 +1,7 @@
 local static = require 'utils.static'
 local server_configs = require 'configs.lsp-server-configs'
 
-local border = require('core.settings').border
+local border = require('init.settings').border
 
 ---Customize LspInfo floating window
 local function lspconfig_info_win()

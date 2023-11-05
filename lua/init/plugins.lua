@@ -1,4 +1,4 @@
-local border = require('core.settings').border
+local border = require('init.settings').border
 local git = require 'utils.git'
 local icons = require('utils.static').icons
 

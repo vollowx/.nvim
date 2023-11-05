@@ -1,4 +1,4 @@
-local border = require('core.settings').border
+local border = require('init.settings').border
 
 vim.g.rnvimr_enable_ex = 1
 vim.g.rnvimr_enable_picker = 1

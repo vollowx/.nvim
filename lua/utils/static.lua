@@ -34,7 +34,7 @@ function langs_mt:map(field)
   return result
 end
 
-M.langs = setmetatable(require('core.settings').langs, langs_mt)
+M.langs = setmetatable(require('init.settings').langs, langs_mt)
 
 -- stylua: ignore start
 M.borders = {
@@ -49,6 +49,6 @@ M.borders = {
 }
 -- stylua: ignore end
 
-M.icons = require('core.settings').icons
+M.icons = require('init.settings').icons
 
 return M

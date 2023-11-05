@@ -1,7 +1,7 @@
 local icons = require('utils.static').icons
 local default_config = require 'configs.lsp-server-configs.shared.default'
 
-local border = require('core.settings').border
+local border = require('init.settings').border
 
 require('clangd_extensions').setup {
   server = default_config,

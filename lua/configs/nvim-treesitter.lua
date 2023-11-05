@@ -1,6 +1,6 @@
 local ts_configs = require 'nvim-treesitter.configs'
 
-local border = require('core.settings').border
+local border = require('init.settings').border
 
 -- Get all filetypes that have treesitter parsers
 local ts_filetypes = {}

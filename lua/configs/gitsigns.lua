@@ -1,4 +1,4 @@
-local border = require('core.settings').border
+local border = require('init.settings').border
 
 require('gitsigns').setup {
   preview_config = {

@@ -1,7 +1,7 @@
 local telescope = require 'telescope'
 local static = require 'utils.static'
 
-local border = require('core.settings').border
+local border = require('init.settings').border
 
 local rg_cmd = {
   'rg',

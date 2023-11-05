@@ -1,4 +1,4 @@
-local transparent = require('core.settings').transparent
+local transparent = require('init.settings').transparent
 
 require('catppuccin').setup {
   transparent_background = transparent,
