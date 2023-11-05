@@ -1,6 +1,5 @@
 _G.statusline = {}
 local utils = require 'utils'
-local redraw_cmd = 'silent! redrawstatus'
 
 ---@type table<string, string>
 local signs_text_cache = {}
@@ -12,57 +11,51 @@ local function get_sign_text(name)
     local sign_def = vim.fn.sign_getdefined(name)[1]
     signs_text_cache[name] = sign_def and sign_def.text
   end
-
   return signs_text_cache[name] or ''
 end
 
-
 -- stylua: ignore start
 local modes = {
-  ['n']    = 'NO',
-
-  ['no']   = 'OP',
-  ['nov']  = 'OC',
-  ['noV']  = 'OL',
+  ['n']   = 'NO',
+  ['no']  = 'OP',
+  ['nov'] = 'OC',
+  ['noV'] = 'OL',
   ['no'] = 'OB',
   ['']   = 'VB',
-  ['niI']  = 'IN',
-  ['niR']  = 'RE',
-  ['niV']  = 'RV',
-  ['nt']   = 'NT',
-  ['ntT']  = 'TM',
-  ['v']    = 'VI',
-  ['vs']   = 'VI',
-  ['V']    = 'VL',
-  ['Vs']   = 'VL',
+  ['niI'] = 'IN',
+  ['niR'] = 'RE',
+  ['niV'] = 'RV',
+  ['nt']  = 'NT',
+  ['ntT'] = 'TM',
+  ['v']   = 'VI',
+  ['vs']  = 'VI',
+  ['V']   = 'VL',
+  ['Vs']  = 'VL',
   ['s']  = 'VB',
-
-  ['s']    = 'SE',
-  ['S']    = 'SL',
+  ['s']   = 'SE',
+  ['S']   = 'SL',
   ['']   = 'SB',
-  ['i']    = 'IN',
-  ['ic']   = 'IC',
-  ['ix']   = 'IX',
-  ['R']    = 'RE',
-  ['Rc']   = 'RC',
-  ['Rx']   = 'RX',
-  ['Rv']   = 'RV',
-  ['Rvc']  = 'RC',
-  ['Rvx']  = 'RX',
-  ['c']    = 'CO',
-  ['cv']   = 'CV',
-  ['r']    = 'PR',
-
-  ['rm']   = 'PM',
-  ['r?']   = 'P?',
-  ['!']    = 'SH',
-  ['t']    = 'TE',
+  ['i']   = 'IN',
+  ['ic']  = 'IC',
+  ['ix']  = 'IX',
+  ['R']   = 'RE',
+  ['Rc']  = 'RC',
+  ['Rx']  = 'RX',
+  ['Rv']  = 'RV',
+  ['Rvc'] = 'RC',
+  ['Rvx'] = 'RX',
+  ['c']   = 'CO',
+  ['cv']  = 'CV',
+  ['r']   = 'PR',
+  ['rm']  = 'PM',
+  ['r?']  = 'P?',
+  ['!']   = 'SH',
+  ['t']   = 'TE',
 }
 -- stylua: ignore end
 
 ---Get string representation of the current mode
 ---@return string
-
 function statusline.mode()
   local hl = vim.bo.mod and 'StatusLineHeaderModified' or 'StatusLineHeader'
   return utils.stl.hl(' ' .. modes[vim.fn.mode()] .. ' ', hl)
@@ -87,7 +80,6 @@ function statusline.gitdiff()
 end
 
 ---Get string representation of current git branch
-
 ---@return string
 function statusline.branch()
   ---@diagnostic disable-next-line: undefined-field
@@ -104,16 +96,16 @@ end
 
 ---@type table<string, fun(): string>
 ---@diagnostic disable: undefined-field
-
 statusline.flags = {
   md_captitle = function()
     return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or ''
   end,
-  autoformat = function()
+  autofmt = function()
     return (vim.g.autoformat or vim.b.autoformat) and 'auto-format' or ''
   end,
 }
 ---@diagnostic enable: undefined-field
+
 ---Additional info for the current buffer enclosed in parentheses
 ---@return string
 function statusline.info()
@@ -127,14 +119,13 @@ function statusline.info()
   add_section(statusline.branch())
   add_section(statusline.gitdiff())
   add_section(statusline.flags.md_captitle())
-  add_section(statusline.flags.autoformat())
+  add_section(statusline.flags.autofmt())
   return vim.tbl_isempty(info) and ''
     or string.format('(%s) ', table.concat(info, ', '))
 end
 
 ---Get string representation of diagnostics for current buffer
 ---@return string
-
 function statusline.diag() return '' end
 
 vim.api.nvim_create_autocmd('DiagnosticChanged', {
@@ -144,14 +135,12 @@ vim.api.nvim_create_autocmd('DiagnosticChanged', {
   callback = function()
     function statusline.diag()
       local diagnostics = vim.diagnostic.get(0)
-
       local diagnostics_workspace = vim.diagnostic.get(nil)
       local counts = { 0, 0, 0, 0 }
       local counts_workspace = { 0, 0, 0, 0 }
       for _, diagnostic in ipairs(diagnostics) do
         counts[diagnostic.severity] = counts[diagnostic.severity] + 1
       end
-
       for _, diagnostic in ipairs(diagnostics_workspace) do
         counts_workspace[diagnostic.severity] = counts_workspace[diagnostic.severity]
           + 1
@@ -200,7 +189,6 @@ vim.api.nvim_create_autocmd('DiagnosticChanged', {
 ---@field percentage integer?
 
 local lsp_prog_data ---@type lsp_progress_data_t?
-
 local report_time ---@type integer?
 vim.api.nvim_create_autocmd('LspProgress', {
   desc = 'Update LSP progress info for the status line.',
@@ -220,17 +208,18 @@ vim.api.nvim_create_autocmd('LspProgress', {
     lsp_prog_data = data
     report_time = vim.uv.now()
     local _report_time = report_time
-    lsp_prog_data.result.value.message =
-      vim.trim(utils.static.icons.diagnostics.Ok)
+    if data.result.value.kind == 'end' then
+      lsp_prog_data.result.value.message =
+        vim.trim(utils.static.icons.diagnostics.Ok)
+    end
     -- Clear client message after a short time if no new message is received
     vim.defer_fn(function()
       -- No new report since the timer was set
       if _report_time == report_time then
         lsp_prog_data = nil
-        vim.cmd(redraw_cmd)
+        vim.cmd.redrawstatus()
       end
     end, 2048)
-    vim.cmd(redraw_cmd)
   end,
 })
 
@@ -268,37 +257,68 @@ local components = {
 }
 -- stylua: ignore end
 
+local stl = table.concat {
+  components.mode,
+  components.fname,
+  components.info,
+  components.align,
+  components.truncate,
+  components.lsp_progress,
+  components.diag,
+  components.pos,
+}
+
+local stl_nc = table.concat {
+  components.fname_nc,
+  components.align,
+  components.truncate,
+  components.pos_nc,
+}
+
 local groupid = vim.api.nvim_create_augroup('StatusLine', {})
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'CursorMoved' }, {
   group = groupid,
   callback = function()
-    vim.wo.statusline = table.concat {
-      components.mode,
-      components.fname,
-
-      components.info,
-      components.align,
-      components.truncate,
-
-      components.lsp_progress,
-      components.diag,
-      components.pos,
-    }
+    if vim.wo.stl ~= stl then vim.wo.stl = stl end
   end,
 })
 vim.api.nvim_create_autocmd('WinLeave', {
   group = groupid,
   callback = function()
-    vim.wo.statusline = table.concat {
-      components.fname_nc,
-      components.align,
-      components.truncate,
-      components.pos_nc,
-    }
+    if vim.wo.stl ~= stl_nc then vim.wo.stl = stl_nc end
   end,
 })
+vim.api.nvim_create_autocmd(
+  { 'FileChangedShellPost', 'DiagnosticChanged', 'LspProgress' },
+  {
+    group = groupid,
+    command = 'redrawstatus',
+  }
+)
 
-vim.api.nvim_create_autocmd({ 'FileChangedShellPost', 'DiagnosticChanged' }, {
+vim.api.nvim_create_autocmd({ 'UIEnter', 'ColorScheme' }, {
   group = groupid,
-  command = redraw_cmd,
+  callback = function()
+    ---@param hlgroup_name string
+    ---@param attr table
+    ---@return nil
+    local function sethl(hlgroup_name, attr)
+      attr.fg = attr.fg or 'StatusLine'
+      attr.bg = attr.bg or 'StatusLine'
+      utils.hl.set_default(0, hlgroup_name, attr)
+    end
+    -- stylua: ignore start
+    sethl('StatusLineHeader', { bg = 'TabLine', bold = true })
+    sethl('StatusLineHeaderModified', { fg = 'Special', bg = 'TabLine', bold = true })
+    sethl('StatusLineStrong', { bold = true })
+    sethl('StatusLineFaded', { fg = 'Comment' })
+    sethl('StatusLineGitAdded', { fg = 'GitSignsAdd' })
+    sethl('StatusLineGitChanged', { fg = 'GitSignsChange' })
+    sethl('StatusLineGitRemoved', { fg = 'GitSignsDelete' })
+    sethl('StatusLineDiagnosticError', { fg = 'LspDiagnosticsSignError' })
+    sethl('StatusLineDiagnosticHint', { fg = 'LspDiagnosticsSignHint' })
+    sethl('StatusLineDiagnosticInfo', { fg = 'LspDiagnosticsSignInformation' })
+    sethl('StatusLineDiagnosticWarn', { fg = 'LspDiagnosticsSignWarning' })
+    -- stylua: ignore end
+  end,
 })

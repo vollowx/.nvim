@@ -39,14 +39,11 @@ function M.get(mode, lhs)
       return {
         lhs = map.lhs,
         rhs = map.rhs,
-
         expr = map.expr == 1,
-
         callback = map.callback,
         desc = map.desc,
         noremap = map.noremap == 1,
         script = map.script == 1,
-
         silent = map.silent == 1,
         nowait = map.nowait == 1,
         buffer = true,
@@ -54,7 +51,6 @@ function M.get(mode, lhs)
       }
     end
   end
-
   for _, map in ipairs(vim.api.nvim_get_keymap(mode)) do
     if vim.keycode(map.lhs) == lhs_keycode then
       return {
@@ -73,7 +69,6 @@ function M.get(mode, lhs)
     end
   end
   return {
-
     lhs = lhs,
     rhs = lhs,
     expr = false,
@@ -107,7 +102,6 @@ end
 
 ---Amend keymap
 ---Caveat: currently cannot amend keymap with <Cmd>...<CR> rhs
-
 ---@param modes string[]|string
 ---@param lhs string
 ---@param rhs function(fallback: function)
@@ -117,7 +111,6 @@ function M.amend(modes, lhs, rhs, opts)
   modes = type(modes) ~= 'table' and { modes } or modes --[=[@as string[]]=]
   for _, mode in ipairs(modes) do
     local fallback = M.fallback_fn(M.get(mode, lhs))
-
     vim.keymap.set(mode, lhs, function() rhs(fallback) end, opts)
   end
 end

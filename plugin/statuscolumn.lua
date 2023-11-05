@@ -1,5 +1,5 @@
-local ffi = require('ffi')
-local utils = require('utils')
+local ffi = require 'ffi'
+local utils = require 'utils'
 local make_hl = utils.stl.hl
 
 ---@type table<string, table<string, vim.fn.sign_getdefined.ret.item>>
@@ -41,7 +41,7 @@ local shared = {}
 ---@type table<string, fun(data: stc_shared_data_t, ...): string>
 local builders = {}
 
-ffi.cdef([[
+ffi.cdef [[
   typedef struct {} Error;
   typedef struct {} win_T;
   typedef struct {
@@ -55,20 +55,16 @@ ffi.cdef([[
 
   // Display tick, incremented for each call to update_screen()
   uint64_t display_tick;
-]])
+]]
 
 ---Get sign definition
 ---@param name string sign name
 ---@return vim.fn.sign_getdefined.ret.item?
 local function get_sign_def(name)
   local sign_def = sign_cache[name]
-  if sign_def then
-    return sign_def
-  end
+  if sign_def then return sign_def end
   sign_def = vim.fn.sign_getdefined(name)[1]
-  if not sign_def then
-    return
-  end
+  if not sign_def then return end
   sign_cache[name] = sign_def
   return sign_def
 end
@@ -78,18 +74,12 @@ end
 ---@param filter fun(sign: vim.fn.sign): boolean
 ---@return string
 function builders.signcol(data, filter)
-  if data.scl == 'no' then
-    return ''
-  end
+  if data.scl == 'no' then return '' end
   local max_priority = -1
   local sign_name_mp = nil
-  if data.virtnum ~= 0 then
-    goto signcol_ret_default
-  end
+  if data.virtnum ~= 0 then goto signcol_ret_default end
   for _, sign in ipairs(data.signs) do
-    if sign.lnum > data.lnum then
-      break
-    end
+    if sign.lnum > data.lnum then break end
     if
       sign.lnum == data.lnum
       and sign.priority > max_priority
@@ -114,9 +104,7 @@ end
 ---@return string
 function builders.lnum(data)
   local result = '' ---@type string|integer
-  if not data.nu and not data.rnu then
-    return ''
-  end
+  if not data.nu and not data.rnu then return '' end
   if data.virtnum ~= 0 then -- Drawing virtual line
     goto lnum_ret_default
   end
@@ -143,9 +131,7 @@ end
 ---@param data stc_shared_data_t
 ---@return string
 function builders.foldcol(data)
-  if data.fdc == '0' then
-    return ''
-  end
+  if data.fdc == '0' then return '' end
   local lnum = data.lnum --[[@as integer]]
   local foldinfo = ffi.C.fold_info(data.wp, lnum)
   local foldchar = (data.virtnum ~= 0 or foldinfo.start ~= lnum)
@@ -158,14 +144,12 @@ end
 ---@param sign vim.fn.sign
 ---@return boolean
 local function gitsigns_filter(sign)
-  return sign.name:find('^Git') and true or false
+  return sign.name:find '^Git' and true or false
 end
 
 ---@param sign vim.fn.sign
 ---@return boolean
-local function nongitsigns_filter(sign)
-  return not sign.name:find('^Git')
-end
+local function nongitsigns_filter(sign) return not sign.name:find '^Git' end
 
 ---Get number of digits of a decimal integer
 ---@param number integer
@@ -186,7 +170,7 @@ function _G.get_statuscolumn()
   if not shared[win] then -- Initialize shared data
     shared[win] = {
       win = win,
-      wp = ffi.C.find_window_by_handle(win, ffi.new('Error')),
+      wp = ffi.C.find_window_by_handle(win, ffi.new 'Error'),
     }
   end
 
@@ -226,9 +210,7 @@ function _G.get_statuscolumn()
   data.relnum = vim.v.relnum
   data.virtnum = vim.v.virtnum
 
-  data.culhl = data.cul
-    and data.culopt:find('[ou]')
-    and data.lnum == data.cur[1]
+  data.culhl = data.cul and data.culopt:find '[ou]' and data.lnum == data.cur[1]
 
   return builders.signcol(data, nongitsigns_filter)
     .. ' '
@@ -253,14 +235,10 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufWinEnter' }, {
 vim.api.nvim_create_autocmd('WinClosed', {
   group = augroup,
   desc = 'Clear per window shared data cache.',
-  callback = function(info)
-    shared[tonumber(info.match)] = nil
-  end,
+  callback = function(info) shared[tonumber(info.match)] = nil end,
 })
 vim.api.nvim_create_autocmd('BufWipeOut', {
   group = augroup,
   desc = 'Clear per buffer lnum width cache.',
-  callback = function(info)
-    lnumw_cache[info.buf] = nil
-  end,
+  callback = function(info) lnumw_cache[info.buf] = nil end,
 })

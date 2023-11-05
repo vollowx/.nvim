@@ -1,3 +1,9 @@
+-- Colorschemes other than the default colorscheme looks bad when the terminal
+-- does not support truecolor
+if vim.env.COLORTERM ~= 'truecolor' and vim.fn.has 'gui_running' == 0 then
+  return
+end
+
 -- 1. Restore dark/light background and colorscheme from ShaDa so that nvim
 --    "remembers" the background and colorscheme when it is restarted.
 -- 2. Change background on receiving signal SIGUSER1 to make nvim colorscheme
@@ -9,21 +15,17 @@
 
 local groupid = vim.api.nvim_create_augroup('SwitchBackground', {})
 
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'UIEnter' }, {
+vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
+  nested = true,
   group = groupid,
   desc = 'Restore dark/light background and colorscheme from ShaDa.',
   callback = function()
-    if vim.g.theme_restored then return end
-
-    vim.g.theme_restored = true
     if vim.g.BACKGROUND and vim.g.BACKGROUND ~= vim.go.background then
       vim.go.background = vim.g.BACKGROUND
     end
     if not vim.g.colors_name or vim.g.COLORSNAME ~= vim.g.colors_name then
-      vim.cmd(
-        'silent! colorscheme ' .. (vim.g.COLORSNAME or 'catppuccin-mocha')
-      )
+      vim.cmd('silent! colorscheme ' .. (vim.g.COLORSNAME or 'nano'))
     end
     return true
   end,
@@ -33,7 +35,6 @@ vim.api.nvim_create_autocmd('Signal', {
   nested = true,
   pattern = 'SIGUSR1',
   group = groupid,
-
   desc = 'Change background on receiving signal SIGUSER1.',
   callback = function()
     local now = vim.uv.now()
@@ -46,13 +47,12 @@ vim.api.nvim_create_autocmd('Signal', {
     -- -> setting bg
     -- -> ...
     if vim.g.sigtime and now - vim.g.sigtime < 500 then return end
-
     vim.g.sigtime = now
     vim.cmd.rshada()
     -- Must save the background and colorscheme name read from ShaDa
     -- because setting background or colorscheme will overwrite them
     local background = vim.g.BACKGROUND or 'dark'
-    local colors_name = vim.g.COLORSNAME or 'catppuccin-mocha'
+    local colors_name = vim.g.COLORSNAME or 'nano'
     if vim.go.background ~= background then vim.go.background = background end
     if vim.g.colors_name ~= colors_name then
       vim.cmd('silent! colorscheme ' .. colors_name)
