@@ -28,7 +28,7 @@ opt.undofile       = true
 opt.updatetime     = 10
 opt.wrap           = false
 opt.linebreak      = true
-opt.breakindent    = true
+opt.breakindent    = true -- Freeze nvim when editing long line with &wrap set
 opt.smoothscroll   = true
 opt.completeopt    = 'menuone'
 opt.conceallevel   = 2
@@ -40,8 +40,12 @@ opt.virtualedit    = 'block'
 -- Cursor shape
 opt.gcr:append 'n-v:block-Cursor/lCursor,i-c-ci-ve:blinkoff500-blinkon500-block-TermCursor,r-cr:hor20,o:hor50-Cursor/lCursor'
 
--- Use patience algorithm for diffing
-opt.diffopt:append 'algorithm:patience'
+-- Use histogram algorithm for diffing, generates more readable diffs in
+-- situations where two lines are swapped
+opt.diffopt:append 'algorithm:histogram'
+
+-- Use system clipboard
+opt.clipboard:append 'unnamedplus'
 
 opt.backup = true
 opt.backupdir:remove '.'

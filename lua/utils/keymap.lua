@@ -93,7 +93,9 @@ function M.fallback_fn(def)
   ---@param keys string
   ---@return nil
   local function feed(keys)
-    vim.api.nvim_feedkeys(vim.keycode(keys), modes, false)
+    local keycode = vim.keycode(keys)
+    local keyseq = vim.v.count > 0 and vim.v.count .. keycode or keycode
+    vim.api.nvim_feedkeys(keyseq, modes, false)
   end
   if not def.expr then return def.callback or function() feed(def.rhs) end end
   if def.callback then

@@ -6,7 +6,7 @@ local M = {}
 ---@param restore? boolean restore highlight after the sign, default true
 ---@return string sign string representation of the sign with highlight
 function M.hl(str, hl, restore)
-  restore = restore == nil and true or restore
+  restore = restore == nil or restore
   if restore then
     return table.concat { '%#', hl or '', '#', str or '', '%*' }
   else

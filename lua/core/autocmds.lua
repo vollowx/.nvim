@@ -1,5 +1,29 @@
 local autocmds = {
   {
+    { 'BufReadPre' },
+    {
+      group = 'LargeFileSettings',
+      desc = 'Set settings for large files.',
+      callback = function(info)
+        if vim.b.large_file ~= nil then return end
+        vim.b.large_file = false
+        local stat = vim.uv.fs_stat(info.match)
+        if stat and stat.size > 1000000 then
+          vim.b.large_file = true
+          vim.opt_local.swapfile = false
+          vim.opt_local.undofile = false
+          vim.opt_local.breakindent = false
+          vim.opt_local.colorcolumn = ''
+          vim.opt_local.statuscolumn = ''
+          vim.opt_local.signcolumn = 'no'
+          vim.opt_local.foldcolumn = '0'
+          vim.opt_local.winbar = ''
+        end
+      end,
+    },
+  },
+
+  {
     { 'TextYankPost' },
     {
       pattern = '*',
@@ -11,30 +35,14 @@ local autocmds = {
     },
   },
 
-  -- Append system clipboard to clipboard settings here because setting it on
-  -- startup dramatically slows down startup time
   {
-    { 'TextYankPost' },
-    {
-      group = 'YankToSystemClipboard',
-      once = true,
-      desc = 'Yank into system clipboard.',
-      callback = function()
-        vim.opt.clipboard:append 'unnamedplus'
-        vim.cmd('silent! let @+ = @' .. vim.v.register)
-        return true
-      end,
-    },
-  },
-
-  {
-    { 'BufLeave', 'WinLeave', 'FocusLost' },
+    { 'BufLeave', 'FocusLost' },
     {
       pattern = '*',
+      nested = true,
       group = 'Autosave',
       desc = 'Autosave on focus change.',
-      command = 'silent! wall',
-      nested = true,
+      command = 'if &bt ==# "" | silent! w | endif',
     },
   },
 
@@ -229,7 +237,7 @@ local autocmds = {
       group = 'TextwidthRelativeColorcolumn',
       desc = 'Set colorcolumn according to textwidth.',
       callback = function()
-        if vim.v.option_new ~= '0' then vim.opt_local.colorcolumn = '+1' end
+        if vim.v.option_new ~= 0 then vim.opt_local.colorcolumn = '+1' end
       end,
     },
   },
@@ -241,7 +249,7 @@ local autocmds = {
       group = 'DisableWinBarInDiffMode',
       desc = 'Disable winbar in diff mode.',
       callback = function()
-        if vim.v.option_new == '1' then
+        if vim.v.option_new then
           vim.w._winbar = vim.wo.winbar
           vim.wo.winbar = nil
           if vim.wo.culopt:find 'both' or vim.wo.culopt:find 'line' then

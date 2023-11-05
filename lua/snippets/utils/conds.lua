@@ -33,7 +33,7 @@ end
 
 ---Returns whether the current buffer has treesitter enabled
 ---@return boolean
-function M.ts_active() return utils.treesitter.ts_active() end
+function M.ts_active() return utils.treesitter.is_active() end
 
 ---Returns whether current cursor is in a comment
 ---@param type string

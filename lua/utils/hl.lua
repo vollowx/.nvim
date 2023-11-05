@@ -1,11 +1,10 @@
 local M = {}
 
 ---Wrapper of nvim_get_hl(), but does not create a cleared highlight group
-
 ---if it doesn't exist
 ---NOTE: vim.api.nvim_get_hl() has a side effect, it will create a cleared
 ---highlight group if it doesn't exist, see
----https://githubfast.com/neovim/neovim/issues/24583
+---https://github.com/neovim/neovim/issues/24583
 ---This affects regions highlighted by non-existing highlight groups in a
 ---winbar, which should falls back to the default 'WinBar' or 'WinBarNC'
 ---highlight groups but instead falls back to 'Normal' highlight group
@@ -15,7 +14,7 @@ local M = {}
 ---@param ns_id integer
 ---@param opts table{ name: string?, id: integer?, link: boolean? }
 ---@return table highlight attributes
-function M.get_hl(ns_id, opts)
+function M.get(ns_id, opts)
   if not opts.name then return vim.api.nvim_get_hl(ns_id, opts) end
   return vim.fn.hlexists(opts.name) == 1 and vim.api.nvim_get_hl(ns_id, opts)
     or {}
@@ -23,7 +22,6 @@ end
 
 ---Wrapper of nvim_buf_add_highlight(), but does not create a cleared
 ---highlight group if it doesn't exist
-
 ---@param buffer integer buffer handle, or 0 for current buffer
 ---@param ns_id integer namespace to use or -1 for ungrouped highlight
 ---@param hl_group string name of the highlight group to use
@@ -43,14 +41,10 @@ function M.buf_add_hl(buffer, ns_id, hl_group, line, col_start, col_end)
   )
 end
 
----@class lsp_range_t
----@field start {line: integer, character: integer}
----@field end {line: integer, character: integer}
-
 ---Highlight text in buffer, clear previous highlight if any exists
 ---@param buf integer
 ---@param hlgroup string
----@param range lsp_range_t?
+---@param range winbar_symbol_range_t?
 function M.range_single(buf, hlgroup, range)
   local ns = vim.api.nvim_create_namespace(hlgroup)
   vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
@@ -66,7 +60,6 @@ function M.range_single(buf, hlgroup, range)
 end
 
 ---Highlight a line in buffer, clear previous highlight if any exists
-
 ---@param buf integer
 ---@param hlgroup string
 ---@param linenr integer? 1-indexed line number
@@ -95,7 +88,7 @@ function M.merge(...)
   end
   local hl_attr = vim.tbl_map(
     function(hl_name)
-      return M.get_hl(0, {
+      return M.get(0, {
         name = hl_name,
         link = false,
       })
@@ -103,6 +96,206 @@ function M.merge(...)
     hl_names
   )
   return vim.tbl_extend('force', unpack(hl_attr))
+end
+
+---@param attr_type 'fg'|'bg'
+---@param fbg? string|integer
+---@param default? integer
+---@return integer|string|nil
+function M.normalize_fg_or_bg(attr_type, fbg, default)
+  if not fbg then return default end
+  local data_type = type(fbg)
+  if data_type == 'number' then return fbg end
+  if data_type == 'string' then
+    if vim.fn.hlexists(fbg) == 1 then
+      return vim.api.nvim_get_hl(0, {
+        name = fbg,
+        link = false,
+      })[attr_type]
+    end
+    if fbg:match '^#%x%x%x%x%x%x$' then return fbg end
+  end
+  return default
+end
+
+---Normalize highlight attributes
+---1. Replace `attr.fg` and `attr.bg` with their corresponding color codes
+---   if they are set to highlight group names
+---2. If `attr.link` used in combination with other attributes, will first
+---   retrieve the attributes of the linked highlight group, then merge
+---   with other attributes
+---Side effect: change `attr` table
+---@param attr table highlight attributes
+---@return table: normalized highlight attributes
+function M.normalize(attr)
+  if attr.link then
+    local num_keys = #vim.tbl_keys(attr)
+    if num_keys <= 1 then return attr end
+    attr.fg = M.normalize_fg_or_bg('fg', attr.fg)
+    attr.bg = M.normalize_fg_or_bg('bg', attr.bg)
+    attr = vim.tbl_extend(
+      'force',
+      M.get(0, { name = attr.link, link = false }) or {},
+      attr
+    )
+    attr.link = nil
+    return attr
+  end
+  attr.fg = M.normalize_fg_or_bg('fg', attr.fg)
+  attr.bg = M.normalize_fg_or_bg('bg', attr.bg)
+  return attr
+end
+
+---Wrapper of nvim_set_hl(), normalize highlight attributes before setting
+---@param ns_id integer namespace id
+---@param name string
+---@param attr table highlight attributes
+---@return nil
+function M.set(ns_id, name, attr)
+  return vim.api.nvim_set_hl(ns_id, name, M.normalize(attr))
+end
+
+---Set default highlight attributes, normalize highlight attributes before setting
+---@param ns_id integer namespace id
+---@param name string
+---@param attr table highlight attributes
+---@return nil
+function M.set_default(ns_id, name, attr)
+  attr.default = true
+  return vim.api.nvim_set_hl(ns_id, name, M.normalize(attr))
+end
+
+-- stylua: ignore start
+local todec = {
+  ['0'] = 0,
+  ['1'] = 1,
+  ['2'] = 2,
+  ['3'] = 3,
+  ['4'] = 4,
+  ['5'] = 5,
+  ['6'] = 6,
+  ['7'] = 7,
+  ['8'] = 8,
+  ['9'] = 9,
+  ['A'] = 10,
+  ['B'] = 11,
+  ['C'] = 12,
+  ['D'] = 13,
+  ['E'] = 14,
+  ['F'] = 15,
+}
+
+local tohex = {
+  [0]  = '0',
+  [1]  = '1',
+  [2]  = '2',
+  [3]  = '3',
+  [4]  = '4',
+  [5]  = '5',
+  [6]  = '6',
+  [7]  = '7',
+  [8]  = '8',
+  [9]  = '9',
+  [10] = 'A',
+  [11] = 'B',
+  [12] = 'C',
+  [13] = 'D',
+  [14] = 'E',
+  [15] = 'F',
+}
+-- stylua: ignore end
+
+---Convert an integer from hexadecimal to decimal
+---@param hex string
+---@return integer dec
+function M.hex2dec(hex)
+  local digit = 1
+  local dec = 0
+  while digit <= #hex do
+    dec = dec + todec[string.sub(hex, digit, digit)] * 16 ^ (#hex - digit)
+    digit = digit + 1
+  end
+  return dec
+end
+
+---Convert an integer from decimal to hexadecimal
+---@param int integer
+---@return string hex
+function M.dec2hex(int)
+  local hex = ''
+  while int > 0 do
+    hex = tohex[int % 16] .. hex
+    int = math.floor(int / 16)
+  end
+  return hex
+end
+
+---Convert a hex color to rgb color
+---@param hex string hex code of the color
+---@return integer[] rgb
+function M.hex2rgb(hex)
+  return {
+    M.hex2dec(string.sub(hex, 1, 2)),
+    M.hex2dec(string.sub(hex, 3, 4)),
+    M.hex2dec(string.sub(hex, 5, 6)),
+  }
+end
+---Convert an rgb color to hex color
+---@param rgb integer[]
+---@return string
+function M.rgb2hex(rgb)
+  local hex = {
+    M.dec2hex(math.floor(rgb[1])),
+    M.dec2hex(math.floor(rgb[2])),
+    M.dec2hex(math.floor(rgb[3])),
+  }
+  hex = {
+    string.rep('0', 2 - #hex[1]) .. hex[1],
+    string.rep('0', 2 - #hex[2]) .. hex[2],
+    string.rep('0', 2 - #hex[3]) .. hex[3],
+  }
+  return table.concat(hex, '')
+end
+
+---Blend two colors
+---@param c1 string|number|table the first color, in hex, dec, or rgb
+---@param c2 string|number|table the second color, in hex, dec, or rgb
+---@param alpha number? between 0~1, weight of the first color, default to 0.5
+---@return { hex: string, dec: integer, r: integer, g: integer, b: integer }
+function M.cblend(c1, c2, alpha)
+  alpha = alpha or 0.5
+  c1 = type(c1) == 'number' and M.dec2hex(c1) or c1
+  c2 = type(c2) == 'number' and M.dec2hex(c2) or c2
+  local rgb1 = type(c1) == 'string' and M.hex2rgb(c1:gsub('#', '', 1)) or c1
+  local rgb2 = type(c2) == 'string' and M.hex2rgb(c2:gsub('#', '', 1)) or c2
+  local rgb_blended = {
+    alpha * rgb1[1] + (1 - alpha) * rgb2[1],
+    alpha * rgb1[2] + (1 - alpha) * rgb2[2],
+    alpha * rgb1[3] + (1 - alpha) * rgb2[3],
+  }
+  local hex = M.rgb2hex(rgb_blended)
+  return {
+    hex = '#' .. hex,
+    dec = M.hex2dec(hex),
+    r = math.floor(rgb_blended[1]),
+    g = math.floor(rgb_blended[2]),
+    b = math.floor(rgb_blended[3]),
+  }
+end
+
+---Blend two hlgroups
+---@param h1 string|table the first hlgroup name or highlight attribute table
+---@param h2 string|table the second hlgroup name or highlight attribute table
+---@param alpha number? between 0~1, weight of the first color, default to 0.5
+---@return table: merged color or highlight attributes
+function M.blend(h1, h2, alpha)
+  -- stylua: ignore start
+  h1 = type(h1) == 'table' and h1 or M.get(0, { name = h1, link = false })
+  h2 = type(h2) == 'table' and h1 or M.get(0, { name = h2, link = false })
+  local fg = h1.fg and h2.fg and M.cblend(h1.fg, h2.fg, alpha).dec or h1.fg or h2.fg
+  local bg = h1.bg and h2.bg and M.cblend(h1.bg, h2.bg, alpha).dec or h1.bg or h2.bg
+  return vim.tbl_deep_extend('force', h1, h2, { fg = fg, bg = bg })
+  -- stylua: ignore end
 end
 
 return M
