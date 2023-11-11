@@ -43,6 +43,7 @@
   "ts-node-action": { "branch": "master", "commit": "f266409809555d7604b1ba894ffad8958670d04f" },
   "typescript-tools.nvim": { "branch": "master", "commit": "102ba313f87e1f9f9864f681dd7779cac8f6d3ea" },
   "ultimate-autopair.nvim": { "branch": "v0.6", "commit": "6fd0d6aa976a97dd6f1bed4d46be1b437613a52f" },
+  "vim-easy-align": { "branch": "master", "commit": "12dd6316974f71ce333e360c0260b4e1f81169c3" },
   "vim-table-mode": { "branch": "master", "commit": "4ff8de2ac93431ee6d85a9e04177012752e6abdc" },
   "vim-wakatime": { "branch": "master", "commit": "3c6c5bf17f4ae6c53396667ce3405df02a80b894" }
 }

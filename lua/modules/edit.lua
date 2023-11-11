@@ -15,6 +15,15 @@ return {
   },
 
   {
+    'junegunn/vim-easy-align',
+    keys = {
+      { 'gl', mode = { 'n', 'x' } },
+      { 'gL', mode = { 'n', 'x' } },
+    },
+    config = function() require 'configs.vim-easy-align' end,
+  },
+
+  {
     'zbirenbaum/copilot.lua',
     event = 'VeryLazy',
     config = function() require 'configs.copilot' end,
