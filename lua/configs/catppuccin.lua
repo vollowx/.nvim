@@ -1,4 +1,4 @@
-local transparent = require('init.settings').transparent
+local transparent = false
 
 require('catppuccin').setup {
   transparent_background = transparent,
@@ -26,22 +26,14 @@ require('catppuccin').setup {
         -- For base configs
         None = { bg = cp.none },
         WinSeparator = { fg = cp.surface0 },
-        FloatBorder = {
-          fg = transparent and cp.blue or cp.mantle,
-          bg = transparent and cp.none or cp.mantle,
-        },
-        FloatTitle = {
-          fg = transparent and cp.blue or cp.base,
-          bg = transparent and cp.none or cp.red,
-        },
 
         -- For telescope.nvim
-        TelescopePromptNormal = { bg = transparent and cp.none or cp.crust },
+        TelescopePromptNormal = { bg = cp.crust },
         TelescopePromptBorder = {
-          fg = transparent and cp.blue or cp.crust,
-          bg = transparent and cp.none or cp.crust,
+          fg = cp.crust,
+          bg = cp.crust,
         },
-        TelescopePromptPrefix = { bg = transparent and cp.none or cp.crust },
+        TelescopePromptPrefix = { bg = cp.crust },
 
         -- For status line
         StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },

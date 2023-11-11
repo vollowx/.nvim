@@ -1,8 +1,6 @@
-local border = require('init.settings').border
-
 require('dressing').setup {
   input = {
-    border = border,
+    border = 'solid',
     win_options = {
       winblend = 0,
     },
@@ -10,7 +8,7 @@ require('dressing').setup {
   select = {
     backend = 'builtin',
     builtin = {
-      border = border,
+      border = 'solid',
       relative = 'cursor',
       win_options = {
         winblend = 0,

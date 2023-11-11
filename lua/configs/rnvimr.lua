@@ -1,5 +1,3 @@
-local border = require('init.settings').border
-
 vim.g.rnvimr_enable_ex = 1
 vim.g.rnvimr_enable_picker = 1
 vim.g.rnvimr_enable_bw = 1
@@ -22,7 +20,7 @@ local function rnvimr_update_layout()
     width = vim.go.columns,
     height = math.max(10, math.floor(0.35 * vim.go.lines)),
     style = 'minimal',
-    border = border,
+    border = 'solid',
   }
 end
 rnvimr_update_layout()

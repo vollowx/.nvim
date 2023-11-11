@@ -153,7 +153,7 @@ local function setup_diagnostic_signs()
   for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
     local sign_name = 'DiagnosticSign' .. severity
     vim.fn.sign_define(sign_name, {
-      text = icons.diagnostics[severity],
+      text = icons.diagnostics[sign_name],
       texthl = sign_name,
       numhl = sign_name,
       culhl = sign_name .. 'Cul',

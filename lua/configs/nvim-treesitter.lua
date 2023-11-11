@@ -1,7 +1,5 @@
 local ts_configs = require 'nvim-treesitter.configs'
 
-local border = require('init.settings').border
-
 -- Get all filetypes that have treesitter parsers
 local ts_filetypes = {}
 local langs = require('utils.static').langs
@@ -80,7 +78,7 @@ ts_configs.setup {
     },
     lsp_interop = {
       enable = true,
-      border = border,
+      border = 'solid',
       peek_definition_code = {
         ['<C-o>'] = '@function.outer',
       },

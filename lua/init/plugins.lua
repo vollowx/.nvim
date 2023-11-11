@@ -1,4 +1,3 @@
-local border = require('init.settings').border
 local git = require 'utils.git'
 local icons = require('utils.static').icons
 
@@ -61,13 +60,13 @@ local function enable_modules(module_names)
     lockfile = vim.g.plugin_lock,
     git = { url_format = 'git@github.com:%s.git' },
     ui = {
-      border = border,
+      border = 'shadow',
       size = { width = 0.7, height = 0.74 },
       icons = {
         cmd = vim.trim(icons.ui.Command),
         config = vim.trim(icons.ui.Cog),
         event = vim.trim(icons.kinds.Event),
-        ft = vim.trim(icons.ui.FileDocument),
+        ft = vim.trim(icons.kinds.File),
         init = vim.trim(icons.ui.Flag),
         import = vim.trim(icons.ui.Import),
         keys = vim.trim(icons.ui.Keyboard),

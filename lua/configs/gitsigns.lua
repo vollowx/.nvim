@@ -1,8 +1,6 @@
-local border = require('init.settings').border
-
 require('gitsigns').setup {
   preview_config = {
-    border = border,
+    border = 'solid',
     style = 'minimal',
   },
   signs = {

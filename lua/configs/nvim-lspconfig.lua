@@ -1,12 +1,10 @@
 local static = require 'utils.static'
 local server_configs = require 'configs.lsp-server-configs'
 
-local border = require('init.settings').border
-
 ---Customize LspInfo floating window
 local function lspconfig_info_win()
   -- setup LspInfo floating window border
-  require('lspconfig.ui.windows').default_options.border = border
+  require('lspconfig.ui.windows').default_options.border = 'shadow'
   -- reload LspInfo floating window on VimResized
   vim.api.nvim_create_autocmd('VimResized', {
     pattern = '*',

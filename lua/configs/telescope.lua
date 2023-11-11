@@ -1,8 +1,6 @@
 local telescope = require 'telescope'
 local static = require 'utils.static'
 
-local border = require('init.settings').border
-
 local rg_cmd = {
   'rg',
   '--hidden',
@@ -169,9 +167,9 @@ local layout_dropdown = {
 telescope.setup {
   defaults = {
     mappings = { i = { ['<Esc>'] = require('telescope.actions').close } },
-    prompt_prefix = static.icons.ui.Magnify,
+    prompt_prefix = '/ ',
     selection_caret = static.icons.ui.ArrowRight,
-    borderchars = static.borders[border],
+    borderchars = static.borders.solid,
     results_title = false,
     layout_strategy = 'flex',
     layout_config = {
