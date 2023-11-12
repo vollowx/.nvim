@@ -62,8 +62,8 @@ vim.keymap.set({ 'n', 'x' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
 vim.keymap.set({ 'n', 'x' }, 'k', 'v:count ? "k" : "gk"', { expr = true })
 
 -- Buffer navigation
-vim.keymap.set('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>')
-vim.keymap.set('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>')
+vim.keymap.set('n', '<C-n>', '<Cmd>exec v:count1 . "bn"<CR>')
+vim.keymap.set('n', '<C-p>', '<Cmd>exec v:count1 . "bp"<CR>')
 
 -- Tabpages
 ---@param default function
