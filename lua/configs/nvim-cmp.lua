@@ -12,6 +12,7 @@ cmp.setup {
       max_height = 20,
     },
   },
+  completion = { completeopt = 'menu,menuone,noinsert' },
   snippet = {
     expand = function(args) require('luasnip').lsp_expand(args.body) end,
   },
@@ -92,24 +93,15 @@ cmp.setup {
       end
     end, { 'i', 'c' }),
   },
-  sources = {
-    { name = 'luasnip' },
+  sources = cmp.config.sources({
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
-    { name = 'buffer', max_item_count = 8 },
+    { name = 'luasnip' },
     { name = 'path' },
     { name = 'calc' },
-  },
-  sorting = {
-    ---@type table[]|function[]
-    comparators = {
-      cmp.config.compare.kind,
-      cmp.config.compare.exact,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.locality,
-      cmp.config.compare.score,
-    },
-  },
+  }, {
+    { name = 'buffer' },
+  }),
 }
 
 -- Use buffer source for `/`.

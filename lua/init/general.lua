@@ -4,9 +4,7 @@ local opt = vim.opt
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '80'
-opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()'
 opt.foldlevelstart = 99
-opt.foldtext       = 'v:lua.vim.treesitter.foldtext()'
 opt.guifont        = 'ComicShannsMono Nerd Font:h13'
 opt.helpheight     = 10
 opt.laststatus     = 3

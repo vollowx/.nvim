@@ -31,7 +31,7 @@ local function bootstrap()
 end
 
 ---Load custom events
-local function load_custom_events()
+local function setup_file_event()
   local Event = require 'lazy.core.handler.event'
 
   Event.mappings.LazyFile =
@@ -88,13 +88,14 @@ local function load_custom_events()
   })
 end
 
----Enable modules
----@param module_names string[]
-local function load_modules(module_names)
-  load_custom_events()
+---Setup Lazy
+---@param profile string
+local function setup_lazy(profile)
+  setup_file_event()
 
-  local config = {
-    defaults = { lazy = true },
+  require('lazy').setup {
+    spec = { { import = 'profiles.' .. profile } },
+    defaults = { lazy = true, version = false },
     root = vim.g.plugin_path,
     lockfile = vim.g.plugin_lock,
     ui = {
@@ -142,30 +143,11 @@ local function load_modules(module_names)
       },
     },
   }
-  local modules = {}
-  for _, module_name in ipairs(module_names) do
-    vim.list_extend(modules, require('modules.' .. module_name))
-  end
-  require('lazy').setup(modules, config)
 end
 
 if vim.env.NVIM_MANPAGER or not bootstrap() then return end
 if vim.g.vscode then
-  load_modules {
-    'lib',
-    'treesitter',
-    'edit',
-  }
+  setup_lazy 'vscode'
 else
-  load_modules {
-    'lib',
-    'completion',
-    'edit',
-    'lsp',
-    'markup',
-    'tools',
-    'treesitter',
-    'ui',
-    'colorscheme',
-  }
+  setup_lazy 'default'
 end

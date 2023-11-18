@@ -1,4 +1,5 @@
 local map = vim.keymap.set
+local utils = require 'utils'
 
 map({ 'n', 'x' }, '<Space>', '<Ignore>')
 vim.g.mapleader = ' '
@@ -51,6 +52,9 @@ map('n', '<M-7>', tabswitch(vim.cmd.tabnext, 7))
 map('n', '<M-8>', tabswitch(vim.cmd.tabnext, 8))
 map('n', '<M-9>', tabswitch(vim.cmd.tabnext, 9))
 
+map({ 'n', 't' }, '<M-Space>', function() utils.fterm(nil, {}) end)
+map({ 'n', 't' }, '<M-i>', function() utils.fterm({ 'lazygit' }, {}) end)
+
 -- Correct misspelled word / mark as correct
 map('i', '<C-S-L>', '<Esc>[szg`]a')
 map('i', '<C-l>', '<C-G>u<Esc>[s1z=`]a<C-G>u')
@@ -70,7 +74,6 @@ map(
 map('n', '<C-s>', '<Cmd>w<CR>')
 
 -- Close all floating windows
-map('n', '<Esc>', '<Cmd>fclose<CR>')
 map('n', 'q', '<Cmd>fclose<CR>')
 
 -- Select all file

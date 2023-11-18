@@ -59,10 +59,4 @@ return {
     'HiPhish/rainbow-delimiters.nvim',
     dependencies = 'nvim-treesitter',
   },
-
-  {
-    'Eandrju/cellular-automaton.nvim',
-    dependencies = 'nvim-treesitter',
-    cmd = 'CellularAutomaton',
-  },
 }

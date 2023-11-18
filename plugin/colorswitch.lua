@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
       vim.go.background = vim.g.BACKGROUND
     end
     if not vim.g.colors_name or vim.g.COLORSNAME ~= vim.g.colors_name then
-      vim.cmd('silent! colorscheme ' .. (vim.g.COLORSNAME or 'nano'))
+      vim.cmd('silent! colorscheme ' .. (vim.g.COLORSNAME or 'catppuccin'))
     end
     return true
   end,
@@ -52,7 +52,7 @@ vim.api.nvim_create_autocmd('Signal', {
     -- Must save the background and colorscheme name read from ShaDa
     -- because setting background or colorscheme will overwrite them
     local background = vim.g.BACKGROUND or 'dark'
-    local colors_name = vim.g.COLORSNAME or 'nano'
+    local colors_name = vim.g.COLORSNAME or 'catppuccin'
     if vim.go.background ~= background then vim.go.background = background end
     if vim.g.colors_name ~= colors_name then
       vim.cmd('silent! colorscheme ' .. colors_name)
