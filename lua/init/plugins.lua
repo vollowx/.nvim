@@ -1,53 +1,32 @@
 local git = require 'utils.git'
 local icons = require('utils.static').icons
 
-local confpath = vim.fn.stdpath 'config'
-local datapath = vim.fn.stdpath 'data'
-
----Read file contents
----@param path string
----@return string?
-local function read_file(path)
-  local file = io.open(path, 'r')
-  if not file then return nil end
-  local content = file:read '*a'
-  file:close()
-  return content
-end
-
 ---Install package manager if not already installed
 ---@return boolean success
 local function bootstrap()
-  vim.g.package_path = datapath .. '/lazy'
-  vim.g.package_lock = confpath .. '/lazy-lock.json'
-  local lazy_path = vim.g.package_path .. '/lazy.nvim'
-  vim.opt.rtp:prepend(lazy_path)
-  vim.opt.pp:prepend(lazy_path)
-  if vim.uv.fs_stat(lazy_path) then return true end
+  local lazy_path = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
-  local lock = read_file(vim.g.package_lock)
-  local lock_data = lock and vim.json.decode(lock) or nil
-  local commit = lock_data
-      and lock_data['lazy.nvim']
-      and lock_data['lazy.nvim'].commit
-    or nil
-  local url = 'https://github.com/folke/lazy.nvim.git'
-  vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
-  vim.fn.mkdir(vim.g.package_path, 'p')
-  if
-    not git.execute({
-      'clone',
-      '--filter=blob:none',
-      url,
-      lazy_path,
-    }, vim.log.levels.INFO).success
-  then
-    return false
+  if not vim.uv.fs_stat(lazy_path) then
+    local url = 'https://github.com/folke/lazy.nvim.git'
+    vim.notify('[plugins] installing lazy.nvim...', vim.log.levels.INFO)
+    if
+      not git.execute({
+        'clone',
+        '--filter=blob:none',
+        url,
+        lazy_path,
+      }, vim.log.levels.INFO).success
+    then
+      return false
+    else
+      vim.notify(
+        '[plugins] lazy.nvim cloned to ' .. lazy_path,
+        vim.log.levels.INFO
+      )
+    end
   end
-  if commit then
-    git.dir_execute(lazy_path, { 'checkout', commit }, vim.log.levels.INFO)
-  end
-  vim.notify('[plugins] lazy.nvim cloned to ' .. lazy_path, vim.log.levels.INFO)
+
+  vim.opt.rtp:prepend(vim.env.LAZY or lazy_path)
   return true
 end
 
@@ -111,7 +90,7 @@ end
 
 ---Enable modules
 ---@param module_names string[]
-local function enable_modules(module_names)
+local function load_modules(module_names)
   load_custom_events()
 
   local config = {
@@ -148,7 +127,20 @@ local function enable_modules(module_names)
     checker = { enabled = false },
     change_detection = { notify = false },
     install = { colorscheme = { 'catppuccin' } },
-    performance = { rtp = { disabled_plugins = {} } },
+    performance = {
+      rtp = {
+        disabled_plugins = {
+          'gzip',
+          'matchit',
+          'matchparen',
+          'netrwPlugin',
+          'tarPlugin',
+          'tohtml',
+          'tutor',
+          'zipPlugin',
+        },
+      },
+    },
   }
   local modules = {}
   for _, module_name in ipairs(module_names) do
@@ -159,13 +151,13 @@ end
 
 if vim.env.NVIM_MANPAGER or not bootstrap() then return end
 if vim.g.vscode then
-  enable_modules {
+  load_modules {
     'lib',
     'treesitter',
     'edit',
   }
 else
-  enable_modules {
+  load_modules {
     'lib',
     'completion',
     'edit',
