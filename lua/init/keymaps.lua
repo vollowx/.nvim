@@ -5,19 +5,10 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Multi-window operations
--- stylua: ignore start
-map({ 'x', 'n' }, '<C-h>',      '<C-w><C-h>')
-map({ 'x', 'n' }, '<C-j>',      '<C-w><C-j>')
-map({ 'x', 'n' }, '<C-k>',      '<C-w><C-k>')
-map({ 'x', 'n' }, '<C-l>',      '<C-w><C-l>')
-
-map({ 'x', 'n' }, '<C-w>>', '(v:count ? "" : 4) . (winnr() == winnr("l") ? "<C-w><" : "<C-w>>")', { expr = true })
-map({ 'x', 'n' }, '<C-w><', '(v:count ? "" : 4) . (winnr() == winnr("l") ? "<C-w>>" : "<C-w><")', { expr = true })
-map({ 'x', 'n' }, '<C-w>,', '(v:count ? "" : 4) . (winnr() == winnr("l") ? "<C-w><" : "<C-w>>")', { expr = true })
-map({ 'x', 'n' }, '<C-w>.', '(v:count ? "" : 4) . (winnr() == winnr("l") ? "<C-w>>" : "<C-w><")', { expr = true })
-map({ 'x', 'n' }, '<C-w>+', 'v:count ? "<C-w>+" : "2<C-w>+"', { expr = true })
-map({ 'x', 'n' }, '<C-w>-', 'v:count ? "<C-w>-" : "2<C-w>-"', { expr = true })
--- stylua: ignore end
+map({ 'x', 'n' }, '<C-h>', '<C-w><C-h>')
+map({ 'x', 'n' }, '<C-j>', '<C-w><C-j>')
+map({ 'x', 'n' }, '<C-k>', '<C-w><C-k>')
+map({ 'x', 'n' }, '<C-l>', '<C-w><C-l>')
 
 -- Up/down motions
 map({ 'n', 'x' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
@@ -76,18 +67,16 @@ map(
   { expr = true }
 )
 
--- Don't include extra spaces around quotes
-map({ 'o', 'x' }, 'a"', '2i"', { noremap = false })
-map({ 'o', 'x' }, "a'", "2i'", { noremap = false })
-map({ 'o', 'x' }, 'a`', '2i`', { noremap = false })
+map('n', '<C-s>', '<Cmd>w<CR>')
 
 -- Close all floating windows
+map('n', '<Esc>', '<Cmd>fclose<CR>')
 map('n', 'q', '<Cmd>fclose<CR>')
 
--- Text object: current buffer
--- stylua: ignore start
-map('x', 'af', ':<C-u>silent! keepjumps normal! ggVG<CR>', { silent = true, noremap = false })
-map('x', 'if', ':<C-u>silent! keepjumps normal! ggVG<CR>', { silent = true, noremap = false })
-map('o', 'af', '<Cmd>silent! normal m`Vaf<CR><Cmd>silent! normal! ``<CR>', { silent = true, noremap = false })
-map('o', 'if', '<Cmd>silent! normal m`Vif<CR><Cmd>silent! normal! ``<CR>', { silent = true, noremap = false })
--- stylua: ignore end
+-- Select all file
+map(
+  'x',
+  'af',
+  ':<C-u>silent! keepjumps normal! ggVG<CR>',
+  { silent = true, noremap = false }
+)
