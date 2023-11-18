@@ -118,7 +118,7 @@ local fterm_opts_default = {
   },
   winopts = {
     relative = 'editor',
-    border = 'none',
+    border = 'shadow',
     style = 'minimal',
     width = 0.75,
     height = 0.75,

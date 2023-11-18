@@ -19,7 +19,6 @@ local function lazygit_toggle(root)
       lazygits[root]:toggle()
     else
       lazygits[root] = utils.classes.fterm_t:new('lazygit', {
-        winopts = { border = 'solid' },
         jobopts = { cwd = root },
         termopts = { toggle_keys = { toggle_key } },
       })
