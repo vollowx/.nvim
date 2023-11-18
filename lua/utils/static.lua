@@ -35,6 +35,9 @@ function langs_mt:map(field)
 end
 
 M.langs = setmetatable({
+  ['*'] = {
+    linters = { 'codespell' },
+  },
   sh = {
     ft = 'sh',
     lsp_server = 'bashls',
@@ -47,6 +50,7 @@ M.langs = setmetatable({
     lsp_server = 'clangd',
     dap = 'codelldb',
     formatters = { 'clang-format' },
+    linters = { 'codespell' },
   },
   cpp = {
     ts = 'cpp',

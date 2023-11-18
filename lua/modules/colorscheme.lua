@@ -1,7 +1,6 @@
 return {
   {
-    'Jint-lzxy/nvim',
-    branch = 'refactor/syntax-highlighting',
+    'catppuccin/nvim',
     name = 'catppuccin',
     config = function() require 'configs.catppuccin' end,
     lazy = false,

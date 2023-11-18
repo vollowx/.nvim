@@ -102,6 +102,12 @@ return {
   },
 
   {
+    'mfussenegger/nvim-lint',
+    config = function() require 'configs.lint' end,
+    event = 'BufReadPre',
+  },
+
+  {
     'folke/todo-comments.nvim',
     dependencies = 'plenary.nvim',
     config = function() require 'configs.todo-comments' end,
@@ -122,7 +128,7 @@ return {
     'lewis6991/gitsigns.nvim',
     dependencies = 'plenary.nvim',
     config = function() require 'configs.gitsigns' end,
-    event = 'VeryLazy',
+    event = 'LazyFile',
     keys = {
       { ']g', '<Cmd>Gitsigns next_hunk<CR>', desc = 'git: Next hunk' },
       { '[g', '<Cmd>Gitsigns prev_hunk<CR>', desc = 'git: Previous hunk' },
@@ -187,27 +193,6 @@ return {
         mode = { 'n', 't' },
       },
     },
-  },
-
-  {
-    'NvChad/nvim-colorizer.lua',
-    config = function() require 'configs.colorizer' end,
-    event = 'VeryLazy',
-  },
-
-  {
-    'ojroques/nvim-bufdel',
-    cmd = { 'BufDel', 'BufDelAll', 'BufDelOthers' },
-    keys = {
-      { '<C-q>', '<Cmd>BufDel<CR>', desc = 'buffer: Delete current' },
-      { '<C-S-q>', '<Cmd>BufDel!<CR>', desc = 'buffer: Force delete current' },
-    },
-  },
-
-  {
-    'Aasim-A/scrollEOF.nvim',
-    config = function() require 'configs.scrollEOF' end,
-    event = 'VeryLazy',
   },
 
   { 'wakatime/vim-wakatime', event = 'VeryLazy' },

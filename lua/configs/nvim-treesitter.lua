@@ -93,9 +93,3 @@ ts_configs.setup {
   context_commentstring = { enable = true },
   endwise = { enable = true },
 }
-require('nvim-treesitter.install').prefer_git = true
-local parsers = require('nvim-treesitter.parsers').get_parser_configs()
-for _, p in pairs(parsers) do
-  p.install_info.url =
-    p.install_info.url:gsub('https://githubfast.com/', 'git@github.com:')
-end

@@ -2,7 +2,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     config = function() require 'configs.nvim-lspconfig' end,
-    event = 'VeryLazy',
+    event = 'LazyFile',
     cmd = { 'LspInfo', 'LspStart' },
     keys = {
       { '<Leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp: Server information' },
@@ -23,7 +23,7 @@ return {
     'pmizio/typescript-tools.nvim',
     dependencies = 'nvim-lspconfig',
     config = function() require 'configs.typescript-tools' end,
-    event = 'VeryLazy',
+    event = 'LazyFile',
   },
 
   {

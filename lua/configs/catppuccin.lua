@@ -26,6 +26,9 @@ require('catppuccin').setup {
         -- For base configs
         None = { bg = cp.none },
         WinSeparator = { fg = cp.surface0 },
+        TabLine = { bg = cp.crust, fg = cp.overlay0 },
+        TabLineFill = { bg = cp.crust },
+        TabLineSel = { bg = cp.base, fg = cp.text },
 
         -- For telescope.nvim
         TelescopePromptNormal = { bg = cp.crust },
