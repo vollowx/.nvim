@@ -2,16 +2,71 @@ return {
   {
     'catppuccin/nvim',
     name = 'catppuccin',
-    config = function() require 'configs.catppuccin' end,
     lazy = false,
     priority = 1000,
+    opts = {
+      integrations = {
+        alpha = false,
+        dashboard = false,
+        flash = false,
+        illuminate = false,
+        neogit = false,
+
+        treesitter = true,
+        native_lsp = { enabled = true },
+        cmp = true,
+        dropbar = { enabled = true, color_mode = true },
+        gitsigns = true,
+        indent_blankline = { enabled = true, scope_color = 'surface2' },
+        markdown = true,
+        nvimtree = true,
+        semantic_tokens = true,
+        telescope = { enabled = true, style = 'nvchad' },
+      },
+      highlight_overrides = {
+        all = function(cp)
+          return {
+            -- For base configs
+            None = { bg = cp.none },
+            WinSeparator = { fg = cp.surface0 },
+            TabLine = { bg = cp.crust, fg = cp.overlay0 },
+            TabLineFill = { bg = cp.crust },
+            TabLineSel = { bg = cp.base, fg = cp.text },
+
+            -- For telescope.nvim
+            TelescopePromptNormal = { bg = cp.crust },
+            TelescopePromptBorder = {
+              fg = cp.crust,
+              bg = cp.crust,
+            },
+            TelescopePromptPrefix = { bg = cp.crust },
+
+            -- For status line
+            StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
+            StatusLineDiagnosticWarn = { fg = cp.yellow, bg = cp.mantle },
+            StatusLineDiagnosticInfo = { fg = cp.blue, bg = cp.mantle },
+            StatusLineDiagnosticHint = { fg = cp.teal, bg = cp.mantle },
+            StatusLineFaded = { fg = cp.subtext0, bg = cp.mantle },
+            StatusLineGitAdded = { fg = cp.green, bg = cp.mantle },
+            StatusLineGitChanged = { fg = cp.blue, bg = cp.mantle },
+            StatusLineGitRemoved = { fg = cp.red, bg = cp.mantle },
+            StatusLineHeader = { fg = cp.lavender, bg = cp.surface0 },
+            StatusLineHeaderModified = { fg = cp.pink, bg = cp.surface0 },
+            StatusLineStrong = {
+              fg = cp.text,
+              bg = cp.mantle,
+              style = { 'bold' },
+            },
+          }
+        end,
+      },
+    },
   },
 
   {
     'akinsho/bufferline.nvim',
-    dependencies = { 'scope.nvim' },
+    dir = '~/Documents/Development/bufferline.nvim/',
     event = 'VeryLazy',
-    config = function() require 'configs.bufferline' end,
     keys = {
       { 'H', '<Cmd>BufferLineCyclePrev<CR>' },
       { 'L', '<Cmd>BufferLineCycleNext<CR>' },
@@ -25,15 +80,26 @@ return {
       { '<M-S-8>', '<Cmd>ScopeMoveBuf 8<CR>' },
       { '<M-S-9>', '<Cmd>ScopeMoveBuf 9<CR>' },
     },
+    opts = function()
+      return {
+        options = {
+          always_show_bufferline = false,
+          indicator = { style = 'none' },
+          separator_style = { '', '' },
+          tab_size = 20,
+        },
+        highlights = require('catppuccin.groups.integrations.bufferline').get(),
+      }
+    end,
   },
   {
     'tiagovla/scope.nvim',
-    config = function() require 'configs.scope' end,
+    event = 'VeryLazy',
+    opts = {},
   },
 
   {
     'stevearc/dressing.nvim',
-    config = function() require 'configs.dressing' end,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
@@ -46,22 +112,41 @@ return {
         return vim.ui.input(...)
       end
     end,
+    opts = {
+      input = {
+        border = 'shadow',
+      },
+      select = {
+        backend = 'builtin',
+        builtin = {
+          border = 'shadow',
+          relative = 'cursor',
+          min_height = { 0, 0 },
+        },
+      },
+    },
   },
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     event = 'LazyFile',
-    config = function() require 'configs.indent-blankline' end,
+    opts = {
+      indent = { char = '▏' },
+      scope = {
+        show_start = false,
+        show_end = false,
+      },
+    },
   },
   {
     'yorickpeterse/nvim-pqf',
-    config = function() require 'configs.pqf' end,
     event = 'VeryLazy',
+    opts = {},
   },
   {
     'utilyre/sentiment.nvim',
-    config = function() require 'configs.sentiment' end,
-    init = function() vim.g.loaded_matchparen = 1 end,
     event = 'VeryLazy',
+    init = function() vim.g.loaded_matchparen = 1 end,
+    opts = {},
   },
 }

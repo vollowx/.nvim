@@ -1,25 +1,19 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    dependencies = { 'nvim-treesitter-endwise' },
     build = ':TSUpdate',
+    init = function(plugin)
+      require('lazy.core.loader').add_to_rtp(plugin)
+      require 'nvim-treesitter.query_predicates'
+    end,
     config = function() require 'configs.nvim-treesitter' end,
     cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
     event = { 'LazyFile', 'VeryLazy' },
-    dependencies = {
-      'ts-node-action',
-      'nvim-ts-autotag',
-      'nvim-ts-context-commentstring',
-      'nvim-treesitter-context',
-      'nvim-treesitter-endwise',
-      'nvim-treesitter-textobjects',
-      'rainbow-delimiters.nvim',
-    },
   },
 
   {
     'CKolkey/ts-node-action',
-    dependencies = 'nvim-treesitter',
-    config = function() require 'configs.ts-node-action' end,
     keys = {
       {
         '<Leader><Leader>',
@@ -31,32 +25,28 @@ return {
 
   {
     'windwp/nvim-ts-autotag',
-    dependencies = 'nvim-treesitter',
+    event = 'LazyFile',
   },
 
   {
     'nvim-treesitter/nvim-treesitter-context',
-    dependencies = 'nvim-treesitter',
-    config = function() require 'configs.ts-context' end,
+    event = 'LazyFile',
+    opts = { zindex = 30 },
   },
 
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
-    dependencies = 'nvim-treesitter',
-  },
-
-  {
-    'RRethy/nvim-treesitter-endwise',
-    dependencies = 'nvim-treesitter',
-  },
-
-  {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    dependencies = 'nvim-treesitter',
+    event = 'LazyFile',
+    opts = { enable_autocmd = false },
   },
 
   {
     'HiPhish/rainbow-delimiters.nvim',
+    event = 'LazyFile',
+  },
+
+  {
+    'RRethy/nvim-treesitter-endwise',
     dependencies = 'nvim-treesitter',
   },
 }

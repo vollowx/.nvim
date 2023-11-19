@@ -102,12 +102,6 @@ return {
   },
 
   {
-    'mfussenegger/nvim-lint',
-    config = function() require 'configs.lint' end,
-    event = 'BufReadPre',
-  },
-
-  {
     'folke/todo-comments.nvim',
     dependencies = 'plenary.nvim',
     config = function() require 'configs.todo-comments' end,
@@ -127,7 +121,6 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     dependencies = 'plenary.nvim',
-    config = function() require 'configs.gitsigns' end,
     event = 'LazyFile',
     keys = {
       { ']g', '<Cmd>Gitsigns next_hunk<CR>', desc = 'git: Next hunk' },
@@ -178,6 +171,27 @@ return {
         ':<C-u>Gitsigns select_hunk<CR>',
         mode = 'v',
         desc = 'git: Select hunk',
+      },
+    },
+    opts = {
+      preview_config = {
+        border = 'shadow',
+        style = 'minimal',
+      },
+      signs = {
+        add = { text = '┃' },
+        untracked = { text = '┃' },
+        change = { text = '┃' },
+        delete = { text = '▁' },
+        topdelete = { text = '▔' },
+        changedelete = { text = '╋' },
+      },
+      _extmark_signs = false,
+      current_line_blame = false,
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol',
+        delay = 100,
       },
     },
   },

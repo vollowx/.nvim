@@ -35,9 +35,6 @@ function langs_mt:map(field)
 end
 
 M.langs = setmetatable({
-  ['*'] = {
-    linters = { 'codespell' },
-  },
   sh = {
     ft = 'sh',
     lsp_server = 'bashls',

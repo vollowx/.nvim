@@ -91,6 +91,5 @@ ts_configs.setup {
     enable_close = true,
     enable_close_on_slash = true,
   },
-  context_commentstring = { enable = true },
   endwise = { enable = true },
 }

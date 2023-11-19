@@ -4,9 +4,9 @@ vim.g.rnvimr_enable_bw = 1
 vim.g.rnvimr_ranger_cmd = { 'ranger', '--cmd=set draw_borders none' }
 vim.g.rnvimr_draw_border = 0
 vim.g.rnvimr_action = {
-  ['<A-t>'] = 'NvimEdit tabedit',
-  ['<A-s>'] = 'NvimEdit split',
-  ['<A-v>'] = 'NvimEdit vsplit',
+  ['<M-t>'] = 'NvimEdit tabedit',
+  ['<M-s>'] = 'NvimEdit split',
+  ['<M-v>'] = 'NvimEdit vsplit',
   ['gw'] = 'JumpNvimCwd',
   ['yw'] = 'EmitRangerCwd',
 }

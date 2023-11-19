@@ -35,16 +35,16 @@ local autocmds = {
     },
   },
 
-  {
-    { 'BufLeave', 'FocusLost' },
-    {
-      pattern = '*',
-      nested = true,
-      group = 'Autosave',
-      desc = 'Autosave on focus change.',
-      command = 'if &bt ==# "" | silent! w | endif',
-    },
-  },
+  -- {
+  --   { 'BufLeave', 'FocusLost' },
+  --   {
+  --     pattern = '*',
+  --     nested = true,
+  --     group = 'Autosave',
+  --     desc = 'Autosave on focus change.',
+  --     command = 'if &bt ==# "" | silent! w | endif',
+  --   },
+  -- },
 
   {
     { 'WinClosed' },
