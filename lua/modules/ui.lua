@@ -1,3 +1,5 @@
+local icons = require('utils.static').icons
+
 return {
   {
     'catppuccin/nvim',
@@ -40,23 +42,6 @@ return {
               bg = cp.crust,
             },
             TelescopePromptPrefix = { bg = cp.crust },
-
-            -- For status line
-            StatusLineDiagnosticError = { fg = cp.red, bg = cp.mantle },
-            StatusLineDiagnosticWarn = { fg = cp.yellow, bg = cp.mantle },
-            StatusLineDiagnosticInfo = { fg = cp.blue, bg = cp.mantle },
-            StatusLineDiagnosticHint = { fg = cp.teal, bg = cp.mantle },
-            StatusLineFaded = { fg = cp.subtext0, bg = cp.mantle },
-            StatusLineGitAdded = { fg = cp.green, bg = cp.mantle },
-            StatusLineGitChanged = { fg = cp.blue, bg = cp.mantle },
-            StatusLineGitRemoved = { fg = cp.red, bg = cp.mantle },
-            StatusLineHeader = { fg = cp.lavender, bg = cp.surface0 },
-            StatusLineHeaderModified = { fg = cp.pink, bg = cp.surface0 },
-            StatusLineStrong = {
-              fg = cp.text,
-              bg = cp.mantle,
-              style = { 'bold' },
-            },
           }
         end,
       },
@@ -65,37 +50,23 @@ return {
 
   {
     'akinsho/bufferline.nvim',
-    dir = '~/Documents/Development/bufferline.nvim/',
     event = 'VeryLazy',
-    keys = {
-      { 'H', '<Cmd>BufferLineCyclePrev<CR>' },
-      { 'L', '<Cmd>BufferLineCycleNext<CR>' },
-      { '<M-S-1>', '<Cmd>ScopeMoveBuf 1<CR>' },
-      { '<M-S-2>', '<Cmd>ScopeMoveBuf 2<CR>' },
-      { '<M-S-3>', '<Cmd>ScopeMoveBuf 3<CR>' },
-      { '<M-S-4>', '<Cmd>ScopeMoveBuf 4<CR>' },
-      { '<M-S-5>', '<Cmd>ScopeMoveBuf 5<CR>' },
-      { '<M-S-6>', '<Cmd>ScopeMoveBuf 6<CR>' },
-      { '<M-S-7>', '<Cmd>ScopeMoveBuf 7<CR>' },
-      { '<M-S-8>', '<Cmd>ScopeMoveBuf 8<CR>' },
-      { '<M-S-9>', '<Cmd>ScopeMoveBuf 9<CR>' },
-    },
     opts = function()
       return {
         options = {
           always_show_bufferline = false,
           indicator = { style = 'none' },
           separator_style = { '', '' },
-          tab_size = 20,
+          tab_size = 0,
+          mode = 'tabs',
+          show_buffer_close_icons = false,
+          show_close_icon = false,
+          show_duplicate = false,
+          enforce_regular_tabs = false,
         },
         highlights = require('catppuccin.groups.integrations.bufferline').get(),
       }
     end,
-  },
-  {
-    'tiagovla/scope.nvim',
-    event = 'VeryLazy',
-    opts = {},
   },
 
   {

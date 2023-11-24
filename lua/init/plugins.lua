@@ -89,12 +89,11 @@ local function setup_file_event()
 end
 
 ---Setup Lazy
----@param profile string
-local function setup_lazy(profile)
+---@param module_names string[]
+local function setup_lazy(module_names)
   setup_file_event()
 
-  require('lazy').setup {
-    spec = { { import = 'profiles.' .. profile } },
+  local config = {
     defaults = { lazy = true, version = false },
     root = vim.g.plugin_path,
     lockfile = vim.g.plugin_lock,
@@ -143,11 +142,31 @@ local function setup_lazy(profile)
       },
     },
   }
+
+  local modules = {}
+  for _, module_name in ipairs(module_names) do
+    vim.list_extend(modules, require('modules.' .. module_name))
+  end
+
+  require('lazy').setup(modules, config)
 end
 
 if vim.env.NVIM_MANPAGER or not bootstrap() then return end
 if vim.g.vscode then
-  setup_lazy 'vscode'
+  setup_lazy {
+    'lib',
+    'edit',
+    'treesitter',
+  }
 else
-  setup_lazy 'default'
+  setup_lazy {
+    'lib',
+    'completion',
+    'edit',
+    'lsp',
+    'markup',
+    'tools',
+    'treesitter',
+    'ui',
+  }
 end

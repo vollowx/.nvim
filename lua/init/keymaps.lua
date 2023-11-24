@@ -20,37 +20,37 @@ map('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>')
 map('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>')
 
 -- Tabpages
----@param default function
----@param count number?
+---@param tab_action function
+---@param default_count number?
 ---@return function
-local function tabswitch(default, count)
+local function tabswitch(tab_action, default_count)
   return function()
-    count = count or vim.v.count
-    local tabcount = vim.fn.tabpagenr '$'
-    if tabcount >= count then
-      default(count ~= 0 and count or nil)
+    local count = default_count or vim.v.count
+    local num_tabs = vim.fn.tabpagenr '$'
+    if num_tabs >= count then
+      tab_action(count ~= 0 and count or nil)
       return
     end
-    for _ = 1, count - tabcount do
+    vim.cmd.tablast()
+    for _ = 1, count - num_tabs do
       vim.cmd.tabnew()
     end
-    vim.cmd.tabnext '$'
   end
 end
+map('n', 'gt', tabswitch(vim.cmd.tabnext))
+map('n', 'gT', tabswitch(vim.cmd.tabprev))
+map('n', 'gy', tabswitch(vim.cmd.tabprev))
 
-map('n', '<M-j>', tabswitch(vim.cmd.tabnext))
-map('n', '<M-k>', tabswitch(vim.cmd.tabprev))
-map('n', '<M-q>', '<Cmd>tabclose<CR>')
-
-map('n', '<M-1>', tabswitch(vim.cmd.tabnext, 1))
-map('n', '<M-2>', tabswitch(vim.cmd.tabnext, 2))
-map('n', '<M-3>', tabswitch(vim.cmd.tabnext, 3))
-map('n', '<M-4>', tabswitch(vim.cmd.tabnext, 4))
-map('n', '<M-5>', tabswitch(vim.cmd.tabnext, 5))
-map('n', '<M-6>', tabswitch(vim.cmd.tabnext, 6))
-map('n', '<M-7>', tabswitch(vim.cmd.tabnext, 7))
-map('n', '<M-8>', tabswitch(vim.cmd.tabnext, 8))
-map('n', '<M-9>', tabswitch(vim.cmd.tabnext, 9))
+map('n', '<Leader>0', '<Cmd>0tabnew<CR>')
+map('n', '<Leader>1', tabswitch(vim.cmd.tabnext, 1))
+map('n', '<Leader>2', tabswitch(vim.cmd.tabnext, 2))
+map('n', '<Leader>3', tabswitch(vim.cmd.tabnext, 3))
+map('n', '<Leader>4', tabswitch(vim.cmd.tabnext, 4))
+map('n', '<Leader>5', tabswitch(vim.cmd.tabnext, 5))
+map('n', '<Leader>6', tabswitch(vim.cmd.tabnext, 6))
+map('n', '<Leader>7', tabswitch(vim.cmd.tabnext, 7))
+map('n', '<Leader>8', tabswitch(vim.cmd.tabnext, 8))
+map('n', '<Leader>9', tabswitch(vim.cmd.tabnext, 9))
 
 map({ 'n', 't' }, '<M-Space>', function() utils.fterm(nil, {}) end)
 map({ 'n', 't' }, '<M-i>', function() utils.fterm({ 'lazygit' }, {}) end)

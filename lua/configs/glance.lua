@@ -54,8 +54,10 @@ glance.setup {
   },
 }
 
+---@diagnostic disable: duplicate-set-field
 -- Override LSP handler functions
 vim.lsp.buf.references = function() glance.open 'references' end
 vim.lsp.buf.definition = function() glance.open 'definitions' end
 vim.lsp.buf.type_definition = function() glance.open 'type_definitions' end
 vim.lsp.buf.implementations = function() glance.open 'implementations' end
+---@diagnostic enable: duplicate-set-field
