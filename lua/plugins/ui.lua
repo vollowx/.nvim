@@ -65,18 +65,19 @@ return {
     end,
     opts = {
       input = {
-        border = 'shadow',
+        border = 'none',
       },
       select = {
         backend = 'builtin',
         builtin = {
-          border = 'shadow',
+          border = 'none',
           relative = 'cursor',
           min_height = { 0, 0 },
         },
       },
     },
   },
+
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
@@ -89,15 +90,21 @@ return {
       },
     },
   },
-  {
-    'yorickpeterse/nvim-pqf',
-    event = 'VeryLazy',
-    opts = {},
-  },
+
   {
     'utilyre/sentiment.nvim',
     event = 'VeryLazy',
     init = function() vim.g.loaded_matchparen = 1 end,
     opts = { delay = 0 },
+  },
+
+  {
+    'echasnovski/mini.bufremove',
+    keys = {
+      {
+        'sd',
+        function() require('mini.bufremove').delete() end,
+      },
+    },
   },
 }

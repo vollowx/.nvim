@@ -42,10 +42,35 @@ au('LargeFileSettings', {
   },
 })
 
+-- Workaround for nvim treating whole Chinese sentence as a single word
+-- Ideally something like https://github.com/neovim/neovim/pull/14029
+-- will be merged to nvim, also see
+-- https://github.com/neovim/neovim/issues/13967
+au('CJKFileSettings', {
+  'BufEnter',
+  {
+    desc = 'Settings for CJK files.',
+    callback = function(info)
+      local lnum_nonblank = math.max(0, vim.fn.nextnonblank(1) - 1)
+      local lines = vim.api.nvim_buf_get_lines(
+        info.buf,
+        lnum_nonblank,
+        lnum_nonblank + 64,
+        false
+      )
+      for _, line in ipairs(lines) do
+        if line:match '[\128-\255]' then
+          vim.opt_local.linebreak = false
+          return
+        end
+      end
+    end,
+  },
+})
+
 au('YankHighlight', {
   'TextYankPost',
   {
-    group = 'YankHighlight',
     desc = 'Highlight the selection on yank.',
     callback = function()
       vim.highlight.on_yank { higroup = 'Visual', timeout = 200 }
@@ -57,7 +82,6 @@ au('Autosave', {
   { 'BufLeave', 'WinLeave', 'FocusLost' },
   {
     nested = true,
-    group = 'Autosave',
     desc = 'Autosave on focus change.',
     command = 'if &bt ==# "" | silent! update | endif',
   },
@@ -282,7 +306,6 @@ au('DisableWinBarInDiffMode', {
 au('UpdateTimestamp', {
   'BufWritePre',
   {
-    group = 'UpdateTimestamp',
     desc = 'Update timestamp automatically.',
     callback = function(info)
       if not vim.bo[info.buf].ma or not vim.bo[info.buf].mod then return end
@@ -314,16 +337,6 @@ au('UpdateTimestamp', {
 })
 
 au('FixVirtualEditCursorPos', {
-  'CursorMoved',
-  {
-    desc = 'Record cursor position in visual mode if virtualedit is set.',
-    callback = function()
-      if vim.wo.ve:find 'all' then vim.w.ve_cursor = vim.fn.getcurpos() end
-    end,
-  },
-})
-
-au('FixVirtualEditCursorPos', {
   'ModeChanged',
   {
     desc = 'Keep cursor position after entering normal mode from visual mode with virtual edit enabled.',
@@ -335,6 +348,14 @@ au('FixVirtualEditCursorPos', {
           vim.w.ve_cursor[3] + vim.w.ve_cursor[4] - 1,
         })
       end
+    end,
+  },
+}, {
+  'CursorMoved',
+  {
+    desc = 'Record cursor position in visual mode if virtualedit is set.',
+    callback = function()
+      if vim.wo.ve:find 'all' then vim.w.ve_cursor = vim.fn.getcurpos() end
     end,
   },
 })

@@ -89,14 +89,13 @@ local function setup_file_event()
 end
 
 ---Setup Lazy
----@param module_names string[]
-local function setup_lazy(module_names)
+---@param spec LazySpec
+local function setup_lazy(spec)
   setup_file_event()
 
   local config = {
+    spec = spec,
     defaults = { lazy = true, version = false },
-    root = vim.g.plugin_path,
-    lockfile = vim.g.plugin_lock,
     ui = {
       border = 'shadow',
       size = { width = 0.7, height = 0.74 },
@@ -128,12 +127,14 @@ local function setup_lazy(module_names)
     change_detection = { notify = false },
     install = { colorscheme = { 'catppuccin' } },
     performance = {
+      cache = { enabled = true },
       rtp = {
         disabled_plugins = {
           'gzip',
           'matchit',
           'matchparen',
           'netrwPlugin',
+          'rplugin',
           'tarPlugin',
           'tohtml',
           'tutor',
@@ -143,30 +144,18 @@ local function setup_lazy(module_names)
     },
   }
 
-  local modules = {}
-  for _, module_name in ipairs(module_names) do
-    vim.list_extend(modules, require('modules.' .. module_name))
-  end
-
-  require('lazy').setup(modules, config)
+  require('lazy').setup(config)
 end
 
 if vim.env.NVIM_MANPAGER or not bootstrap() then return end
 if vim.g.vscode then
   setup_lazy {
-    'lib',
-    'edit',
-    'treesitter',
+    { import = 'plugins.lib' },
+    { import = 'plugins.editing' },
+    { import = 'plugins.treesitter' },
   }
 else
   setup_lazy {
-    'lib',
-    'completion',
-    'edit',
-    'lsp',
-    'markup',
-    'tools',
-    'treesitter',
-    'ui',
+    { import = 'plugins' },
   }
 end

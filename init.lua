@@ -1,6 +1,6 @@
 vim.loader.enable()
 
-require 'init.general'
-require 'init.keymaps'
-require 'init.autocmds'
-require 'init.plugins'
+require 'core.general'
+require 'core.keymaps'
+require 'core.autocmds'
+require 'core.plugins'
