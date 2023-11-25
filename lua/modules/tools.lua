@@ -1,21 +1,13 @@
+local icons = require('utils.static').icons
+
 return {
   {
     'nvim-telescope/telescope.nvim',
-    dependencies = {
-      'plenary.nvim',
-      'telescope-undo.nvim',
-    },
+    dependencies = { 'plenary.nvim' },
     config = function() require 'configs.telescope' end,
     cmd = 'Telescope',
     keys = {
-      { '<Leader>f', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
-      { '<Leader>F', '<Cmd>Telescope builtin<CR>', desc = 'find: Finders' },
       { '<Leader>ff', '<Cmd>Telescope find_files<CR>', desc = 'find: Files' },
-      {
-        '<Leader>fo',
-        '<Cmd>Telescope oldfiles<CR>',
-        desc = 'find: Recent files',
-      },
       { '<Leader>fw', '<Cmd>Telescope live_grep<CR>', desc = 'find: Words' },
       { '<Leader>fb', '<Cmd>Telescope buffers<CR>', desc = 'find: Buffers' },
       {
@@ -33,45 +25,57 @@ return {
         '<Cmd>Telescope colorscheme<CR>',
         desc = 'find: Color-Schemes',
       },
-      {
-        '<Leader>fg',
-        '<Cmd>Telescope git_status<CR>',
-        desc = 'find: Git status',
-      },
 
       {
         '<Leader>fe',
         '<Cmd>Telescope diagnostics<CR>',
         desc = 'find: Diagnostics',
       },
-      {
-        '<Leader>fr',
-        '<Cmd>Telescope lsp_references<CR>',
-        desc = 'find: LSP references',
-      },
-      {
-        '<Leader>fd',
-        '<Cmd>Telescope lsp_definitions<CR>',
-        desc = 'find: LSP definitions',
-      },
-      {
-        '<Leader>fs',
-        '<Cmd>Telescope lsp_document_symbols<CR>',
-        desc = 'find: LSP document symbols',
-      },
 
-      { '<Leader>fu', '<Cmd>Telescope undo<CR>', desc = 'find: Undoes' },
       {
-        '<Leader>fn',
-        '<Cmd>Telescope notify<CR>',
-        desc = 'find: Notifications',
+        '<Leader>fgb',
+        '<Cmd>Telescope git_branches<CR>',
+        desc = 'find: Git branches',
+      },
+      {
+        '<Leader>fgc',
+        '<Cmd>Telescope git_commits<CR>',
+        desc = 'find: Git commits',
+      },
+      {
+        '<Leader>fgs',
+        '<Cmd>Telescope git_status<CR>',
+        desc = 'find: Git status',
       },
     },
   },
 
   {
-    'debugloop/telescope-undo.nvim',
-    dependencies = { 'plenary.nvim', 'telescope.nvim' },
+    'nvim-telescope/telescope-file-browser.nvim',
+    dependencies = { 'telescope.nvim' },
+    config = function() require('telescope').load_extension 'file_browser' end,
+    keys = {
+      {
+        '<Leader>fi',
+        function()
+          require('telescope').extensions.file_browser.file_browser {
+            dir_icon = vim.trim(icons.kinds.Folder),
+            grouped = true,
+            hijack_netrw = true,
+          }
+        end,
+        desc = 'find: File browser',
+      },
+    },
+  },
+
+  {
+    'nvim-telescope/telescope-frecency.nvim',
+    dependencies = { 'telescope.nvim' },
+    config = function() require('telescope').load_extension 'frecency' end,
+    keys = {
+      { '<Leader>fo', '<Cmd>Telescope frecency<CR>', desc = 'find: Frecency' },
+    },
   },
 
   {
@@ -104,7 +108,32 @@ return {
   {
     'folke/todo-comments.nvim',
     dependencies = 'plenary.nvim',
-    config = function() require 'configs.todo-comments' end,
+    opts = {
+      keywords = {
+        FIX = {
+          icon = icons.ui.Bug,
+          color = 'error',
+          alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' },
+        },
+        TODO = { icon = icons.ui.Check, color = 'info' },
+        HACK = { icon = icons.ui.Ghost, color = 'warning' },
+        WARN = {
+          icon = icons.diagnostics.Warn,
+          color = 'warning',
+          alt = { 'WARNING', 'XXX' },
+        },
+        PERF = {
+          icon = icons.ui.ClockFast,
+          alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' },
+        },
+        NOTE = { icon = icons.ui.Note, color = 'hint', alt = { 'INFO' } },
+        TEST = {
+          icon = icons.ui.Flag,
+          color = 'test',
+          alt = { 'TESTING', 'PASSED', 'FAILED' },
+        },
+      },
+    },
     event = 'VeryLazy',
     cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
     keys = {
@@ -192,19 +221,6 @@ return {
         virt_text = true,
         virt_text_pos = 'eol',
         delay = 100,
-      },
-    },
-  },
-
-  {
-    'kevinhwang91/rnvimr',
-    config = function() require 'configs.rnvimr' end,
-    keys = {
-      {
-        '<M-e>',
-        function() require('configs.rnvimr').toggle() end,
-        desc = 'ui: Toggle file tree',
-        mode = { 'n', 't' },
       },
     },
   },

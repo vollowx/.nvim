@@ -11,7 +11,7 @@ return {
   {
     'altermo/ultimate-autopair.nvim',
     event = { 'InsertEnter', 'CmdlineEnter' },
-    config = function() require 'configs.ultimate-autopair' end,
+    opts = {},
   },
 
   {
@@ -26,6 +26,13 @@ return {
   {
     'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
-    config = function() require 'configs.copilot' end,
+    opts = {
+      panel = {
+        auto_refresh = true,
+      },
+      suggestion = {
+        auto_trigger = true,
+      },
+    },
   },
 }

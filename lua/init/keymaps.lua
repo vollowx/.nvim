@@ -5,7 +5,6 @@ map({ 'n', 'x' }, '<Space>', '<Ignore>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-
 -- Multi-window operations
 -- stylua: ignore start
 map({ 'x', 'n' }, '<M-W>',      '<C-w>W')
@@ -118,7 +117,7 @@ map(
     return vim.v.hlsearch == 1 and '<Cmd>nohlsearch<Bar>diffupdate<Bar>echo<CR>'
       or '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-l><CR>'
   end,
-  { expr = true }
+  { expr = true, desc = 'search: Clear highlights' }
 )
 
 map('n', '<C-s>', '<Cmd>w<CR>')

@@ -1,5 +1,3 @@
-local icons = require('utils.static').icons
-
 return {
   {
     'catppuccin/nvim',
@@ -17,7 +15,6 @@ return {
         treesitter = true,
         native_lsp = { enabled = true },
         cmp = true,
-        dropbar = { enabled = true, color_mode = true },
         gitsigns = true,
         indent_blankline = { enabled = true, scope_color = 'surface2' },
         markdown = true,
@@ -26,24 +23,7 @@ return {
         telescope = { enabled = true, style = 'nvchad' },
       },
       highlight_overrides = {
-        all = function(cp)
-          return {
-            -- For base configs
-            None = { bg = cp.none },
-            WinSeparator = { fg = cp.surface0 },
-            TabLine = { bg = cp.crust, fg = cp.overlay0 },
-            TabLineFill = { bg = cp.crust },
-            TabLineSel = { bg = cp.base, fg = cp.text },
-
-            -- For telescope.nvim
-            TelescopePromptNormal = { bg = cp.crust },
-            TelescopePromptBorder = {
-              fg = cp.crust,
-              bg = cp.crust,
-            },
-            TelescopePromptPrefix = { bg = cp.crust },
-          }
-        end,
+        all = function(cp) return { WinSeparator = { fg = cp.surface0 } } end,
       },
     },
   },
@@ -118,6 +98,6 @@ return {
     'utilyre/sentiment.nvim',
     event = 'VeryLazy',
     init = function() vim.g.loaded_matchparen = 1 end,
-    opts = {},
+    opts = { delay = 0 },
   },
 }

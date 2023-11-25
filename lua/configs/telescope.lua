@@ -59,36 +59,12 @@ telescope.setup {
   },
   pickers = {
     colorscheme = { enable_preview = true },
-    commands = layout_dropdown,
-    command_history = layout_dropdown,
-    filetypes = layout_dropdown,
     find_files = { find_command = fd_cmd },
     keymaps = layout_dropdown,
     live_grep = { additional_args = { '--hidden' } },
     lsp_references = { include_current_line = true, jump_type = 'never' },
     lsp_definitions = { jump_type = 'never' },
     lsp_type_definitions = { jump_type = 'never' },
-    vim_options = layout_dropdown,
-    registers = layout_dropdown,
-    reloader = layout_dropdown,
-    search_history = layout_dropdown,
     spell_suggest = layout_dropdown,
   },
-  extensions = {
-    undo = {
-      use_delta = true,
-      mappings = {
-        i = {
-          ['<CR>'] = require('telescope-undo.actions').restore,
-        },
-        n = {
-          ['<CR>'] = require('telescope-undo.actions').restore,
-          ['ya'] = require('telescope-undo.actions').yank_additions,
-          ['yd'] = require('telescope-undo.actions').yank_deletions,
-        },
-      },
-    },
-  },
 }
-
-telescope.load_extension 'undo'
