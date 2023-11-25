@@ -108,7 +108,7 @@ local function setup_lazy(module_names)
         init = vim.trim(icons.ui.Flag),
         import = vim.trim(icons.ui.Import),
         keys = vim.trim(icons.ui.Keyboard),
-        lazy = icons.ui.Sleep,
+        lazy = icons.ui.Sleep .. ' ',
         loaded = vim.trim(icons.ui.CheckCircle),
         not_loaded = vim.trim(icons.ui.Ghost),
         plugin = vim.trim(icons.kinds.Package),
