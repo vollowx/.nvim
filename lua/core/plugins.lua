@@ -153,9 +153,15 @@ if vim.g.vscode then
     { import = 'plugins.lib' },
     { import = 'plugins.editing' },
     { import = 'plugins.treesitter' },
+    { import = 'plugins.extra.lang.c' },
+    { import = 'plugins.extra.lang.markdown' },
+    { import = 'plugins.extra.lang.typescript' },
   }
 else
   setup_lazy {
     { import = 'plugins' },
+    { import = 'plugins.extra.lang.c' },
+    { import = 'plugins.extra.lang.markdown' },
+    { import = 'plugins.extra.lang.typescript' },
   }
 end

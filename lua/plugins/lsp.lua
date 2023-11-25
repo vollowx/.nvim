@@ -13,20 +13,6 @@ return {
   },
 
   {
-    'p00f/clangd_extensions.nvim',
-    dependencies = 'nvim-lspconfig',
-    config = function() require 'configs.clangd_extensions' end,
-    ft = { 'c', 'cpp' },
-  },
-
-  {
-    'pmizio/typescript-tools.nvim',
-    dependencies = 'nvim-lspconfig',
-    config = function() require 'configs.typescript-tools' end,
-    event = 'LazyFile',
-  },
-
-  {
     'dnlhc/glance.nvim',
     config = function() require 'configs.glance' end,
     event = 'LspAttach',
