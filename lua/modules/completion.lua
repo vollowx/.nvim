@@ -6,12 +6,6 @@ return {
   },
 
   {
-    'hrsh7th/cmp-calc',
-    dependencies = 'nvim-cmp',
-    event = 'InsertEnter',
-  },
-
-  {
     'hrsh7th/cmp-cmdline',
     dependencies = 'nvim-cmp',
     event = 'CmdlineEnter',

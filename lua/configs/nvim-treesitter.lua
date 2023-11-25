@@ -24,7 +24,7 @@ ts_configs.setup {
   modules = {},
   ignore_install = {},
   ensure_installed = require('utils.static').langs:list 'ts',
-  sync_install = true,
+  sync_install = false,
   highlight = {
     enable = not vim.g.vscode,
     additional_vim_regex_highlighting = false,
@@ -33,63 +33,9 @@ ts_configs.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      node_incremental = '<Enter>',
-      node_decremental = '<Backspace>',
+      node_incremental = '+',
+      node_decremental = '-',
     },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj
-      keymaps = {
-        ['fo'] = '@function.outer',
-        ['fi'] = '@function.inner',
-        ['co'] = '@class.outer',
-        ['ci'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']['] = '@function.outer',
-        [']m'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']]'] = '@function.outer',
-        [']M'] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[['] = '@function.outer',
-        ['[m'] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[]'] = '@function.outer',
-        ['[M'] = '@class.outer',
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<C-S-j>'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<C-S-k>'] = '@parameter.inner',
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      border = 'solid',
-      peek_definition_code = {
-        ['<C-o>'] = '@function.outer',
-      },
-    },
-  },
-  autotag = {
-    enable = true,
-    enable_rename = true,
-    enable_close = true,
-    enable_close_on_slash = true,
   },
   endwise = { enable = true },
 }

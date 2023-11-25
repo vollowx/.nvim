@@ -5,7 +5,8 @@ local M = {}
 ---@return boolean
 function M.is_active(buf)
   buf = buf or vim.api.nvim_get_current_buf()
-  return vim.treesitter.highlighter.active[buf] ~= nil
+  local ok = pcall(vim.treesitter.get_parser, buf or 0, vim.b[buf].ft)
+  return ok and true or false
 end
 
 ---Returns whether cursor is in a specific type of treesitter node

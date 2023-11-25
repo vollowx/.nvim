@@ -3,7 +3,6 @@ local luasnip = require 'luasnip'
 local icons = require('utils.static').icons
 
 local icon_dot = vim.trim(icons.ui.CircleSmall)
-local icon_calc = icons.kinds.Calculator
 local icon_folder = icons.kinds.Folder
 local icon_file = icons.kinds.File
 local compltype_path = {
@@ -50,11 +49,10 @@ cmp.setup {
             cmp_item.kind_hl_group = icon_hl or 'CmpItemKindFile'
           end
         end
-      else -- Use special icons for cmdline / calc completions
+      else -- Use special icons for cmdline completions
         ---@type table<string, string> override icons with `entry.source.name`
         local icon_override = {
           cmdline = icon_dot,
-          calc = icon_calc,
         }
         cmp_item.kind = icon_override[entry.source.name]
           or icons[cmp_item.kind]
@@ -176,7 +174,6 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'calc' },
   },
 }
 
