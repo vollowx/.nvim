@@ -1,11 +1,10 @@
-local g = vim.g
 local opt = vim.opt
 
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '80'
 opt.foldlevelstart = 99
-opt.guifont        = 'JetBrainsMono NF:h13'
+opt.guifont        = 'CommitMono Nerd Font:h12'
 opt.helpheight     = 10
 opt.laststatus     = 3
 opt.showmode       = false
@@ -85,3 +84,4 @@ opt.spellcapcheck        = ''
 opt.spelllang            = 'en,cjk'
 opt.spelloptions         = 'camel'
 opt.spellsuggest         = 'best,9'
+-- stylua: ignore end

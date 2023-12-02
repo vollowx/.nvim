@@ -2,21 +2,6 @@ local utils = require 'utils'
 local static = require 'utils.static'
 local server_configs = require 'configs.lsp-server-configs'
 
----Set up diagnostic signs
----@return nil
-local function setup_diagnostic_signs()
-  local icons = utils.static.icons
-  for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
-    local sign_name = 'DiagnosticSign' .. severity
-    vim.fn.sign_define(sign_name, {
-      text = icons.diagnostics[sign_name],
-      texthl = sign_name,
-      numhl = sign_name,
-      culhl = sign_name .. 'Cul',
-    })
-  end
-end
-
 ---Check if there exists an LS that supports the given method
 ---for the given buffer
 ---@param method string the method to check for
@@ -163,7 +148,6 @@ local function lsp_setup()
   end
 end
 
-setup_diagnostic_signs()
 setup_keymaps()
 setup_lsp_overrides()
 lspconfig_info_win()

@@ -5,6 +5,17 @@ return {
   {
     'neovim/nvim-lspconfig',
     config = function() require 'configs.nvim-lspconfig' end,
+    init = function()
+      for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
+        local sign_name = 'DiagnosticSign' .. severity
+        vim.fn.sign_define(sign_name, {
+          text = icons.diagnostics[sign_name],
+          texthl = sign_name,
+          numhl = sign_name,
+          culhl = sign_name .. 'Cul',
+        })
+      end
+    end,
     event = 'LazyFile',
     cmd = { 'LspInfo', 'LspStart' },
     keys = {
