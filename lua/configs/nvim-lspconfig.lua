@@ -72,10 +72,6 @@ local function setup_keymaps()
   vim.keymap.set('n', ']I', goto_diagnostic('next', 'INFO'))
   vim.keymap.set('n', '[H', goto_diagnostic('prev', 'HINT'))
   vim.keymap.set('n', ']H', goto_diagnostic('next', 'HINT'))
-  vim.keymap.set('n', 'gR', vim.lsp.buf.references)
-  vim.keymap.set('n', 'gd', if_supports_lsp_method('textDocument/definition', 'definition', 'gd'), { expr = true })
-  vim.keymap.set('n', 'gD', if_supports_lsp_method('textDocument/typeDefinition', 'type_definition', 'gD'),
-    { expr = true })
   vim.keymap.set('n', 'K', if_supports_lsp_method('textDocument/hover', 'hover', 'K'), { expr = true })
   -- stylua: ignore end
 end

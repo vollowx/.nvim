@@ -21,7 +21,7 @@ map('n', 'sd', '<Cmd>bdelete<CR>', opts)
 map('n', ']b', '<Cmd>bnext<CR>', opts)
 map('n', '[b', '<Cmd>bprevious<CR>', opts)
 
-map('n', 'sn', '<Cmd>tabnew<CR>', opts)
+map('n', 's+', '<Cmd>tabnew<CR>', opts)
 map('n', 'sc', '<Cmd>tabclose<CR>', opts)
 map('n', 'sn', '<Cmd>tabnext<CR>', opts)
 map('n', 'sp', '<Cmd>tabprevious<CR>', opts)
