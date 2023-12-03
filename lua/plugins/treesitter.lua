@@ -32,7 +32,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-context',
     event = 'LazyFile',
-    opts = { zindex = 30 },
+    opts = { max_lines = 3 },
   },
 
   {

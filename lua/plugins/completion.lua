@@ -6,12 +6,6 @@ return {
   },
 
   {
-    'hrsh7th/cmp-cmdline',
-    dependencies = 'nvim-cmp',
-    event = 'CmdlineEnter',
-  },
-
-  {
     'hrsh7th/cmp-nvim-lsp',
     dependencies = { 'nvim-cmp', 'nvim-lspconfig' },
     event = 'InsertEnter',
@@ -44,10 +38,11 @@ return {
   {
     'L3MON4D3/LuaSnip',
     dependencies = {
-      'rafamadriz/friendly-snippets',
-      config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+      {
+        'rafamadriz/friendly-snippets',
+        config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+      },
     },
-    event = 'InsertEnter',
     config = function() require 'configs.LuaSnip' end,
   },
 }

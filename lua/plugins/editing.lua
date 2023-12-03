@@ -34,5 +34,6 @@ return {
         auto_trigger = true,
       },
     },
+    enabled = false,
   },
 }

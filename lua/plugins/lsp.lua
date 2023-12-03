@@ -27,6 +27,15 @@ return {
   },
 
   {
+    'dgagn/diagflow.nvim',
+    event = 'LspAttach',
+    opts = {
+      padding_top = 3,
+      scope = 'line',
+    },
+  },
+
+  {
     'dnlhc/glance.nvim',
     event = 'LspAttach',
     opts = function()
