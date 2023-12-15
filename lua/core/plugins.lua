@@ -125,23 +125,8 @@ local function setup_lazy(spec)
     },
     checker = { enabled = false },
     change_detection = { notify = false },
-    install = { colorscheme = { 'catppuccin' } },
-    performance = {
-      cache = { enabled = true },
-      rtp = {
-        disabled_plugins = {
-          'gzip',
-          'matchit',
-          'matchparen',
-          'netrwPlugin',
-          'rplugin',
-          'tarPlugin',
-          'tohtml',
-          'tutor',
-          'zipPlugin',
-        },
-      },
-    },
+    install = { colorscheme = { 'catppuccin-mocha' } },
+    performance = { rtp = { disabled_plugins = {} } },
   }
 
   require('lazy').setup(config)

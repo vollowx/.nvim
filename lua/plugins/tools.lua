@@ -8,6 +8,11 @@ return {
     cmd = 'Telescope',
     keys = {
       { '<Leader>ff', '<Cmd>Telescope find_files<CR>', desc = 'find: Files' },
+      {
+        '<Leader>fo',
+        '<Cmd>Telescope oldfiles<CR>',
+        desc = 'find: Recent files',
+      },
       { '<Leader>fw', '<Cmd>Telescope live_grep<CR>', desc = 'find: Words' },
       { '<Leader>fb', '<Cmd>Telescope buffers<CR>', desc = 'find: Buffers' },
       {
@@ -66,15 +71,6 @@ return {
         end,
         desc = 'find: File browser',
       },
-    },
-  },
-
-  {
-    'nvim-telescope/telescope-frecency.nvim',
-    dependencies = { 'telescope.nvim' },
-    config = function() require('telescope').load_extension 'frecency' end,
-    keys = {
-      { '<Leader>fo', '<Cmd>Telescope frecency<CR>', desc = 'find: Frecency' },
     },
   },
 

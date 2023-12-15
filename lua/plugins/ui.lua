@@ -63,13 +63,6 @@ return {
   },
 
   {
-    'utilyre/sentiment.nvim',
-    event = 'VeryLazy',
-    init = function() vim.g.loaded_matchparen = 1 end,
-    opts = { delay = 0 },
-  },
-
-  {
     'echasnovski/mini.bufremove',
     keys = {
       {

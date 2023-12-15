@@ -20,13 +20,13 @@ return {
   {
     'hrsh7th/cmp-path',
     dependencies = 'nvim-cmp',
-    event = { 'CmdlineEnter', 'InsertEnter' },
+    event = 'InsertEnter',
   },
 
   {
     'hrsh7th/cmp-buffer',
     dependencies = 'nvim-cmp',
-    event = { 'CmdlineEnter', 'InsertEnter' },
+    event = 'InsertEnter',
   },
 
   {
