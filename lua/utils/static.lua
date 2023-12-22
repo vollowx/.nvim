@@ -163,7 +163,7 @@ M.icons = {
     DiagnosticSignError = '󰅚 ',
     DiagnosticSignHint  = '󰌶 ',
     DiagnosticSignInfo  = '󰋽 ',
-    DiagnosticSignOk    = ' ',
+    DiagnosticSignOk    = '󰄬 ',
     DiagnosticSignWarn  = '󰀪 ',
   },
   kinds                 = {

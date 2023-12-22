@@ -29,6 +29,20 @@ return {
         semantic_tokens = true,
         telescope = { enabled = true, style = 'nvchad' },
       },
+      highlight_overrides = {
+        all = function(cp)
+          return {
+            GlanceWinBarFilename = { fg = cp.subtext1, style = { 'bold' } },
+            GlanceWinBarFilepath = { fg = cp.subtext0, style = { 'italic' } },
+            GlanceWinBarTitle = { fg = cp.teal, style = { 'bold' } },
+            GlanceListCount = { fg = cp.lavender },
+            GlanceListFilepath = { link = 'Comment' },
+            GlanceListFilename = { fg = cp.blue },
+            GlanceListMatch = { fg = cp.lavender, style = { 'bold' } },
+            GlanceFoldIcon = { fg = cp.green },
+          }
+        end,
+      },
     },
   },
 }

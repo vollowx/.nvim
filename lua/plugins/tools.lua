@@ -194,18 +194,17 @@ return {
     },
     opts = {
       preview_config = {
-        border = 'shadow',
+        border = 'none',
         style = 'minimal',
       },
       signs = {
-        add = { text = '┃' },
-        untracked = { text = '┃' },
-        change = { text = '┃' },
+        add = { text = '▍' },
+        untracked = { text = '▍' },
+        change = { text = '▍' },
         delete = { text = '▁' },
         topdelete = { text = '▔' },
-        changedelete = { text = '╋' },
+        changedelete = { text = '▍' },
       },
-      _extmark_signs = false,
       current_line_blame = false,
       current_line_blame_opts = {
         virt_text = true,

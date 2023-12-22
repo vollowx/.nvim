@@ -28,7 +28,7 @@ opt.smoothscroll   = true
 opt.conceallevel   = 2
 opt.autowriteall   = true
 opt.virtualedit    = 'block'
-opt.completeopt    = 'menuone'
+opt.completeopt    = 'menu,menuone,preview,noselect,popup'
 -- stylua: ignore end
 
 -- Font fot GUI
@@ -83,7 +83,7 @@ opt.autoindent    = true
 opt.ignorecase    = true
 opt.smartcase     = true
 
-opt.spell         = true
+opt.spell         = false
 opt.spellcapcheck = ''
 opt.spelllang     = 'en,cjk'
 opt.spelloptions  = 'camel'

@@ -7,7 +7,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Window/Buffer/Tab navigation and operations
-map('n', 's<Esc>', '<Ignore>')
+map('n', 's', '<Ignore>')
 
 map('n', 'sq', '<Cmd>quit<CR>', opts)
 map('n', 'ss', '<Cmd>split<CR>', opts)
