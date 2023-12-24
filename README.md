@@ -22,3 +22,4 @@ nvim
 - [ ] [lsp_line.nvim](https://git.sr.ht/~whynothugo/lsp_lines.nvim)
 - [x] `vim-easy-align`
 - [ ] `vimtex`
+- [ ] Remove `statuscol.nvim` and write a tiny one
