@@ -1,14 +1,10 @@
 return {
   {
     'pmizio/typescript-tools.nvim',
-    dependencies = 'nvim-lspconfig',
-    event = 'LazyFile',
+    dependencies = 'neovim/nvim-lspconfig',
+    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
     opts = function()
-      local on_attach =
-        require('configs.lsp-server-configs.shared.default').on_attach
-
-      return {
-        on_attach = on_attach,
+      return vim.tbl_deep_extend('force', require 'plugins._lsp.default', {
         settings = {
           tsserver_file_preferences = {
             includeInlayParameterNameHints = 'all',
@@ -16,7 +12,7 @@ return {
             quotePreference = 'auto',
           },
         },
-      }
+      })
     end,
   },
 }

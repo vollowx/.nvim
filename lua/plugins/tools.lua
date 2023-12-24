@@ -1,58 +1,92 @@
-local icons = require('utils.static').icons
-
 return {
   {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'plenary.nvim' },
-    config = function() require 'configs.telescope' end,
     cmd = 'Telescope',
     keys = {
       { '<Leader>ff', '<Cmd>Telescope find_files<CR>', desc = 'find: Files' },
-      {
-        '<Leader>fo',
-        '<Cmd>Telescope oldfiles<CR>',
-        desc = 'find: Recent files',
-      },
-      { '<Leader>fw', '<Cmd>Telescope live_grep<CR>', desc = 'find: Words' },
-      { '<Leader>fb', '<Cmd>Telescope buffers<CR>', desc = 'find: Buffers' },
-      {
-        '<Leader>fk',
-        '<Cmd>Telescope keymaps<CR>',
-        desc = 'find: Key-mappings',
-      },
-      {
-        '<Leader>fh',
-        '<Cmd>Telescope help_tags<CR>',
-        desc = 'find: Help pages',
-      },
-      {
-        '<Leader>fc',
-        '<Cmd>Telescope colorscheme<CR>',
-        desc = 'find: Color-Schemes',
-      },
+      { '<Leader>fo', '<Cmd>Telescope oldfiles<CR>' },
+      { '<Leader>fw', '<Cmd>Telescope live_grep<CR>' },
+      { '<Leader>fb', '<Cmd>Telescope buffers<CR>' },
+      { '<Leader>fh', '<Cmd>Telescope help_tags<CR>' },
+      { '<Leader>fc', '<Cmd>Telescope colorscheme<CR>' },
 
-      {
-        '<Leader>fe',
-        '<Cmd>Telescope diagnostics<CR>',
-        desc = 'find: Diagnostics',
-      },
+      { '<Leader>fe', '<Cmd>Telescope diagnostics<CR>' },
 
-      {
-        '<Leader>fgb',
-        '<Cmd>Telescope git_branches<CR>',
-        desc = 'find: Git branches',
-      },
-      {
-        '<Leader>fgc',
-        '<Cmd>Telescope git_commits<CR>',
-        desc = 'find: Git commits',
-      },
-      {
-        '<Leader>fgs',
-        '<Cmd>Telescope git_status<CR>',
-        desc = 'find: Git status',
-      },
+      { '<Leader>fgb', '<Cmd>Telescope git_branches<CR>' },
+      { '<Leader>fgc', '<Cmd>Telescope git_commits<CR>' },
+      { '<Leader>fgs', '<Cmd>Telescope git_status<CR>' },
     },
+    config = function()
+      local telescope = require 'telescope'
+
+      local rg_cmd = {
+        'rg',
+        '--hidden',
+        '--vimgrep',
+        '--column',
+        '--line-number',
+        '--smart-case',
+        '--with-filename',
+        '--no-heading',
+        '--color=never',
+      }
+
+      local fd_cmd = {
+        'fd',
+        '-p',
+        '-H',
+        '-L',
+        '-tf',
+        '-tl',
+        '-d10',
+        '--mount',
+        '-c=never',
+      }
+
+      -- Dropdown layout for telescope
+      local layout_dropdown = {
+        previewer = false,
+        layout_config = {
+          width = 0.6,
+          height = 0.65,
+        },
+      }
+
+      telescope.setup {
+        defaults = {
+          mappings = { i = { ['<Esc>'] = require('telescope.actions').close } },
+          prompt_prefix = '/ ',
+          selection_caret = PREF.icons.ui.ArrowRight,
+          results_title = false,
+          layout_strategy = 'flex',
+          layout_config = {
+            width = 0.8,
+            height = 0.8,
+            horizontal = {
+              prompt_position = 'top',
+              preview_width = 0.55,
+            },
+            vertical = {
+              prompt_position = 'top',
+              mirror = true,
+            },
+          },
+          sorting_strategy = 'ascending',
+          vimgrep_arguments = rg_cmd,
+        },
+        pickers = {
+          colorscheme = { enable_preview = true },
+          find_files = { find_command = fd_cmd },
+          keymaps = layout_dropdown,
+          live_grep = { additional_args = { '--hidden' } },
+          lsp_references = { include_current_line = true, jump_type = 'never' },
+          lsp_definitions = { jump_type = 'never' },
+          lsp_type_definitions = { jump_type = 'never' },
+          spell_suggest = layout_dropdown,
+        },
+      }
+    end,
   },
 
   {
@@ -64,7 +98,7 @@ return {
         '<Leader>fi',
         function()
           require('telescope').extensions.file_browser.file_browser {
-            dir_icon = vim.trim(icons.kinds.Folder),
+            dir_icon = vim.trim(PREF.icons.kinds.Folder),
             grouped = true,
             hijack_netrw = true,
           }
@@ -76,125 +110,35 @@ return {
 
   {
     'stevearc/conform.nvim',
-    config = function() require 'configs.conform' end,
-    init = function()
-      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-      vim.g.autoformat = true
-      vim.api.nvim_create_user_command('AutoFormatDisable', function(args)
-        if args.bang then
-          vim.g.autoformat = false
-        else
-          vim.b.autoformat = false
-        end
-      end, {
-        desc = 'Disable autoformat-on-save',
-        bang = true,
-      })
-      vim.api.nvim_create_user_command('AutoFormatEnable', function()
-        vim.b.autoformat = true
-        vim.g.autoformat = true
-      end, {
-        desc = 'Re-enable autoformat-on-save',
-      })
-    end,
     cmd = { 'ConformInfo' },
-    event = 'BufWritePre',
-  },
-
-  {
-    'folke/todo-comments.nvim',
-    dependencies = 'plenary.nvim',
-    opts = {
-      keywords = {
-        FIX = {
-          icon = icons.ui.Bug,
-          color = 'error',
-          alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' },
-        },
-        TODO = { icon = icons.ui.Check, color = 'info' },
-        HACK = { icon = icons.ui.Ghost, color = 'warning' },
-        WARN = {
-          icon = icons.diagnostics.Warn,
-          color = 'warning',
-          alt = { 'WARNING', 'XXX' },
-        },
-        PERF = {
-          icon = icons.ui.ClockFast,
-          alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' },
-        },
-        NOTE = { icon = icons.ui.Note, color = 'hint', alt = { 'INFO' } },
-        TEST = {
-          icon = icons.ui.Flag,
-          color = 'test',
-          alt = { 'TESTING', 'PASSED', 'FAILED' },
-        },
-      },
-    },
-    event = 'VeryLazy',
-    cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
-    keys = {
-      { '<Leader>ft', '<Cmd>TodoTelescope<CR>', desc = 'find: Todos' },
-    },
+    keys = { { 'gq;', function() require('conform').format() end } },
+    opts = { formatters_by_ft = PREF.formatters },
   },
 
   {
     'lewis6991/gitsigns.nvim',
     dependencies = 'plenary.nvim',
-    event = 'LazyFile',
+    event = 'BufReadPost',
     keys = {
-      { ']g', '<Cmd>Gitsigns next_hunk<CR>', desc = 'git: Next hunk' },
-      { '[g', '<Cmd>Gitsigns prev_hunk<CR>', desc = 'git: Previous hunk' },
-      {
-        '<Leader>gl',
-        '<Cmd>Gitsigns blame_line<CR>',
-        desc = 'git: View blame',
-      },
+      { ']g', '<Cmd>Gitsigns next_hunk<CR>' },
+      { '[g', '<Cmd>Gitsigns prev_hunk<CR>' },
+      { '<Leader>gl', '<Cmd>Gitsigns blame_line<CR>' },
       {
         '<Leader>gL',
         function() require('gitsigns').blame_line { full = true } end,
-        desc = 'git: View full blame',
       },
-      {
-        '<Leader>gp',
-        '<Cmd>Gitsigns preview_hunk<CR>',
-        desc = 'git: Preview hunk',
-      },
-      {
-        '<Leader>gs',
-        '<Cmd>Gitsigns stage_hunk<CR>',
-        desc = 'git: Stage hunk',
-      },
-      {
-        '<Leader>gh',
-        '<Cmd>Gitsigns reset_hunk<CR>',
-        desc = 'git: Reset hunk',
-      },
-      {
-        '<Leader>gS',
-        '<Cmd>Gitsigns stage_buffer<CR>',
-        desc = 'git: Stage buffer',
-      },
-      {
-        '<Leader>gr',
-        '<Cmd>Gitsigns reset_buffer<CR>',
-        desc = 'git: Reset buffer',
-      },
-      {
-        '<Leader>gu',
-        '<Cmd>Gitsigns undo_stage_hunk<CR>',
-        desc = 'git: Undo stage hunk',
-      },
-      { '<Leader>gd', '<Cmd>Gitsigns diffthis<CR>', desc = 'git: View diff' },
-      {
-        'ah',
-        ':<C-u>Gitsigns select_hunk<CR>',
-        mode = 'v',
-        desc = 'git: Select hunk',
-      },
+      { '<Leader>gp', '<Cmd>Gitsigns preview_hunk<CR>' },
+      { '<Leader>gs', '<Cmd>Gitsigns stage_hunk<CR>' },
+      { '<Leader>gr', '<Cmd>Gitsigns reset_hunk<CR>' },
+      { '<Leader>gS', '<Cmd>Gitsigns stage_buffer<CR>' },
+      { '<Leader>gR', '<Cmd>Gitsigns reset_buffer<CR>' },
+      { '<Leader>gu', '<Cmd>Gitsigns undo_stage_hunk<CR>' },
+      { '<Leader>gd', '<Cmd>Gitsigns diffthis<CR>' },
+      { 'ah', ':<C-u>Gitsigns select_hunk<CR>', mode = 'v' },
     },
     opts = {
       preview_config = {
-        border = 'none',
+        border = PREF.ui.hover_border,
         style = 'minimal',
       },
       signs = {
@@ -205,14 +149,15 @@ return {
         topdelete = { text = '▔' },
         changedelete = { text = '▍' },
       },
-      current_line_blame = false,
+      signcolumn = PREF.git.show_signcolumn,
+      current_line_blame = PREF.git.show_blame,
       current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = 'eol',
-        delay = 100,
+        delay = 500,
       },
     },
   },
 
-  { 'wakatime/vim-wakatime', event = 'VeryLazy' },
+  { 'wakatime/vim-wakatime', event = 'BufReadPost' },
 }

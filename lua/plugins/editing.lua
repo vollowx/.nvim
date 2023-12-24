@@ -1,11 +1,21 @@
 return {
   {
     'numToStr/Comment.nvim',
-    config = function() require 'configs.Comment' end,
-    keys = {
-      { 'gc', mode = { 'n', 'x' }, desc = 'comment: Toggle lines' },
-      { 'gb', mode = { 'n', 'x' }, desc = 'comment: Toggle block' },
+    event = { 'BufReadPre' },
+    dependencies = {
+      {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+      },
     },
+    config = function()
+      vim.g.skip_ts_context_commentstring_module = true
+      require('Comment').setup {
+        pre_hook = require(
+          'ts_context_commentstring.integrations.comment_nvim'
+        ).create_pre_hook(),
+      }
+    end,
   },
 
   {
@@ -17,23 +27,20 @@ return {
   {
     'junegunn/vim-easy-align',
     keys = {
-      { 'gl', mode = { 'n', 'x' } },
-      { 'gL', mode = { 'n', 'x' } },
+      { 'gl', '<Plug>(EasyAlign)', mode = { 'n', 'x' } },
+      { 'gL', '<Plug>(LiveEasyAlign)', mode = { 'n', 'x' } },
     },
-    config = function() require 'configs.vim-easy-align' end,
-  },
-
-  {
-    'zbirenbaum/copilot.lua',
-    event = 'InsertEnter',
-    opts = {
-      panel = {
-        auto_refresh = true,
-      },
-      suggestion = {
-        auto_trigger = true,
-      },
-    },
-    enabled = false,
+    config = function()
+      vim.g.easy_align_delimiters = {
+        ['\\'] = {
+          pattern = [[\\\+]],
+        },
+        ['/'] = {
+          pattern = [[//\+\|/\*\|\*/]],
+          delimiter_align = 'c',
+          ignore_groups = '!Comment',
+        },
+      }
+    end,
   },
 }

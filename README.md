@@ -12,13 +12,11 @@ nvim
 **Packages to Be Installed Manually**
 
 - LSP servers: `clangd`, `cssls`, `lua_ls`, `marksman`, `tsserver`
-- Formatters: `clang-format`, `prettier`
-
-(Why not `mason.nvim`? For NixOS support)
+- Formatters: `clang-format`, `prettier`, `eslint`
 
 ## Todos
 
-- [x] Inlay hints
+- [x] `vim.lsp.inlay_hint`
 - [x] `dressing.nvim`
 - [ ] `nvim-dap`
 - [ ] [lsp_line.nvim](https://git.sr.ht/~whynothugo/lsp_lines.nvim)

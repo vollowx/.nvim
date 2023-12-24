@@ -1,10 +1,11 @@
 return {
   settings = {
     Lua = {
+      hint = { enable = true },
       completion = { callSnippet = 'Replace' },
-      diagnostics = { enable = true },
       workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
+      format = { enabled = false },
+      codeLens = { enable = false },
     },
   },
 }

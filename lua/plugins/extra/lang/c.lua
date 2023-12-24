@@ -1,9 +1,7 @@
-local icons = require('utils.static').icons
-
 return {
   {
     'p00f/clangd_extensions.nvim',
-    dependencies = 'nvim-lspconfig',
+    dependencies = 'neovim/nvim-lspconfig',
     ft = { 'c', 'cpp' },
     config = function() end,
     opts = function()
@@ -18,21 +16,21 @@ return {
           },
           ast = {
             role_icons = {
-              ['type'] = icons.kinds.Type,
-              ['declaration'] = icons.kinds.Function,
-              ['expression'] = icons.kinds.Snippet,
-              ['specifier'] = icons.kinds.Specifier,
-              ['statement'] = icons.kinds.Statement,
-              ['template argument'] = icons.kinds.TypeParameter,
+              ['type'] = PREF.icons.kinds.Type,
+              ['declaration'] = PREF.icons.kinds.Function,
+              ['expression'] = PREF.icons.kinds.Snippet,
+              ['specifier'] = PREF.icons.kinds.Specifier,
+              ['statement'] = PREF.icons.kinds.Statement,
+              ['template argument'] = PREF.icons.kinds.TypeParameter,
             },
             kind_icons = {
-              ['Compound'] = icons.kinds.Namespace,
-              ['Recovery'] = icons.diagnostics.Error,
-              ['TranslationUnit'] = icons.kinds.Unit,
-              ['PackExpansion'] = icons.ui.Ellipsis,
-              ['TemplateTypeParm'] = icons.kinds.TypeParameter,
-              ['TemplateTemplateParm'] = icons.kinds.TypeParameter,
-              ['TemplateParamObject'] = icons.kinds.TypeParameter,
+              ['Compound'] = PREF.icons.kinds.Namespace,
+              ['Recovery'] = PREF.icons.diagnostics.Error,
+              ['TranslationUnit'] = PREF.icons.kinds.Unit,
+              ['PackExpansion'] = PREF.icons.ui.Ellipsis,
+              ['TemplateTypeParm'] = PREF.icons.kinds.TypeParameter,
+              ['TemplateTemplateParm'] = PREF.icons.kinds.TypeParameter,
+              ['TemplateParamObject'] = PREF.icons.kinds.TypeParameter,
             },
           },
           memory_usage = { border = 'shadow' },

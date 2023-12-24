@@ -6,7 +6,11 @@ local g = vim.g
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '80'
+opt.foldcolumn     = 'auto'
 opt.foldlevelstart = 99
+opt.foldmethod     = 'expr'
+opt.foldtext       = 'v:lua.vim.treesitter.foldtext()'
+opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()'
 opt.helpheight     = 10
 opt.showmode       = false
 opt.mousemoveevent = true
@@ -28,8 +32,11 @@ opt.smoothscroll   = true
 opt.conceallevel   = 2
 opt.autowriteall   = true
 opt.virtualedit    = 'block'
-opt.completeopt    = 'menu,menuone,preview,noselect,popup'
+opt.completeopt    = 'menuone'
 -- stylua: ignore end
+
+-- Recognize numbered lists when formatting text
+opt.formatoptions:append 'n'
 
 -- Font fot GUI
 opt.guifont = 'CommitMono Nerd Font:h12'
@@ -52,8 +59,8 @@ opt.clipboard:append 'unnamedplus'
 opt.backup = true
 opt.backupdir:remove '.'
 
--- Disable intro texts
-opt.shortmess:append 'I'
+-- Disable completion messages
+opt.shortmess:append 'c'
 
 -- stylua: ignore start
 opt.list      = true
@@ -65,7 +72,7 @@ opt.listchars = {
   trail    = '·',
 }
 opt.fillchars = {
-  fold      = '·',
+  fold      = ' ',
   foldopen  = '󰅀',
   foldclose = '󰅂',
   foldsep   = ' ',
@@ -73,9 +80,9 @@ opt.fillchars = {
   eob       = ' ',
 }
 
-opt.tabstop       = 2
-opt.softtabstop   = 2
-opt.shiftwidth    = 2
+opt.tabstop       = PREF.editor.tabsize
+opt.softtabstop   = PREF.editor.tabsize
+opt.shiftwidth    = PREF.editor.tabsize
 opt.expandtab     = true
 opt.smartindent   = true
 opt.autoindent    = true
@@ -83,13 +90,12 @@ opt.autoindent    = true
 opt.ignorecase    = true
 opt.smartcase     = true
 
-opt.spell         = false
 opt.spellcapcheck = ''
 opt.spelllang     = 'en,cjk'
 opt.spelloptions  = 'camel'
 opt.spellsuggest  = 'best,9'
 
--- disable plugins shipped with neovim
+-- disable plugins
 g.loaded_2html_plugin      = 1
 g.loaded_gzip              = 1
 g.loaded_matchit           = 1
@@ -100,4 +106,10 @@ g.loaded_vimball           = 1
 g.loaded_vimballPlugin     = 1
 g.loaded_zip               = 1
 g.loaded_zipPlugin         = 1
+
+-- disable providers
+g.loaded_node_provider    = 0
+g.loaded_perl_provider    = 0
+g.loaded_python3_provider = 0
+g.loaded_ruby_provider    = 0
 -- stylua: ignore end

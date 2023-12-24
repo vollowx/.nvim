@@ -33,7 +33,6 @@ au('LargeFileSettings', {
           once = true,
           callback = function()
             vim.opt_local.syntax = ''
-            vim.opt_local.filetype = ''
             return true
           end,
         })
@@ -83,7 +82,16 @@ au('Autosave', {
   {
     nested = true,
     desc = 'Autosave on focus change.',
-    command = 'if &bt ==# "" | silent! update | endif',
+    callback = function(info)
+      if
+        vim.bo[info.buf].bt == ''
+        and (vim.uv.fs_stat(info.file) or {}).type == 'file'
+      then
+        vim.cmd.update {
+          mods = { emsg_silent = true },
+        }
+      end
+    end,
   },
 })
 
@@ -104,7 +112,11 @@ au('LastPosJmp', {
       local ft = vim.bo[info.buf].ft
       -- don't apply to git messages
       if ft ~= 'gitcommit' and ft ~= 'gitrebase' then
-        vim.cmd 'silent! normal! g`"'
+        vim.cmd.normal {
+          'g`"zvzz',
+          bang = true,
+          mods = { emsg_silent = true },
+        }
       end
     end,
   },
@@ -120,23 +132,19 @@ au('AutoCwd', {
         if
           info.file == ''
           or not vim.api.nvim_buf_is_valid(info.buf)
-          or not vim.bo[info.buf].ma
+          or vim.bo[info.buf].bt ~= ''
+          or (vim.uv.fs_stat(info.file) or {}).type ~= 'file'
         then
           return
         end
         local current_dir = vim.fn.getcwd(0)
-        local proj_dir = require('utils').fs.proj_dir(info.file)
+        local target_dir = require('utils').fs.proj_dir(info.file)
+          or vim.fs.dirname(info.file)
+        local stat = target_dir and vim.uv.fs_stat(target_dir)
         -- Prevent unnecessary directory change, which triggers
         -- DirChanged autocmds that may update winbar unexpectedly
-        if current_dir == proj_dir then return end
-        if proj_dir then
-          vim.cmd.lcd(proj_dir)
-          return
-        end
-        local dirname = vim.fs.dirname(info.file) --[[@as string]]
-        local stat = vim.uv.fs_stat(dirname)
-        if stat and stat.type == 'directory' and proj_dir ~= current_dir then
-          vim.cmd.lcd(dirname)
+        if current_dir ~= target_dir and stat and stat.type == 'directory' then
+          vim.cmd.lcd(target_dir)
         end
       end)
     end,
@@ -162,9 +170,21 @@ au('QuickFixAutoOpen', {
     callback = function(info)
       if #vim.fn.getqflist() <= 1 then return end
       if vim.startswith(info.match, 'l') then
-        vim.schedule(function() vim.cmd 'bel lwindow' end)
+        vim.schedule(
+          function()
+            vim.cmd.lwindow {
+              mods = { split = 'belowright' },
+            }
+          end
+        )
       else
-        vim.schedule(function() vim.cmd 'bot cwindow' end)
+        vim.schedule(
+          function()
+            vim.cmd.cwindow {
+              mods = { split = 'botright' },
+            }
+          end
+        )
       end
     end,
   },
@@ -190,7 +210,10 @@ au('AutoHlCursorLine', {
         vim.api.nvim_win_call(
           win,
           function()
-            vim.opt_local.winhl:append { CursorLine = '', CursorColumn = '' }
+            vim.opt_local.winhl:append {
+              CursorLine = '',
+              CursorColumn = '',
+            }
           end
         )
       end
@@ -198,70 +221,66 @@ au('AutoHlCursorLine', {
     end,
   },
 }, {
-  { 'BufWinEnter', 'WinEnter', 'InsertLeave' },
+  { 'BufWinEnter', 'WinEnter' },
   {
     callback = function()
-      vim.defer_fn(function()
-        if vim.fn.win_gettype() ~= '' then return end
-        local winhl = vim.opt_local.winhl:get()
-        -- Restore CursorLine and CursorColumn for current window
-        -- if not in inert/replace/select mode
-        if
-          (winhl['CursorLine'] or winhl['CursorColumn'])
-          and vim.fn.match(vim.fn.mode(), '[iRsS\x13].*') == -1
-        then
+      if
+        vim.fn.win_gettype() ~= ''
+        or vim.api.nvim_get_mode().mode:match '^[itRsS\x13]'
+      then
+        return
+      end
+      -- Restore CursorLine and CursorColumn in current window
+      local winhl = vim.opt_local.winhl:get()
+      if winhl['CursorLine'] or winhl['CursorColumn'] then
+        vim.opt_local.winhl:remove {
+          'CursorLine',
+          'CursorColumn',
+        }
+      end
+      -- Conceal cursor line and cursor column in the previous window
+      -- if current window is a normal window
+      local current_win = vim.api.nvim_get_current_win()
+      local prev_win = vim.fn.win_getid(vim.fn.winnr '#')
+      if
+        prev_win ~= 0
+        and prev_win ~= current_win
+        and vim.api.nvim_win_is_valid(prev_win)
+      then
+        vim.api.nvim_win_call(
+          prev_win,
+          function()
+            vim.opt_local.winhl:append {
+              CursorLine = '',
+              CursorColumn = '',
+            }
+          end
+        )
+      end
+    end,
+  },
+}, {
+  'ModeChanged',
+  {
+    pattern = { '[itRss\x13]*:*', '*:[itRss\x13]*' },
+    callback = function()
+      local winhl = vim.opt_local.winhl:get()
+      if vim.v.event.new_mode:match '^[itRss\x13]' then
+        if not winhl['CursorLine'] or not winhl['CursorColumn'] then
+          vim.opt_local.winhl:append {
+            CursorLine = '',
+            CursorColumn = '',
+          }
+        end
+      else
+        if winhl['CursorLine'] or winhl['CursorColumn'] then
           vim.opt_local.winhl:remove {
             'CursorLine',
             'CursorColumn',
           }
         end
-        -- Conceal cursor line and cursor column in the previous window
-        -- if current window is a normal window
-        local current_win = vim.api.nvim_get_current_win()
-        local prev_win = vim.fn.win_getid(vim.fn.winnr '#')
-        if
-          prev_win ~= 0
-          and prev_win ~= current_win
-          and vim.api.nvim_win_is_valid(prev_win)
-          and vim.fn.win_gettype(current_win) == ''
-        then
-          vim.api.nvim_win_call(
-            prev_win,
-            function()
-              vim.opt_local.winhl:append {
-                CursorLine = '',
-                CursorColumn = '',
-              }
-            end
-          )
-        end
-      end, 10)
-    end,
-  },
-}, {
-  'InsertEnter',
-  {
-    callback = function()
-      vim.opt_local.winhl:append { CursorLine = '', CursorColumn = '' }
-    end,
-  },
-})
-
-au('UpdateFolds', {
-  'BufWinEnter',
-  {
-    desc = 'Update folds on BufEnter.',
-    callback = function(info)
-      if not vim.b[info.buf].foldupdated then
-        vim.b[info.buf].foldupdated = true
-        vim.cmd.normal { 'zx', bang = true }
       end
     end,
-  },
-}, {
-  'BufUnload',
-  {
-    callback = function(info) vim.b[info.buf].foldupdated = nil end,
   },
 })
 
@@ -276,33 +295,6 @@ au('TextwidthRelativeColorcolumn', {
   },
 })
 
-au('DisableWinBarInDiffMode', {
-  'OptionSet',
-  {
-    pattern = 'diff',
-    desc = 'Disable winbar in diff mode.',
-    callback = function()
-      if vim.v.option_new then
-        vim.w._winbar = vim.wo.winbar
-        vim.wo.winbar = nil
-        if vim.wo.culopt:find 'both' or vim.wo.culopt:find 'line' then
-          vim.w._culopt = vim.wo.culopt
-          vim.wo.culopt = 'number'
-        end
-      else
-        if vim.w._winbar then
-          vim.wo.winbar = vim.w._winbar
-          vim.w._winbar = nil
-        end
-        if vim.w._culopt then
-          vim.wo.culopt = vim.w._culopt
-          vim.w._culopt = nil
-        end
-      end
-    end,
-  },
-})
-
 au('UpdateTimestamp', {
   'BufWritePre',
   {
@@ -310,19 +302,18 @@ au('UpdateTimestamp', {
     callback = function(info)
       if not vim.bo[info.buf].ma or not vim.bo[info.buf].mod then return end
       local lines = vim.api.nvim_buf_get_lines(info.buf, 0, 8, false)
-      local update = false
+      local updated = false
       for idx, line in ipairs(lines) do
-        -- Example: "Fri 07 Jul 2023 12:04:05 AM CDT"
         local new_str, pos = line:gsub(
-          '%u%U%U%s+%d%d%s+%u%U%U%s+%d%d%d%d%s+%d%d:%d%d:%d%d%s+%u%u%s+%u+',
-          os.date '%a %d %b %Y %I:%M:%S %p %Z'
+          'Last Updated:.*',
+          'Last Updated: ' .. os.date '%a %d %b %Y %I:%M:%S %p %Z'
         )
         if pos > 0 then
-          update = true
+          updated = true
           lines[idx] = new_str
         end
       end
-      if update then
+      if updated then
         -- Only join further change with the previous undo block
         -- when the current undo block is a leaf node (no further change),
         -- see `:h undojoin` and `:h E790`
@@ -356,6 +347,66 @@ au('FixVirtualEditCursorPos', {
     desc = 'Record cursor position in visual mode if virtualedit is set.',
     callback = function()
       if vim.wo.ve:find 'all' then vim.w.ve_cursor = vim.fn.getcurpos() end
+    end,
+  },
+})
+
+au('FixCmdLineIskeyword', {
+  'CmdLineEnter',
+  {
+    desc = 'Have consistent &iskeyword and &lisp in Ex command-line mode.',
+    pattern = ':',
+    callback = function(info)
+      -- Only use default &iskeyword and &lisp settings in
+      -- Ex mode command-line, since it should always be treated as vimscript;
+      -- for other types of command lines e.g. search command ('/', '?') or
+      -- i_CTRL-r_= ('=') command it is useful to keep the original value of
+      -- &iskeyword and &lisp
+      vim.g._isk_lisp_buf = info.buf
+      vim.g._isk_save = vim.bo[info.buf].isk
+      vim.g._lisp_save = vim.bo[info.buf].lisp
+      vim.cmd.setlocal 'isk&'
+      vim.cmd.setlocal 'lisp&'
+    end,
+  },
+}, {
+  'CmdLineLeave',
+  {
+    desc = 'Restore &iskeyword after leaving command-line mode.',
+    pattern = ':',
+    callback = function()
+      if
+        vim.g._isk_lisp_buf
+        and vim.api.nvim_buf_is_valid(vim.g._isk_lisp_buf)
+        and vim.g._isk_save ~= vim.b[vim.g._isk_lisp_buf].isk
+      then
+        vim.bo[vim.g._isk_lisp_buf].isk = vim.g._isk_save
+        vim.bo[vim.g._isk_lisp_buf].lisp = vim.g._lisp_save
+        vim.g._isk_save = nil
+        vim.g._lisp_save = nil
+        vim.g._isk_lisp_buf = nil
+      end
+    end,
+  },
+})
+
+au('DeferSetSpell', {
+  { 'BufReadPre', 'BufModifiedSet' },
+  {
+    desc = 'Defer setting spell options to improve startup time.',
+    callback = function(info)
+      local buf = info.buf
+      local win = vim.api.nvim_get_current_win()
+      if
+        not vim.b[buf].spell_checked
+        and not vim.b[buf].large_file
+        and not vim.wo[win].spell
+        and vim.bo[buf].bt == ''
+        and vim.bo[buf].ma
+      then
+        vim.opt_local.spell = true
+      end
+      vim.b[buf].spell_checked = true
     end,
   },
 })

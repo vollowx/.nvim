@@ -1,15 +1,31 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    dependencies = { 'nvim-treesitter-endwise' },
-    build = ':TSUpdate',
-    init = function(plugin)
-      require('lazy.core.loader').add_to_rtp(plugin)
-      require 'nvim-treesitter.query_predicates'
-    end,
-    config = function() require 'configs.nvim-treesitter' end,
+    dependencies = { 'RRethy/nvim-treesitter-endwise' },
+    build = ':TSUpdateSync',
     cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-    event = { 'LazyFile', 'VeryLazy' },
+    event = 'BufReadPre',
+    opts = {
+      auto_install = true,
+      modules = {},
+      ignore_install = {},
+      ensure_installed = PREF.treesitter,
+      sync_install = false,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      indent = { enable = true },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          node_incremental = '+',
+          node_decremental = '-',
+        },
+      },
+      endwise = { enable = true },
+    },
+    config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
   },
 
   {
@@ -25,23 +41,19 @@ return {
 
   {
     'windwp/nvim-ts-autotag',
-    event = 'LazyFile',
+    event = 'BufReadPre',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
     opts = {},
   },
 
   {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    event = 'LazyFile',
-    opts = { enable_autocmd = false },
+    'nvim-treesitter/nvim-treesitter-context',
+    event = 'BufReadPre',
+    opts = { max_lines = 3 },
   },
 
   {
     'HiPhish/rainbow-delimiters.nvim',
-    event = 'LazyFile',
-  },
-
-  {
-    'RRethy/nvim-treesitter-endwise',
-    dependencies = 'nvim-treesitter',
+    event = 'BufReadPre',
   },
 }

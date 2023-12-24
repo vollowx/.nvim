@@ -6,8 +6,9 @@ local groupid = vim.api.nvim_create_augroup('StatusLine', {})
 local signs_text_cache = setmetatable({}, {
   __index = function(self, key)
     local sign_def = vim.fn.sign_getdefined(key)[1]
-    self[key] = sign_def and sign_def.text
-    return self[key] or ''
+    local sign_text = sign_def and sign_def.text
+    self[key] = sign_text
+    return sign_text or ''
   end,
 })
 
@@ -91,28 +92,22 @@ function statusline.ft()
   return vim.bo.ft == '' and '' or vim.bo.ft:gsub('^%l', string.upper)
 end
 
----@type table<string, fun(): string>
----@diagnostic disable: undefined-field
-statusline.flags = {
-  md_captitle = function()
-    return vim.bo.ft == 'markdown' and vim.b.captitle and 'md-cap-title' or ''
-  end,
-  autofmt = function()
-    return (vim.g.autoformat or vim.b.autoformat) and 'auto-format' or ''
-  end,
-}
----@diagnostic enable: undefined-field
-
 ---@return string
 function statusline.word_count()
+  if vim.b.wc_str and vim.b.wc_changedtick == vim.b.changedtick then
+    return vim.b.wc_str
+  end
   local wordcount = vim.fn.wordcount()
   local num_words = wordcount.words
   local num_vis_words = wordcount.visual_words
-  return num_words == 0 and ''
+  local wc_str = num_words == 0 and ''
     or (num_vis_words and num_vis_words .. '/' or '')
       .. num_words
       .. ' word'
       .. (num_words > 1 and 's' or '')
+  vim.b.wc_str = wc_str
+  vim.b.wc_changedtick = vim.b.changedtick
+  return wc_str
 end
 
 ---Text filetypes
@@ -139,8 +134,6 @@ function statusline.info()
   end
   add_section(statusline.branch())
   add_section(statusline.gitdiff())
-  add_section(statusline.flags.md_captitle())
-  add_section(statusline.flags.autofmt())
   return vim.tbl_isempty(info) and ''
     or string.format('(%s) ', table.concat(info, ', '))
 end
@@ -185,11 +178,13 @@ end
 local spinner_end_keep = 2000 -- ms
 local spinner_status_keep = 600 -- ms
 local spinner_progress_keep = 80 -- ms
-local spinner_icon_done =
-  vim.trim(utils.static.icons.diagnostics.DiagnosticSignOk)
 local spinner_timer = vim.uv.new_timer()
 
-local spinner_icons = {
+local spinner_icons ---@type string[]
+local spinner_icon_done ---@type string
+
+spinner_icon_done = vim.trim(PREF.icons.diagnostics.Ok)
+spinner_icons = {
   '⠋',
   '⠙',
   '⠹',
@@ -298,12 +293,10 @@ end
 local components = {
   align        = '%=',
   diag         = '%{%v:lua.statusline.diag()%}',
-  fname        = ' %#StatusLineStrong#%{%&bt==#""?"%t":"%F"%}%* ',
-  fname_nc     = ' %{%&bt==#""?"%t":"%F"%} ',
+  fname        = ' %{%&bt==#""?"%t":"%F"%} ',
   info         = '%{%v:lua.statusline.info()%}',
   lsp_progress = '%{%v:lua.statusline.lsp_progress()%}',
   mode         = '%{%v:lua.statusline.mode()%}',
-  padding      = '%#None#  %*',
   pos          = '%{%&ru?"%l:%c ":""%}',
   truncate     = '%<',
 }
@@ -321,7 +314,7 @@ local stl = table.concat {
 }
 
 local stl_nc = table.concat {
-  components.fname_nc,
+  components.fname,
   components.align,
   components.truncate,
   components.pos,
@@ -345,26 +338,23 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd({ 'UIEnter', 'ColorScheme' }, {
   group = groupid,
   callback = function()
+    local default_attr = utils.hl.get(0, { name = 'StatusLine' })
     ---@param hlgroup_name string
     ---@param attr table
     ---@return nil
     local function sethl(hlgroup_name, attr)
-      attr.fg = attr.fg or 'StatusLine'
-      attr.bg = attr.bg or 'StatusLine'
-      utils.hl.set_default(0, hlgroup_name, attr)
+      local merged_attr = vim.tbl_deep_extend('keep', attr, default_attr)
+      utils.hl.set_default(0, hlgroup_name, merged_attr)
     end
-    -- stylua: ignore start
-    sethl('StatusLineHeader', { bg = 'TabLine', bold = true })
-    sethl('StatusLineHeaderModified', { fg = 'Special', bg = 'TabLine', bold = true })
-    sethl('StatusLineStrong', { bold = true })
+    sethl('StatusLineHeader', { bg = 'TabLine' })
     sethl('StatusLineGitAdded', { fg = 'GitSignsAdd' })
     sethl('StatusLineGitChanged', { fg = 'GitSignsChange' })
     sethl('StatusLineGitRemoved', { fg = 'GitSignsDelete' })
-    sethl('StatusLineDiagnosticError', { fg = 'DiagnosticSignError' })
     sethl('StatusLineDiagnosticHint', { fg = 'DiagnosticSignHint' })
     sethl('StatusLineDiagnosticInfo', { fg = 'DiagnosticSignInfo' })
     sethl('StatusLineDiagnosticWarn', { fg = 'DiagnosticSignWarn' })
-    -- stylua: ignore end
+    sethl('StatusLineDiagnosticError', { fg = 'DiagnosticSignError' })
+    sethl('StatusLineHeaderModified', { fg = 'Special', bg = 'TabLine' })
   end,
 })
 
