@@ -2,15 +2,34 @@ _G.statusline = {}
 local utils = require 'utils'
 local groupid = vim.api.nvim_create_augroup('StatusLine', {})
 
----@type table<string, string>
-local signs_text_cache = setmetatable({}, {
-  __index = function(self, key)
-    local sign_def = vim.fn.sign_getdefined(key)[1]
-    local sign_text = sign_def and sign_def.text
-    self[key] = sign_text
-    return sign_text or ''
-  end,
-})
+local diag_signs_default_text = { 'E', 'W', 'I', 'H' }
+
+local diag_severity_map = {
+  [1] = 'ERROR',
+  [2] = 'WARN',
+  [3] = 'INFO',
+  [4] = 'HINT',
+  ERROR = 1,
+  WARN = 2,
+  INFO = 3,
+  HINT = 4,
+}
+
+---@param severity integer|string
+---@return string
+local function get_diag_sign_text(severity)
+  local diag_config = vim.diagnostic.config()
+  local signs_text = diag_config
+    and diag_config.signs
+    and type(diag_config.signs) == 'table'
+    and diag_config.signs.text
+  return signs_text
+      and (signs_text[severity] or signs_text[diag_severity_map[severity]])
+    or (
+      diag_signs_default_text[severity]
+      or diag_signs_default_text[diag_severity_map[severity]]
+    )
+end
 
 -- stylua: ignore start
 local modes = {
@@ -162,11 +181,11 @@ function statusline.diag()
   for serverity_nr, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
     local cnt = buf_cnt[serverity_nr] or 0
     if cnt > 0 then
-      local icon = signs_text_cache['DiagnosticSign' .. severity]
+      local icon_text = get_diag_sign_text(serverity_nr)
       local icon_hl = 'StatusLineDiagnostic' .. severity
       str = str
         .. (str == '' and '' or ' ')
-        .. utils.stl.hl(icon, icon_hl)
+        .. utils.stl.hl(icon_text, icon_hl)
         .. cnt
     end
   end

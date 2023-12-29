@@ -2,34 +2,31 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     dependencies = { 'RRethy/nvim-treesitter-endwise' },
-    build = ':TSUpdateSync',
-    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-    event = 'BufReadPre',
-    opts = {
-      auto_install = true,
-      modules = {},
-      ignore_install = {},
-      ensure_installed = PREF.treesitter,
-      sync_install = false,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          node_incremental = '+',
-          node_decremental = '-',
-        },
-      },
-      endwise = { enable = true },
+    build = ':TSUpdate',
+    cmd = {
+      'TSInstall',
+      'TSInstallSync',
+      'TSInstallInfo',
+      'TSUninstall',
+      'TSUpdate',
+      'TSUpdateSync',
+      'TSBufEnable',
+      'TSBufToggle',
+      'TSEnable',
+      'TSToggle',
+      'TSModuleInfo',
+      'TSEditQuery',
+      'TSEditQueryUserAfter',
     },
-    config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
+    event = 'FileType',
+    config = function()
+      vim.schedule(function() require 'plugins._.treesitter' end)
+    end,
   },
 
   {
     'CKolkey/ts-node-action',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
     keys = {
       {
         '<Leader><Leader>',
@@ -41,19 +38,20 @@ return {
 
   {
     'windwp/nvim-ts-autotag',
-    event = 'BufReadPre',
     dependencies = 'nvim-treesitter/nvim-treesitter',
-    opts = {},
+    event = 'FileType',
+    config = function() require 'plugins._.ts-autotag' end,
   },
 
   {
     'nvim-treesitter/nvim-treesitter-context',
-    event = 'BufReadPre',
-    opts = { max_lines = 3 },
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    event = 'FileType',
+    config = function() require 'plugins._.ts-context' end,
   },
 
   {
     'HiPhish/rainbow-delimiters.nvim',
-    event = 'BufReadPre',
+    event = 'FileType',
   },
 }

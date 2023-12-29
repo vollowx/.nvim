@@ -64,8 +64,6 @@ local function setup_lazy(spec)
       rtp = {
         disabled_plugins = {
           'gzip',
-          'matchit',
-          'matchparen',
           'netrwPlugin',
           'tarPlugin',
           'tohtml',

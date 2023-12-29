@@ -98,7 +98,6 @@ opt.spellsuggest  = 'best,9'
 -- disable plugins
 g.loaded_2html_plugin      = 1
 g.loaded_gzip              = 1
-g.loaded_matchit           = 1
 g.loaded_tar               = 1
 g.loaded_tarPlugin         = 1
 g.loaded_tutor_mode_plugin = 1

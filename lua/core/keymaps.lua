@@ -84,11 +84,52 @@ map('t', '<M-k>',      '<Cmd>wincmd k<CR>')
 map('t', '<M-l>',      '<Cmd>wincmd l<CR>')
 -- stylua: ignore end
 
--- Up/down motions
+-- More consistent behavior when &wrap is set
+-- stylua: ignore start
 map({ 'n', 'x' }, 'j', 'v:count ? "j" : "gj"', { expr = true })
 map({ 'n', 'x' }, 'k', 'v:count ? "k" : "gk"', { expr = true })
-map({ 'n', 'x' }, '<Down>', 'v:count ? "j" : "gj"', { expr = true })
-map({ 'n', 'x' }, '<Up>', 'v:count ? "k" : "gk"', { expr = true })
+map({ 'n', 'x' }, '<Down>', 'v:count ? "<Down>" : "g<Down>"', { expr = true, replace_keycodes = false })
+map({ 'n', 'x' }, '<Up>',   'v:count ? "<Up>"   : "g<Up>"',   { expr = true, replace_keycodes = false })
+map({ 'i' }, '<Down>', '<Cmd>norm! g<Down><CR>')
+map({ 'i' }, '<Up>',   '<Cmd>norm! g<Up><CR>')
+-- stylua: ignore end
+
+-- Buffer navigation
+map('n', ']b', '<Cmd>exec v:count1 . "bn"<CR>')
+map('n', '[b', '<Cmd>exec v:count1 . "bp"<CR>')
+
+-- Tabpages
+---@param tab_action function
+---@param default_count number?
+---@return function
+local function tabswitch(tab_action, default_count)
+  return function()
+    local count = default_count or vim.v.count
+    local num_tabs = vim.fn.tabpagenr '$'
+    if num_tabs >= count then
+      tab_action(count ~= 0 and count or nil)
+      return
+    end
+    vim.cmd.tablast()
+    for _ = 1, count - num_tabs do
+      vim.cmd.tabnew()
+    end
+  end
+end
+map('n', 'gt', tabswitch(vim.cmd.tabnext))
+map('n', 'gT', tabswitch(vim.cmd.tabprev))
+map('n', 'gy', tabswitch(vim.cmd.tabprev)) -- gT is too hard to press
+
+map('n', '<Leader>0', '<Cmd>0tabnew<CR>')
+map('n', '<Leader>1', tabswitch(vim.cmd.tabnext, 1))
+map('n', '<Leader>2', tabswitch(vim.cmd.tabnext, 2))
+map('n', '<Leader>3', tabswitch(vim.cmd.tabnext, 3))
+map('n', '<Leader>4', tabswitch(vim.cmd.tabnext, 4))
+map('n', '<Leader>5', tabswitch(vim.cmd.tabnext, 5))
+map('n', '<Leader>6', tabswitch(vim.cmd.tabnext, 6))
+map('n', '<Leader>7', tabswitch(vim.cmd.tabnext, 7))
+map('n', '<Leader>8', tabswitch(vim.cmd.tabnext, 8))
+map('n', '<Leader>9', tabswitch(vim.cmd.tabnext, 9))
 
 -- Float terminals
 map({ 'n', 't' }, '<M-Space>', function() utils.fterm(nil, {}) end)
@@ -100,10 +141,15 @@ map('i', '<C-g>=', '<C-g>u<Esc>[s1z=`]a<C-G>u')
 
 -- Only clear highlights and message area and don't redraw if search
 -- highlighting is on to avoid flickering
-map('n', '<C-l>', function()
-  return vim.v.hlsearch == 1 and '<Cmd>nohlsearch|diffupdate|echo<CR>'
-    or '<Cmd>nohlsearch|diffupdate|normal! <C-l><CR>'
-end, { expr = true })
+map(
+  'n',
+  '<C-l>',
+  function()
+    return vim.v.hlsearch == 1 and '<Cmd>nohlsearch|diffupdate|echo<CR>'
+      or '<Cmd>nohlsearch|diffupdate|normal! <C-l><CR>'
+  end,
+  { expr = true }
+)
 
 -- Close all floating windows
 map('n', '<Esc>', '<Cmd>fclose<CR>')
