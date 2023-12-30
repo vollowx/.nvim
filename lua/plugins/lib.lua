@@ -1,5 +1,5 @@
 return {
   { 'nvim-lua/plenary.nvim' },
 
-  { 'vollowx/nvim-web-devicons' },
+  { 'nvim-tree/nvim-web-devicons' },
 }

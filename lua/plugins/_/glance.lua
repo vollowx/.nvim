@@ -5,11 +5,6 @@ require('glance').setup {
     fold_closed = PREF.icons.ui.AngleRight,
     fold_open = PREF.icons.ui.AngleDown,
   },
-  border = {
-    enable = true,
-    top_char = horiz,
-    bottom_char = horiz,
-  },
   theme = { mode = 'darken' },
   hooks = {
     before_open = function(results, open, _, method)

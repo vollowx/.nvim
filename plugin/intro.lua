@@ -35,13 +35,15 @@ local lines = {
   {
     chunks = {
       {
+        text = '                         ',
+        hl = 'NonText',
+      },
+      {
         text = string.format(
-          'Powered by Neovim v%s.%s.%s with %s/%s plugins loaded',
+          'Powered by Neovim v%s.%s.%s',
           vim.version().major,
           vim.version().minor,
-          vim.version().patch,
-          require('lazy').stats().loaded,
-          require('lazy').stats().count
+          vim.version().patch
         ),
         hl = 'NonText',
       },

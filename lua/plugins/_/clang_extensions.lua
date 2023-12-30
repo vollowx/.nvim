@@ -5,7 +5,7 @@ return {
   extensions = {
     autoSetHints = true,
     inlay_hints = {
-      only_current_line = false,
+      only_current_line = true,
       highlight = 'LspInlayHint',
     },
     ast = {

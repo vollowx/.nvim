@@ -1,5 +1,3 @@
-local horiz = vim.opt.fillchars:get().horiz
-
 return {
   {
     'neovim/nvim-lspconfig',

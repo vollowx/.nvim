@@ -48,20 +48,24 @@ map({ 'n', 'x' }, ']I', goto_diagnostic('next', 'INFO'))
 map({ 'n', 'x' }, '[H', goto_diagnostic('prev', 'HINT'))
 map({ 'n', 'x' }, ']H', goto_diagnostic('next', 'HINT'))
 
--- Configure diagnostics style
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-  vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    virtual_text = false,
-    update_in_insert = true,
-    severity_sort = true,
-  })
-
-for _, severity in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
-  local sign_name = 'DiagnosticSign' .. severity
-  vim.fn.sign_define(sign_name, {
-    text = PREF.icons.diagnostics[severity],
-    texthl = sign_name,
-    numhl = sign_name,
-  })
-end
+vim.diagnostic.config {
+  update_in_insert = true,
+  virtual_text = {
+    spacing = 4,
+    prefix = vim.trim(PREF.icons.ui.AngleLeft),
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = PREF.icons.diagnostics.Error,
+      [vim.diagnostic.severity.WARN] = PREF.icons.diagnostics.Warn,
+      [vim.diagnostic.severity.INFO] = PREF.icons.diagnostics.Info,
+      [vim.diagnostic.severity.HINT] = PREF.icons.diagnostics.Hint,
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+      [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+      [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+      [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+    },
+  },
+}
