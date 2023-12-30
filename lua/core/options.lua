@@ -1,5 +1,3 @@
-vim.loader.enable()
-
 local opt = vim.opt
 local g = vim.g
 
