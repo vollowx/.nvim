@@ -3,9 +3,10 @@ PREF = {
     tabsize = 2,
   },
   ui = {
-    border = 'single',
-    interactive_border = 'single',
-    hover_border = 'none',
+    border = 'shadow',
+    border_interactive = 'rounded',
+    border_hover = 'none',
+    show_peek_border = false,
   },
   git = {
     show_signcolumn = true,
@@ -94,7 +95,6 @@ PREF = {
       Constant = '󰏿 ',
       Constructor = '󰒓 ',
       ContinueStatement = '→ ',
-      Copilot = ' ',
       Declaration = '󰙠 ',
       Delete = '󰩺 ',
       DoStatement = '󰑖 ',

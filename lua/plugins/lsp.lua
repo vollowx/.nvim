@@ -17,12 +17,6 @@ return {
   {
     'dnlhc/glance.nvim',
     event = 'LspAttach',
-    keys = {
-      { 'gd', '<Cmd>Glance definitions<CR>' },
-      { 'gD', '<Cmd>Glance type_definitions<CR>' },
-      { 'gr', '<Cmd>Glance references<CR>' },
-      { 'gi', '<Cmd>Glance implementations<CR>' },
-    },
     config = function() require 'plugins._.glance' end,
   },
 }

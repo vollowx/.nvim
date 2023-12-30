@@ -1,6 +1,6 @@
 require('gitsigns').setup {
   preview_config = {
-    border = PREF.ui.hover_border,
+    border = PREF.ui.border_hover,
     style = 'minimal',
   },
   signs = {

@@ -19,6 +19,49 @@ for _, server in ipairs(servers) do
   lspconfig[server].setup(server_[server])
 end
 
+-- Show notification if no references, definition, declaration,
+-- implementation or type definition is found
+local handlers = {
+  ['textDocument/references'] = vim.lsp.handlers['textDocument/references'],
+  ['textDocument/definition'] = vim.lsp.handlers['textDocument/definition'],
+  ['textDocument/declaration'] = vim.lsp.handlers['textDocument/declaration'],
+  ['textDocument/implementation'] = vim.lsp.handlers['textDocument/implementation'],
+  ['textDocument/typeDefinition'] = vim.lsp.handlers['textDocument/typeDefinition'],
+}
+for method, handler in pairs(handlers) do
+  vim.lsp.handlers[method] = function(err, result, ctx, cfg)
+    if not result or type(result) == 'table' and vim.tbl_isempty(result) then
+      vim.notify(
+        '[LSP] no ' .. method:match '/(%w*)$' .. ' found',
+        vim.log.levels.WARN
+      )
+    end
+    handler(err, result, ctx, cfg)
+  end
+end
+
+vim.diagnostic.config {
+  update_in_insert = true,
+  virtual_text = {
+    spacing = 4,
+    prefix = vim.trim(PREF.icons.ui.AngleLeft),
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = PREF.icons.diagnostics.Error,
+      [vim.diagnostic.severity.WARN] = PREF.icons.diagnostics.Warn,
+      [vim.diagnostic.severity.INFO] = PREF.icons.diagnostics.Info,
+      [vim.diagnostic.severity.HINT] = PREF.icons.diagnostics.Hint,
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+      [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+      [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+      [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+    },
+  },
+}
+
 local map = vim.keymap.set
 
 ---@param direction 'prev'|'next'
@@ -47,25 +90,6 @@ map({ 'n', 'x' }, '[I', goto_diagnostic('prev', 'INFO'))
 map({ 'n', 'x' }, ']I', goto_diagnostic('next', 'INFO'))
 map({ 'n', 'x' }, '[H', goto_diagnostic('prev', 'HINT'))
 map({ 'n', 'x' }, ']H', goto_diagnostic('next', 'HINT'))
-
-vim.diagnostic.config {
-  update_in_insert = true,
-  virtual_text = {
-    spacing = 4,
-    prefix = vim.trim(PREF.icons.ui.AngleLeft),
-  },
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = PREF.icons.diagnostics.Error,
-      [vim.diagnostic.severity.WARN] = PREF.icons.diagnostics.Warn,
-      [vim.diagnostic.severity.INFO] = PREF.icons.diagnostics.Info,
-      [vim.diagnostic.severity.HINT] = PREF.icons.diagnostics.Hint,
-    },
-    numhl = {
-      [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
-      [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
-      [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
-      [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
-    },
-  },
-}
+map({ 'n', 'x' }, 'g.', function() vim.lsp.buf.references() end)
+map({ 'n', 'x' }, 'gd', function() vim.lsp.buf.definition() end)
+map({ 'n', 'x' }, 'gD', function() vim.lsp.buf.type_definition() end)

@@ -37,6 +37,14 @@ dropbar.setup {
       end,
     },
   },
+  icons = {
+    kinds = { symbols = PREF.icons.kinds },
+    bar = {
+      separator = PREF.icons.ui.AngleRight,
+      extends = PREF.icons.ui.Ellipsis,
+    },
+    ui = { menu = { indicator = PREF.icons.ui.AngleRight } },
+  },
 }
 
 vim.keymap.set('n', '<Leader>;', api.pick)

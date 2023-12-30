@@ -8,10 +8,12 @@ local hl = require 'utils.hl'
 local function get_hl_hex(hlgroup_name, field, fallback)
   fallback = fallback or vim.opt.bg == 'dark' and '#000000' or '#FFFFFF'
   if not vim.fn.hlexists(hlgroup_name) then return fallback end
-  local attr_val = vim.api.nvim_get_hl(0, {
-    name = hlgroup_name,
-    link = false,
-  })[field]
+  -- Do not use link = false here, because nvim will return the highlight
+  -- attributes of the remapped hlgroup if link = false when winhl is set
+  -- e.g. when winhl=ColorColumn:FooBar, nvim will return the attributes of
+  -- FooBar instead of ColorColumn with link = false, but return the
+  -- attributes of ColorColumn with link = true
+  local attr_val = vim.api.nvim_get_hl(0, { name = hlgroup_name })[field]
   return attr_val and hl.dec2hex(attr_val) or fallback
 end
 

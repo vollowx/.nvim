@@ -29,9 +29,13 @@ return {
         '<Leader>fi',
         function()
           require('telescope').extensions.file_browser.file_browser {
-            dir_icon = vim.trim(PREF.icons.kinds.Folder),
+            path = '%:p:h',
+            cwd = vim.fn.expand '%:p:h',
+            respect_gitignore = false,
+            hidden = true,
             grouped = true,
             quiet = true,
+            dir_icon = vim.trim(PREF.icons.kinds.Folder),
           }
         end,
         desc = 'find: File browser',

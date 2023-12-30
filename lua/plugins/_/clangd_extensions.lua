@@ -22,7 +22,7 @@ require('clangd_extensions').setup {
     },
   },
   memory_usage = { border = PREF.ui.border },
-  symbol_info = { border = PREF.ui.hover_border },
+  symbol_info = { border = PREF.ui.border_hover },
 }
 
 -- Insert comparator in nvim-cmp's comparators list
