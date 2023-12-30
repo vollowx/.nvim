@@ -1,8 +1,8 @@
 return {
   {
     'NvChad/nvim-colorizer.lua',
-    event = 'BufReadPre',
-    configs = function() require 'plugins._.colorizer' end
+    event = { 'BufNew', 'BufRead' },
+    configs = function() require 'plugins._.colorizer' end,
   },
 
   {

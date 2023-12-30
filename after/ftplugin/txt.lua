@@ -1,2 +1,2 @@
-vim.opt_local.wrap = true
-vim.opt_local.linebreak = true
+vim.bo.wrap = true
+vim.bo.linebreak = true

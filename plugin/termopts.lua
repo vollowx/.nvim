@@ -1,45 +1,119 @@
+local utils = require 'utils'
+
+---@type table<string, true>
+local shells_list = {
+  sh = true,
+  zsh = true,
+  bash = true,
+  dash = true,
+  fish = true,
+  less = true,
+  gawk = true,
+  python = true,
+  python3 = true,
+  ipython = true,
+  ipython3 = true,
+  lua = true,
+}
+
+---Set local terminal keymaps and options, start insert immediately
 ---@param buf integer terminal buffer handler
 ---@return nil
-local function term_set_keymaps_and_opts(buf)
+local function term_set_local_keymaps_and_opts(buf)
   if not vim.api.nvim_buf_is_valid(buf) or vim.bo[buf].bt ~= 'terminal' then
     return
   end
-  vim.keymap.set('t', '<S-Esc>', '<C-\\><C-n>', { buffer = buf })
+
+  -- Use <Esc> to exit terminal mode when running a shell,
+  -- use double <Esc> to send <Esc> to shell
+  vim.keymap.set('t', '<Esc>', function()
+    return shells_list[utils.term.proc_name(0)]
+        and (function()
+          ---@diagnostic disable-next-line: undefined-field
+          vim.b.t_esc = vim.uv.now()
+          return true
+        end)()
+        and '<Cmd>stopinsert<CR>'
+      or '<Esc>'
+  end, { expr = true, buffer = buf })
+  vim.keymap.set('n', '<Esc>', function()
+    return vim.b.t_esc
+        ---@diagnostic disable-next-line: undefined-field
+        and vim.uv.now() - vim.b.t_esc <= vim.go.tm
+        and shells_list[utils.term.proc_name(0)]
+        and '<Cmd>startinsert<CR><Esc>'
+      or '<Esc>'
+  end, { expr = true, buffer = buf })
+  vim.keymap.set('n', 'o', '<Cmd>startinsert<CR>', { buffer = buf })
   vim.opt_local.nu = false
   vim.opt_local.rnu = false
+  vim.opt_local.spell = false
   vim.opt_local.statuscolumn = ''
   vim.opt_local.signcolumn = 'no'
-  vim.opt_local.scrolloff = 0
-  vim.opt_local.sidescrolloff = 0
+  if vim.fn.win_gettype() == 'popup' then
+    vim.opt_local.scrolloff = 0
+    vim.opt_local.sidescrolloff = 0
+  end
   vim.cmd.startinsert()
 end
 
 ---@param buf integer terminal buffer handler
 ---@return nil
-local function to_setup(buf)
-  term_set_keymaps_and_opts(buf)
+local function setup(buf)
+  term_set_local_keymaps_and_opts(buf)
 
   local groupid = vim.api.nvim_create_augroup('TermOpts', {})
   vim.api.nvim_create_autocmd('TermOpen', {
     group = groupid,
     desc = 'Set terminal keymaps and options, open term in split.',
-    callback = function(info) term_set_keymaps_and_opts(info.buf) end,
+    callback = function(info) term_set_local_keymaps_and_opts(info.buf) end,
   })
 
   vim.api.nvim_create_autocmd('TermEnter', {
     group = groupid,
     desc = 'Disable mousemoveevent in terminal mode.',
-    command = 'let g:mousemev = &mousemev | set nomousemev',
+    callback = function()
+      vim.g.mousemev = vim.go.mousemev
+      vim.go.mousemev = false
+    end,
   })
 
   vim.api.nvim_create_autocmd('TermLeave', {
     group = groupid,
     desc = 'Restore mousemoveevent after leaving terminal mode.',
-    command = 'if exists("g:mousemev") | let &mousemev = g:mousemev | unlet g:mousemev | endif',
+    callback = function()
+      if vim.g.mousemev ~= nil then
+        vim.go.mousemev = vim.g.mousemev
+        vim.g.mousemev = nil
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('ModeChanged', {
+    group = groupid,
+    desc = 'Record mode in terminal buffer.',
+    callback = function(info)
+      if vim.bo[info.buf].bt == 'terminal' then
+        vim.b[info.buf].termode = vim.api.nvim_get_mode().mode
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
+    group = groupid,
+    desc = 'Recover inseart mode when entering terminal buffer.',
+    callback = function(info)
+      if
+        vim.bo[info.buf].bt == 'terminal'
+        and vim.b[info.buf].termode == 't'
+      then
+        vim.cmd.startinsert()
+      end
+    end,
   })
 end
 
 vim.api.nvim_create_autocmd('TermOpen', {
   group = vim.api.nvim_create_augroup('TermOptsSetup', {}),
-  callback = function(info) to_setup(info.buf) end,
+  callback = function(info) setup(info.buf) end,
 })

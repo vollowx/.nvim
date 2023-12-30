@@ -29,6 +29,6 @@ return {
   {
     'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
-    config = function () require 'plugins._.copilot' end,
+    config = function() require 'plugins._.copilot' end,
   },
 }

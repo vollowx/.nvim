@@ -9,7 +9,7 @@ return {
       { '<Leader>fo', '<Cmd>Telescope oldfiles<CR>' },
       { '<Leader>fw', '<Cmd>Telescope live_grep<CR>' },
       { '<Leader>fb', '<Cmd>Telescope buffers<CR>' },
-      { '<Leader>fh', '<Cmd>Telescope help_tags<CR>' },
+      { '<Leader>fh', '<Cmd>Telescope highlights<CR>' },
       { '<Leader>fc', '<Cmd>Telescope colorscheme<CR>' },
 
       { '<Leader>fe', '<Cmd>Telescope diagnostics<CR>' },
@@ -22,7 +22,7 @@ return {
 
   {
     'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'telescope.nvim' },
+    dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function() require('telescope').load_extension 'file_browser' end,
     keys = {
       {
@@ -31,7 +31,7 @@ return {
           require('telescope').extensions.file_browser.file_browser {
             dir_icon = vim.trim(PREF.icons.kinds.Folder),
             grouped = true,
-            hijack_netrw = true,
+            quiet = true,
           }
         end,
         desc = 'find: File browser',
@@ -44,6 +44,12 @@ return {
     cmd = { 'ConformInfo' },
     keys = { { 'gq;', function() require('conform').format() end } },
     config = function() require 'plugins._.conform' end,
+  },
+
+  {
+    'willothy/flatten.nvim',
+    event = 'BufReadPre',
+    config = function() require 'plugins._.flatten' end,
   },
 
   {
