@@ -1,13 +1,5 @@
 require('copilot').setup {
-  suggestion = {
-    auto_trigger = true,
-    keymap = {
-      accept = '<C-f>',
-      next = '<C-]>',
-      prev = '<C-[>',
-      dismiss = '<C-x>',
-    },
-  },
+  suggestion = { auto_trigger = true },
   filetypes = {
     markdown = true,
     help = true,
