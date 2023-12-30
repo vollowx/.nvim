@@ -3,7 +3,7 @@ vim.opt.shortmess:append 'I'
 
 if vim.fn.argc() > 0 then return end
 
-local logo = 'Λ S Y N C'
+local logo = 'A S Y N C'
 
 ---@class intro_chunk_t
 ---@field text string
