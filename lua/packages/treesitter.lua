@@ -20,7 +20,7 @@ return {
     },
     event = 'FileType',
     config = function()
-      vim.schedule(function() require 'plugins._.treesitter' end)
+      vim.schedule(function() require 'packages._.treesitter' end)
     end,
   },
 
@@ -40,7 +40,7 @@ return {
     'windwp/nvim-ts-autotag',
     dependencies = 'nvim-treesitter/nvim-treesitter',
     event = 'FileType',
-    config = function() require 'plugins._.ts-autotag' end,
+    config = function() require 'packages._.ts-autotag' end,
   },
 
   {

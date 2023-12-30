@@ -8,13 +8,13 @@ return {
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
       },
     },
-    config = function() require 'plugins._.comment' end,
+    config = function() require 'packages._.comment' end,
   },
 
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    config = function() require 'plugins._.autopairs' end,
+    config = function() require 'packages._.autopairs' end,
   },
 
   {
@@ -23,6 +23,6 @@ return {
       { 'gl', '<Plug>(EasyAlign)', mode = { 'n', 'x' } },
       { 'gL', '<Plug>(LiveEasyAlign)', mode = { 'n', 'x' } },
     },
-    config = function() require 'plugins._.easy-align' end,
+    config = function() require 'packages._.easy-align' end,
   },
 }

@@ -23,7 +23,7 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
     ft = { 'markdown', 'norg', 'rmd', 'org' },
     config = function()
-      vim.schedule(function() require 'plugins._.headlines' end)
+      vim.schedule(function() require 'packages._.headlines' end)
     end,
   },
 }

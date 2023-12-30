@@ -12,7 +12,7 @@ return {
       'hrsh7th/cmp-cmdline',
     },
     event = { 'InsertEnter', 'CmdlineEnter' },
-    config = function() require 'plugins._.cmp' end,
+    config = function() require 'packages._.cmp' end,
   },
 
   {
@@ -23,12 +23,12 @@ return {
         config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
       },
     },
-    config = function() require 'plugins._.luasnip' end,
+    config = function() require 'packages._.luasnip' end,
   },
 
   {
     'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
-    config = function() require 'plugins._.copilot' end,
+    config = function() require 'packages._.copilot' end,
   },
 }

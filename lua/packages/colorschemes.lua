@@ -4,7 +4,7 @@ return {
     name = 'catppuccin',
     lazy = false,
     priority = 1000,
-    config = function() require 'plugins._.catppuccin' end,
+    config = function() require 'packages._.catppuccin' end,
   },
 
   { 'sainnhe/everforest' },

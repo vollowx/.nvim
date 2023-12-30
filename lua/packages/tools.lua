@@ -3,7 +3,7 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'plenary.nvim' },
     cmd = 'Telescope',
-    config = function() require 'plugins._.telescope' end,
+    config = function() require 'packages._.telescope' end,
     keys = {
       { '<Leader>ff', '<Cmd>Telescope find_files<CR>', desc = 'find: Files' },
       { '<Leader>fo', '<Cmd>Telescope oldfiles<CR>' },
@@ -47,20 +47,20 @@ return {
     'stevearc/conform.nvim',
     cmd = { 'ConformInfo' },
     keys = { { 'gq;', function() require('conform').format() end } },
-    config = function() require 'plugins._.conform' end,
+    config = function() require 'packages._.conform' end,
   },
 
   {
     'willothy/flatten.nvim',
     event = 'BufReadPre',
-    config = function() require 'plugins._.flatten' end,
+    config = function() require 'packages._.flatten' end,
   },
 
   {
     'lewis6991/gitsigns.nvim',
     dependencies = 'plenary.nvim',
     event = 'BufReadPre',
-    config = function() require 'plugins._.gitsigns' end,
+    config = function() require 'packages._.gitsigns' end,
     keys = {
       { ']g', '<Cmd>Gitsigns next_hunk<CR>' },
       { '[g', '<Cmd>Gitsigns prev_hunk<CR>' },
