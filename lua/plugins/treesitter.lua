@@ -44,13 +44,6 @@ return {
   },
 
   {
-    'nvim-treesitter/nvim-treesitter-context',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
-    event = 'FileType',
-    config = function() require 'plugins._.ts-context' end,
-  },
-
-  {
     'HiPhish/rainbow-delimiters.nvim',
     event = 'FileType',
   },
