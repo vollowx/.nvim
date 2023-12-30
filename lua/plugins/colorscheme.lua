@@ -6,4 +6,6 @@ return {
     priority = 1000,
     config = function() require 'plugins._.catppuccin' end,
   },
+
+  { 'sainnhe/everforest' },
 }

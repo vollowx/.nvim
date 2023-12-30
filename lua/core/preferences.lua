@@ -3,9 +3,9 @@ PREF = {
     tabsize = 2,
   },
   ui = {
-    border = 'shadow',
+    border = 'solid',
     border_interactive = 'rounded',
-    border_hover = 'none',
+    border_hover = 'solid',
     show_peek_border = false,
   },
   git = {
