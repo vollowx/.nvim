@@ -6,7 +6,7 @@ require('clangd_extensions').setup {
     role_icons = {
       ['type'] = PREF.icons.kinds.Type,
       ['declaration'] = PREF.icons.kinds.Function,
-      ['expression'] = PREF.icons.ui.Circle,
+      ['expression'] = PREF.icons.kinds.Object,
       ['specifier'] = PREF.icons.kinds.Specifier,
       ['statement'] = PREF.icons.kinds.Statement,
       ['template argument'] = PREF.icons.kinds.TypeParameter,

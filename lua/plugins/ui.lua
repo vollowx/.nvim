@@ -28,4 +28,10 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     config = function() require 'plugins._.ibl' end,
   },
+
+  {
+    'Bekaboo/dropbar.nvim',
+    event = { 'BufReadPost', 'BufWritePost' },
+    config = function() require 'plugins._.dropbar' end,
+  }
 }

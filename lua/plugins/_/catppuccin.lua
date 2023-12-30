@@ -11,9 +11,9 @@ require('catppuccin').setup {
     ufo = false,
 
     treesitter = true,
-    treesitter_context = true,
     native_lsp = { enabled = true },
     cmp = true,
+    dropbar = { enabled = true, color_mode = true },
     gitsigns = true,
     headlines = true,
     illuminate = true,
