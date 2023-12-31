@@ -46,7 +46,7 @@ end
 opt.formatoptions:append 'n'
 
 -- Font fot GUI
-opt.guifont = 'CommitMono Nerd Font:h12'
+opt.guifont = 'JetBrainsMono Nerd Font:h12'
 
 -- Cursor shape
 opt.gcr = {
