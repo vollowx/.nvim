@@ -109,7 +109,7 @@ local function setup_lazy(module_names)
   }
   local modules = {}
   for _, module_name in ipairs(module_names) do
-    vim.list_extend(modules, require('packages.' .. module_name))
+    vim.list_extend(modules, require('modules.' .. module_name))
   end
   require('lazy').setup(modules, config)
 end

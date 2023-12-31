@@ -3,7 +3,7 @@ return {
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModToggle',
     ft = 'markdown',
-    config = function() require 'packages._.table-mode' end,
+    config = function() require 'configs.table-mode' end,
   },
 
   {
@@ -26,7 +26,7 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
     ft = { 'markdown', 'norg', 'rmd', 'org' },
     config = function()
-      vim.schedule(function() require 'packages._.headlines' end)
+      vim.schedule(function() require 'configs.headlines' end)
     end,
   },
 }

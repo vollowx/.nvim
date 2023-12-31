@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 ---Setup all LSP servers
 local lspconfig = require 'lspconfig'
 local servers = PREF.lsp_servers
-local server_ = require 'packages._.lsp'
+local server_ = require 'configs.lsp'
 for _, server in ipairs(servers) do
   lspconfig[server].setup(server_[server])
 end
