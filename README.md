@@ -1,6 +1,6 @@
-# .nvim
+# Neovim :: ASYNC
 
-> Dotfiles for Neovim.
+> Reactions appear immediately
 
 ## About
 
@@ -49,6 +49,7 @@ In order to prevent duplicated packages installed (especially in NixOS), unlike 
 
 ## Todos
 
-- [ ] `nvim-dap`
-- [ ] [lsp_line.nvim](https://git.sr.ht/~whynothugo/lsp_lines.nvim)
-- [x] `vim-easy-align`
+- [ ] Add `nvim-dap` [optional]
+- [ ] Add [lsp_line.nvim](https://git.sr.ht/~whynothugo/lsp_lines.nvim) [optional]
+- [x] Add `vim-easy-align`
+- [ ] Make LSP configurations lazy loaded

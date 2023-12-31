@@ -9,8 +9,9 @@ return {
   {
     'iamcco/markdown-preview.nvim',
     enabled = vim.g.gui,
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = 'markdown',
     build = function() vim.fn['mkdp#util#install']() end,
+    config = function() require 'configs.markdown-preview' end,
     keys = {
       {
         '<F10>',

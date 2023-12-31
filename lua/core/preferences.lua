@@ -20,7 +20,7 @@ PREF = {
     'jsonls',
     'lua_ls',
     'marksman',
-    'nil_ls',
+    'nixd',
     'pyright',
     'rust_analyzer',
     -- 'tsserver', -- replaced with typescript.nvim
