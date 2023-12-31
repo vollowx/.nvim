@@ -1,7 +1,4 @@
 require('clangd_extensions').setup {
-  inlay_hints = {
-    highlight = 'LspInlayHint',
-  },
   ast = {
     role_icons = {
       ['type'] = PREF.icons.kinds.Type,
