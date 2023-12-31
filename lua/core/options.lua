@@ -33,6 +33,15 @@ opt.virtualedit    = 'block'
 opt.completeopt    = 'menuone'
 -- stylua: ignore end
 
+if not vim.g.modern_ui then
+  -- nvim 0.10.0 automatically enables termguicolors. When using nvim inside
+  -- tmux in Linux tty, where $TERM is set to 'tmux-256color' but $DISPLAY is
+  -- not set, termguicolors is automatically set. This is undesirable, so we
+  -- need to explicitly disable it in this case
+  opt.termguicolors = false
+  opt.cursorlineopt = 'number'
+end
+
 -- Recognize numbered lists when formatting text
 opt.formatoptions:append 'n'
 
@@ -61,22 +70,24 @@ opt.backupdir:remove '.'
 opt.shortmess:append 'c'
 
 -- stylua: ignore start
-opt.list      = true
+opt.list = true
 opt.listchars = {
   tab      = '→ ',
-  extends  = '…',
-  precedes = '…',
-  nbsp     = '␣',
   trail    = '·',
 }
 opt.fillchars = {
   fold      = ' ',
-  foldopen  = '󰅀',
-  foldclose = '󰅂',
   foldsep   = ' ',
-  diff      = '╱',
   eob       = ' ',
 }
+if g.gui then
+  opt.listchars:append({ nbsp = '␣' })
+  opt.fillchars:append({
+    foldopen  = '󰅀',
+    foldclose = '󰅂',
+    diff      = '╱',
+  })
+end
 
 opt.tabstop       = PREF.editor.tabsize
 opt.softtabstop   = PREF.editor.tabsize
@@ -96,6 +107,7 @@ opt.spellsuggest  = 'best,9'
 -- disable plugins
 g.loaded_2html_plugin      = 1
 g.loaded_gzip              = 1
+g.loaded_matchit           = 1
 g.loaded_tar               = 1
 g.loaded_tarPlugin         = 1
 g.loaded_tutor_mode_plugin = 1

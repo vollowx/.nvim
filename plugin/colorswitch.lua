@@ -1,6 +1,7 @@
 -- Colorschemes other than the default colorscheme looks bad when the terminal
 -- does not support truecolor
-if vim.env.COLORTERM ~= 'truecolor' and vim.fn.has 'gui_running' == 0 then
+if not vim.g.gui then
+  if vim.g.ui then vim.cmd.colorscheme 'default' end
   return
 end
 
@@ -14,7 +15,6 @@ local colors_file =
 --    and system color consistent with the current nvim instance.
 
 local saved = utils.json.read(colors_file)
-saved.bg = saved.bg or 'dark'
 saved.colors_name = saved.colors_name or 'catppuccin-mocha'
 
 if saved.bg and saved.bg ~= vim.go.bg then vim.go.bg = saved.bg end
@@ -32,14 +32,16 @@ vim.api.nvim_create_autocmd('Colorscheme', {
   callback = function()
     if vim.g.script_set_bg or vim.g.script_set_colors then return end
 
-    local data = utils.json.read(colors_file)
-    if data.colors_name ~= vim.g.colors_name or data.bg ~= vim.go.bg then
-      data.colors_name = vim.g.colors_name
-      data.bg = vim.go.bg
-      if not utils.json.write(colors_file, data) then return end
-    end
+    vim.schedule(function()
+      local data = utils.json.read(colors_file)
+      if data.colors_name ~= vim.g.colors_name or data.bg ~= vim.go.bg then
+        data.colors_name = vim.g.colors_name
+        data.bg = vim.go.bg
+        if not utils.json.write(colors_file, data) then return end
+      end
 
-    pcall(vim.system, { 'setbg', vim.go.bg })
-    pcall(vim.system, { 'setcolors', vim.g.colors_name })
+      pcall(vim.system, { 'setbg', vim.go.bg })
+      pcall(vim.system, { 'setcolor', vim.g.colors_name })
+    end)
   end,
 })

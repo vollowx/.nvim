@@ -202,19 +202,32 @@ local spinner_timer = vim.uv.new_timer()
 local spinner_icons ---@type string[]
 local spinner_icon_done ---@type string
 
-spinner_icon_done = vim.trim(PREF.icons.diagnostics.Ok)
-spinner_icons = {
-  '⠋',
-  '⠙',
-  '⠹',
-  '⠸',
-  '⠼',
-  '⠴',
-  '⠦',
-  '⠧',
-  '⠇',
-  '⠏',
-}
+if vim.g.gui then
+  spinner_icon_done = vim.trim(PREF.icons.diagnostics.Ok)
+  spinner_icons = {
+    '⠋',
+    '⠙',
+    '⠹',
+    '⠸',
+    '⠼',
+    '⠴',
+    '⠦',
+    '⠧',
+    '⠇',
+    '⠏',
+  }
+else
+  spinner_icon_done = '[done]'
+  spinner_icons = {
+    '[    ]',
+    '[=   ]',
+    '[==  ]',
+    '[=== ]',
+    '[ ===]',
+    '[  ==]',
+    '[   =]',
+  }
+end
 
 ---Id and additional info of language servers in progress
 ---@type table<integer, { name: string, timestamp: integer, type: 'begin'|'report'|'end' }>
@@ -365,7 +378,7 @@ vim.api.nvim_create_autocmd({ 'UIEnter', 'ColorScheme' }, {
       local merged_attr = vim.tbl_deep_extend('keep', attr, default_attr)
       utils.hl.set_default(0, hlgroup_name, merged_attr)
     end
-    sethl('StatusLineHeader', { bg = 'TabLine' })
+    if vim.g.gui then sethl('StatusLineHeader', { bg = 'TabLine' }) end
     sethl('StatusLineGitAdded', { fg = 'GitSignsAdd' })
     sethl('StatusLineGitChanged', { fg = 'GitSignsChange' })
     sethl('StatusLineGitRemoved', { fg = 'GitSignsDelete' })
