@@ -1,6 +1,13 @@
 local ffi = require 'ffi'
 local utils = require 'utils'
-local make_hl = utils.stl.hl
+
+---Wrapper around `utils.stl.hl()` that forces apply hlgroup even in tty
+---@param str? string sign symbol
+---@param hl? string name of the highlight group
+---@param restore? boolean restore highlight after the sign, default true
+local function make_hl(str, hl, restore)
+  return utils.stl.hl(str, hl, restore, true)
+end
 
 ---@type table<integer, integer>
 local lnumw_cache = {}

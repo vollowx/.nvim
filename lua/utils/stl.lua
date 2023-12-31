@@ -4,14 +4,14 @@ local M = {}
 ---@param str? string sign symbol
 ---@param hl? string name of the highlight group
 ---@param restore? boolean restore highlight after the sign, default true
+---@param force? boolean apply highlight even if in tty (`vim.g.modern_ui` is `false`)
 ---@return string sign string representation of the sign with highlight
-function M.hl(str, hl, restore)
+function M.hl(str, hl, restore, force)
   restore = restore == nil or restore
-  if restore then
-    return table.concat { '%#', hl or '', '#', str or '', '%*' }
-  else
-    return table.concat { '%#', hl or '', '#', str or '' }
-  end
+  -- Don't add highlight in tty to get a cleaner UI
+  hl = (vim.g.gui or force) and hl or ''
+  return restore and table.concat { '%#', hl, '#', str or '', '%*' }
+    or table.concat { '%#', hl, '#', str or '' }
 end
 
 ---Make a winbar string clickable
