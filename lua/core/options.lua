@@ -4,7 +4,7 @@ local g = vim.g
 -- stylua: ignore start
 opt.cursorline     = true
 opt.colorcolumn    = '80'
-opt.foldcolumn     = 'auto'
+opt.foldcolumn     = PREF.ui.show_fold_signcolumn and 'auto' or '0'
 opt.foldlevelstart = 99
 opt.foldmethod     = 'expr'
 opt.foldtext       = 'v:lua.vim.treesitter.foldtext()'

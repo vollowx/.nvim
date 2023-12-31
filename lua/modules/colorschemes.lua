@@ -7,5 +7,5 @@ return {
     config = function() require 'configs.catppuccin' end,
   },
 
-  { 'sainnhe/everforest' },
+  { 'sainnhe/everforest', lazy = false },
 }

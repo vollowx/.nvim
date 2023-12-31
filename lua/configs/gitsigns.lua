@@ -11,8 +11,8 @@ require('gitsigns').setup {
     topdelete = { text = vim.trim(PREF.icons.ui.GitSignTopdelete) },
     changedelete = { text = vim.trim(PREF.icons.ui.GitSignChangedelete) },
   },
-  signcolumn = PREF.git.show_signcolumn,
-  current_line_blame = PREF.git.show_blame,
+  signcolumn = PREF.ui.show_git_signcolumn,
+  current_line_blame = PREF.ui.show_git_blame,
   current_line_blame_opts = {
     virt_text = true,
     virt_text_pos = 'eol',
